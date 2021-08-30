@@ -1,0 +1,133 @@
+<!doctype html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<linK rel='stylesheet' href='{{url_for("static",filename="css/dropzone.min.css") }}'>
+<linK rel='stylesheet' href='{{url_for("static",filename="css/home.css") }}'>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<!-- <style>
+    .footerfix{height:4rem;}
+footer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+}
+</style> -->
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap');
+    html,body{
+        font-family: 'Poppins', sans-serif !important;
+        height: 100%
+    }
+    .footerfix{    min-height: 100%;
+    position:relative;}
+footer{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  
+    width:100%;
+}
+
+</style>
+
+{% block custom_head %}
+{% endblock %}
+<title>Detre - Data cleaning made easy</title>
+</head>
+
+
+<body>
+    <!-- Navbar section -->
+    <section>    
+        <nav class="navbar" style="background-color: #faf8f5;">
+            <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 30px; color:#8D5A97">Detre</a>   
+            <nav class="nav justify-content-end">               
+                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
+                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
+                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
+                <a class="nav-link" href="#" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Join Early Access</a>
+              </nav>
+        </nav>
+
+    </section>
+
+       {% block content %} 
+
+       {% endblock content %}
+
+
+    <br>
+    <div class="footerfix"></div>
+    <footer style="display: flex; background-color: #faf8f5;">
+        <div class="container" style="display: flex;" >
+                <div class="col-3" >
+                    <div>
+                        <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 20px; color:#8D5A97">Detre</a> 
+                    </div>
+                    <div>
+                        <p class="ml-3">2021 Detre </p>
+                    </div>
+                    <div>
+                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Terms & Privacy </a>
+                    </div>
+                </div>
+                
+                <div class="col-3 mt-2">
+                    <!-- Resources -->
+                    <div>
+                        <b>Resources</b>
+                        <div>
+                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Blog </a>
+                        </div>
+                        <div>
+                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Documentation </a>
+                        </div>
+                        
+                        <div>
+                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">FAQ </a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-3 mt-2">
+                     <!-- Contact -->
+                     <div>
+                        <b>Contact</b>
+                        <div>
+                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Email </a>
+                        </div>
+                        <div>
+                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Twitter </a>
+                        </div>
+                        
+                        <div>
+                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Linkedin </a>
+                        </div>
+    
+                    </div>  
+                </div>
+    
+     
+    
+    
+        </div>
+    </footer>    
+    
+</body>
+</html>

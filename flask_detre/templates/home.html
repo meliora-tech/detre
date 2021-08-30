@@ -1,0 +1,325 @@
+<!doctype html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<linK rel='stylesheet' href='{{url_for("static",filename="css/dropzone.min.css") }}'>
+<linK rel='stylesheet' href='{{url_for("static",filename="css/home.css") }}'>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap');
+    html,body{
+        font-family: 'Poppins', sans-serif !important;
+        height: 100%
+    }
+
+    .ml10 {
+  position: relative;
+  font-size: 2em;
+}
+
+.ml10 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.2em;
+  padding-right: 0.05em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+}
+
+.ml10 .letter {
+  display: inline-block;
+  line-height: 1em;
+  transform-origin: 0 0;
+}
+</style>
+
+
+
+
+<title>Detre - Data cleaning made easy</title>
+</head>
+
+
+<body>
+    <!-- Navbar section -->
+    <section>    
+        <nav class="navbar" style="background-color: #faf8f5;">
+            <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 30px; color:#8D5A97">Detre</a>   
+            <nav class="nav justify-content-end">               
+                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
+                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
+                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
+                <a class="nav-link" href="#" style="background-color:#8D5A97; color:#fff; border-radius:8px;  text-decoration: none;">Join Early Access</a>
+              </nav>
+        </nav>
+
+    </section>
+
+    <!-- Above the folder content --> 
+    <section style="margin-top: 30px;">  
+        <div class="container text-center">            
+            <h1 style="font-size: 56px; font-weight: 900;"> Enjoy cleaning your data </h1>
+            <p style="font-size: 20px;">Detre is an easy and secure platform to clean small to medium sized data from different file formats </p>
+        </div>
+    </section>
+
+    <!-- Video content section -->
+    <section class="container text-center" style="margin-top: 30px;">
+        <div class="container text-center" style="box-shadow: rgb(60 66 87 / 5%) 0px 0px 0px 1px, rgb(60 66 87 / 10%) 0px 3px 6px, rgb(60 66 87 / 20%) 0px 9px 24px;">
+            <img src="{{url_for('static',filename='assets/images/browser-window.jpg')}}" width="50%">
+        </div>
+    </section>
+
+
+    <!-- Detre messy data section -->
+    <section class="container text-center" style="margin-top: 70px;">
+        <h2 class="ml10">
+            <span class="text-wrapper">
+                <span class="letters"> 
+                    Messy data is a norm rather than an exception. 
+                </span>
+            </span>
+        </h2>
+        <br>
+            <a class="btn " href="{{url_for('route_bp.demo')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Get started for free</a> 
+
+    </section>
+
+    <section class="container text-center" style="margin-top: 70px;">
+        <h2 style="font-weight: 800;" class="">
+            Use Detre to clean different data types
+        </h2>
+    </section>
+
+    <br>
+        <!-- Different data types -->
+
+        <section class="container text-center">
+            <!-- First row -->
+            <div class="text-center" style="display: flex; text-align: center;padding: 40px 20px; flex: 1 1 10%;" >
+               
+                    
+                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238); margin-bottom: 10px;">
+                            <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/date.png')}}" alt="Card image cap" width="50%">
+                            <div class="card-body">
+                              <h5 class="card-title">Date</h5>
+                              <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                            </div>
+                        </div>
+                    
+   
+
+                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <img class="mx-auto d-block" style="display: block;" src="{{url_for('static',filename='/assets/images/time.png')}}" alt="Card image cap" width="50%" >
+                        <div class="card-body">
+                          <h5 class="card-title">Time</h5>
+                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;" >Watch</a>
+                        </div>
+                    </div>
+    
+                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/datetime.png')}}" alt="Card image cap" width="50%" >
+                        <div class="card-body">
+                          <h5 class="card-title">Datetime</h5>
+                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                        </div>
+                    </div>
+               
+
+            </div>
+
+            <!-- Second Row -->
+            <div style="display: flex;text-align: center; padding: 40px 20px;">
+
+                
+                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/currency.png')}}" alt="Card image cap" width="50%">
+                        <div class="card-body">
+                          <h5 class="card-title">Currency</h5>
+                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                        </div>
+                    </div>
+                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/country.png')}}" alt="Card image cap" width="50%">
+                        <div class="card-body">
+                          <h5 class="card-title">Country</h5>
+                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                        </div>
+                    </div>
+    
+                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/phone.png')}}" alt="Card image cap" width="50%">
+                        <div class="card-body">
+                          <h5 class="card-title">Phone number</h5>
+                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                        </div>
+                    </div>
+
+                
+
+            </div>
+
+            <!-- Third Row -->
+            <div style="display: flex;text-align: center; padding: 40px 20px;">
+               
+                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                            <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/whole.png')}}" alt="Card image cap" width="50%">
+                            <div class="card-body">
+                            <h5 class="card-title">Whole Number</h5>
+                            <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                            </div>
+                        </div>
+                    
+
+                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                            <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/decimal.png')}}" alt="Card image cap" width="50%">
+                            <div class="card-body">
+                            <h5 class="card-title">Decimal</h5>
+                            <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                            </div>
+                        </div>
+
+                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                            <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/text.png')}}" alt="Card image cap" width="50%">
+                            <div class="card-body">
+                            <h5 class="card-title">Text</h5>
+                            <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                            </div>
+                        </div>
+
+              
+
+            </div>
+
+        </section>
+
+        <!-- Survey Monkey section -->
+        <section style="margin-top: 70px;">
+            <div class="container text-center">
+                <h2 style="font-weight: 800;">Clean and format your survey from Survey Monkey</h2>
+                <br>
+                <p>Simply upload your survey results, and Detre will do the rest.  The platform will convert
+                    the wide format to long. In addition, provide the total number of responses per question and the 
+                    total number of same answers for a given question.
+                </p>
+            </div>
+        
+        </section>
+
+        <!-- Try it the survey button -->
+        <section class="container text-center" style="margin-top: 50px;">
+            <a class="btn " href="{{url_for('route_bp.survey')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Clean my survey</a> 
+            <p style="font-size: 13px; font-weight: 500;">No sign up required</p>
+        </section>
+
+        <!-- Language of Detre -->
+        <section class="container" style="margin-top: 70px;">
+
+
+        </section>
+
+        <!-- Join Early Access -->
+
+        <section class="container text-center" style="background-color:#8D5A97; margin-top: 50px; border-radius: 8px;">
+            <br>
+            <div class="mb-3">
+                <h2 style="color:#fff;font-weight: 700;line-height: 1.2;letter-spacing: -1px"> Ready to contribute? </h2>
+            </div>
+            <div class="mt-3" style="color: #fff;">
+                <p>We want Detre to handle as many `common edge case` data cleaning issues that people face on a daily basis. </p>
+                <br>
+                    Join our early access and contribute 
+                your `common edge case` and stand a chance to win a lifetime free subscription.  If you don't win, then you still get a discount on the subscription once Detre 
+                launches.
+            </div>
+            <br>
+            <div>
+                <a class="btn " href="/" style="background-color:#fff; color:#8D5A97; border-radius:8px; text-decoration: none;width:180px">Join early access</a>
+            </div>
+            <br>
+        </section>
+
+<br>
+<footer  style="display: flex; background-color: #faf8f5;">
+    <div class="container" style="display: flex;" >
+            <div class="col-3" >
+                <div>
+                    <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 20px; color:#8D5A97">Detre</a> 
+                </div>
+                <div>
+                    <p class="ml-3">2021 Detre </p>
+                </div>
+                <div>
+                    <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Terms & Privacy </a>
+                </div>
+            </div>
+            
+            <div class="col-3 mt-2">
+                <!-- Resources -->
+                <div>
+                    <b>Resources</b>
+                    <div>
+                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Blog </a>
+                    </div>
+                    <div>
+                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Documentation </a>
+                    </div>
+                    
+                    <div>
+                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">FAQ </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3 mt-2">
+                 <!-- Contact -->
+                 <div>
+                    <b>Contact</b>
+                    <div>
+                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Email </a>
+                    </div>
+                    <div>
+                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Twitter </a>
+                    </div>
+                    
+                    <div>
+                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Linkedin </a>
+                    </div>
+
+                </div>  
+            </div>
+
+ 
+
+
+    </div>
+</footer>    
+
+<script>
+    var textWrapper = document.querySelector('.ml10 .letters');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: true})
+  .add({
+    targets: '.ml10 .letter',
+    rotateY: [-90, 0],
+    duration: 1300,
+    delay: (el, i) => 45 * i
+  }).add({
+    targets: '.ml10',
+    opacity: 0,
+    duration: 1200,
+    easing: "easeOutExpo",
+    delay: 1000
+  });
+</script>
+</body>

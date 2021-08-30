@@ -1,0 +1,210 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<body > 
+<h1>Select the data type for each column </h1>
+<div>
+    <form action="data" method="POST">
+    {%  for row in results %}
+        {% for r in row.columns %}
+        
+        <div style="display: flex;">
+            <input type="text" value="{{r}}" readonly>
+            
+        
+         
+            <select name="{{r}}-{{row.filename}}-select" onchange='selectedOption(this,"{{r}}")'>
+                
+                <option value="date">Date</option>
+                <option value="time">Time</option>
+                <option value="datetime">Datetime</option>
+                
+                <option value="text">Text</option>
+
+                
+                <option value="whole">Whole Number</option>
+                <option value="decimal">Decimal Number</option>
+                <option value="currency">Currency</option>
+                <option value="phone">Phone Number</option>
+                <option value="country">Country</option>
+
+            </select>
+            <!-- Phone -->
+            <select id="option-phone-{{r}}" name="{{r}}-country-code-select" hidden>
+                  
+            </select>
+
+            <!-- Text -->
+            <div style="display: flex;" id="text-add-{{r}}" name="{{r}}-text" hidden>
+                <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#textActionModal" data-column="{{r}}" style="font-weight: bold;background-color: #faf8f5;color: #8D5A97; border-color: #8D5A97;" >Add</button>
+            </div>
+            
+        </div>
+
+        {% endfor %}
+    {% endfor %}
+       
+    <br>
+    <br>
+    <button type="submit" class="btn " style="background-color: #8D5A97;color: white; border-color: #8D5A97; font-weight: bold;" > Submit </button>
+</form>
+</div>
+
+
+<!-- Text Action Modal -->
+<div class="modal fade" id="textActionModal" tabindex="-1" role="dialog" aria-labelledby="textActionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Text Action</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+               <label for="Action"> Action </label> 
+               <select class="form-control">
+                <option value="Remove">Remove</option>
+                <option value="Extract">Extract</option>
+                <option value="Replace">Replace</option>
+             </select>
+          </div>  
+
+          <div class="form-group">
+
+            <label for="item">Item</label>
+            <select class="form-control">
+                <option value="URL">URL</option>
+                <option value="Phone">Phone Number</option>
+                <option value="Punct">Punctuation</option>
+                <option value="Email">Email</option>
+                <option Value="Numbers">Numbers</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary add" id='add-text-btn' style="background-color: #8D5A97;color: white; border-color: #8D5A97;"> Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+    function selectedOption(e,column){
+        
+        var selected = e.querySelectorAll('option')[e.selectedIndex].value;
+       
+        if(selected == "phone"){
+            getAllInfo(column);
+            document.getElementById("text-add-"+column).setAttribute("hidden","");
+            document.getElementById("option-phone-"+column).removeAttribute("hidden");
+
+        } else if (selected=="text"){
+            document.getElementById("option-phone-"+column).setAttribute("hidden","");
+            document.getElementById("text-add-"+column).removeAttribute("hidden");
+            
+        } else {
+            document.getElementById("text-add-"+column).setAttribute("hidden","");
+            document.getElementById("option-phone-"+column).setAttribute("hidden","");
+        }
+        
+    }
+
+    function getAllInfo(column){
+        var url  = window.location.protocol +"//" +location.host;
+
+        if (document.getElementById("option-phone-"+column).querySelectorAll('option').length == 0 ){
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200) {
+                    var raw_result = JSON.parse(this.responseText);
+                    var result     = raw_result["result"];
+
+                    var select_numbers = document.getElementById("option-phone-"+column)
+
+                    result.forEach(element => {
+                         var option = document.createElement('option');
+                         var optionText = document.createTextNode(element["value"]);
+
+                         option.setAttribute("value",element["country_code"])
+                         option.append(optionText);
+
+                         select_numbers.append(option);
+
+                        
+                        
+                    });
+                }
+            }
+
+            xhttp.open("GET", url+"/country_codes", true);
+            xhttp.send();   
+         
+           
+        }
+    }
+
+
+
+    function addTextAction(column){
+ 
+        
+        // 
+        var modal = document.getElementById('textActionModal')
+
+        var select_arr = modal.querySelectorAll('select');
+        var action_selected = select_arr[0].querySelectorAll('option')[select_arr[0].selectedIndex].value;
+        var item_selected   = select_arr[1].querySelectorAll('option')[select_arr[1].selectedIndex].value;
+
+        // dismiss modal
+        $('#textActionModal').modal('hide');
+
+
+        // Create the action-item
+        var div = document.createElement('div');
+       // div.style.cssText("display:flex");
+
+        var input = document.createElement('input');
+        input.setAttribute("readonly","");
+        var count = document.getElementById("text-add-"+column).querySelectorAll("input").length;
+        input.setAttribute("name",column+"-text-action-item-"+count);
+        
+        var del_btn = document.createElement('button');
+        input.value = action_selected + " : " + item_selected;
+
+        document.getElementById("text-add-"+column).append(input);
+
+
+
+        
+    }
+</script>
+
+
+
+
+
+  <script>
+    $('#textActionModal').on('show.bs.modal',function(event){
+            var button = $(event.relatedTarget) 
+            var column  = button.data('column');
+
+    
+
+        var modal = $(this)
+        modal.find('#add-text-btn').attr("onclick", 'addTextAction("'+column+'")');
+
+    });
+
+  </script>
+
+</body>
+
+{% endblock %}

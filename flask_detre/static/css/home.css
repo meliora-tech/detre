@@ -1,0 +1,30 @@
+html {
+    font-family: "DM Sans", "Roboto", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.card-box-shadow {
+    box-shadow: rgb(60 66 87 / 5%) 0px 0px 0px 1px, rgb(60 66 87 / 10%) 0px 3px 6px, rgb(60 66 87 / 20%) 0px 9px 24px;
+}
+
+.grid{
+
+    list-style: none; 
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); grid-gap: 64px;
+}
+
+i.card-img-top{
+    color:#8D5A97
+}
+
+a.active {
+    background-color: #B8EBD0; 
+    font-weight: 600; 
+    line-height: 1.5;
+}
+
+.detre-benefits{
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+}

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<br>
+    <div class='container'>
+        <br>
+
+          
+        <form action="{{url_for('route_bp.survey')}}"
+        class="dropzone"
+        id="myAwesomeDropzone" placeholder="Drop file here to upload" style="border-radius: 5px; border-color: #B8EBD0;border-style: dashed;">
+        <div class="dz-message">
+            Drop `Survey Monkey` file here to upload
+        </div>
+
+        </form>
+        <br>
+        <button id='loading' class='btn btn-lg mt-4' style="background-color: #B8EBD0;border-color: #B8EBD0; font-weight: 900; color: #000;" form="myAwesomeDropzone" hidden disabled>Cleaning...</button>
+
+        <a id='download' href="{{url_for('route_bp.download_survey')}}" class='btn btn-lg mt-4' style="background-color: #B8EBD0;border-color: #B8EBD0; font-weight: 900; color: #000;" form="myAwesomeDropzone" hidden>Download</a>
+    </div>
+ 
+
+    <script src='{{url_for("static",filename="js/dropzone.min.js") }}'> </script>
+
+<script>
+
+    Dropzone.autoDiscover = false;
+
+
+    $(function() {
+    var myDropzone = new Dropzone("#myAwesomeDropzone");
+        myDropzone.on("complete", function(file) {
+    
+        document.getElementById('loading').setAttribute('hidden','');
+        document.getElementById('download').removeAttribute('hidden'); 
+    });
+    })
+
+    Dropzone.options.myAwesomeDropzone = {
+        maxFiles: 1,
+        maxFilesize: 2, // MB
+        accept: function(file, done) {
+            if (file.type == "application/vnd.ms-excel" || file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  ) {
+
+                if(file.size < 200000){
+                    //done("all good"); 
+                      done(document.getElementById('loading').removeAttribute('hidden'))
+                   // done(document.getElementById('download').removeAttribute('hidden') ) ;
+                } else {
+                    done("File size too large");
+                }
+                
+                
+            }
+            else { done("Not one of the supported file types"); }
+        }
+};
+
+
+</script>
+
+{% endblock content %}
