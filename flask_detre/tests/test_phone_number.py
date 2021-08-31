@@ -6,6 +6,7 @@ Created on Fri Jul 30 10:57:25 2021
 """
 
 from flask_detre.utils.phone_number import (phone_number, phone_update_value)
+from flask_detre.utils.detre_update_values import detre_update_multiple_values
 import requests
 from flask import Flask
 
@@ -132,3 +133,20 @@ def test_phone_update_more_numbers_start_mid_end():
         value = phone_update_value("073;4215;84722","text[D]dd*ddtext[D]d*ddddtext[D]","phone") 
         
         assert value == "93734258472"
+        
+        
+def test_phone_number_multiple_updates():
+    
+    """
+    Test for multiple value updates
+    """
+    
+    with app.test_client() as c:
+        with c.session_transaction() as sess:
+            sess['country_code'] = '27'
+        
+        rv    = c.get(url)
+        value = detre_update_multiple_values(["11731234567","00734581234"],"text[D]text[D]tel","phone") 
+        
+        assert value[0] == "27731234567"
+        assert value[1] == "27734581234"

@@ -12,6 +12,11 @@ from flask_detre.utils.date import date_update_value
 
 # Main function call from the API
 def detre_datetime(df):
+    
+    """
+    Main API call from the application for `datetime`
+    """
+    
     all_data = []
     correct_ = []
     incorrect = []
@@ -30,6 +35,10 @@ def detre_datetime(df):
 
 # Main function for upates
 def datetime_update_value(value, action):
+    
+    """
+    Update the `datetime` based on the given action
+    """
     
     if action == "remove":
         return "remove"

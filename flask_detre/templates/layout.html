@@ -47,6 +47,8 @@ footer{
 </style>
 
 {% block custom_head %}
+
+
 {% endblock %}
 <title>Detre - Data cleaning made easy</title>
 </head>
@@ -56,13 +58,17 @@ footer{
     <!-- Navbar section -->
     <section>    
         <nav class="navbar" style="background-color: #faf8f5;">
-            <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 30px; color:#8D5A97">Detre</a>   
-            <nav class="nav justify-content-end">               
+            <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 30px; color:#8D5A97">Detre</a> 
+            <a  style="display:block" type="button" class="icon navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
+                <span><i class="fa fa-bars"></i></span>
+            </a> 
+
+            <div class="nav" id="navbarNav">               
                 <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
                 <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
-                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
-                <a class="nav-link" href="#" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Join Early Access</a>
-              </nav>
+                <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
+                <a class="nav-link" href="{{url_for('route_bp.early_access')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Join Early Access</a>
+            </div>
         </nav>
 
     </section>
@@ -76,7 +82,7 @@ footer{
     <div class="footerfix"></div>
     <footer style="display: flex; background-color: #faf8f5;">
         <div class="container" style="display: flex;" >
-                <div class="col-3" >
+                <div class="col-3-md" >
                     <div>
                         <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 20px; color:#8D5A97">Detre</a> 
                     </div>
@@ -88,7 +94,7 @@ footer{
                     </div>
                 </div>
                 
-                <div class="col-3 mt-2">
+                <div class="col-3-md mt-2">
                     <!-- Resources -->
                     <div>
                         <b>Resources</b>
@@ -105,7 +111,7 @@ footer{
                     </div>
                 </div>
     
-                <div class="col-3 mt-2">
+                <div class="col-3-md mt-2">
                      <!-- Contact -->
                      <div>
                         <b>Contact</b>
@@ -128,6 +134,7 @@ footer{
     
         </div>
     </footer>    
-    
+
+    <script src="{{url_for('static',filename='/js/mobile_version.js')}}"></script>
 </body>
 </html>

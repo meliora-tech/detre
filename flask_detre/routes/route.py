@@ -53,6 +53,21 @@ dirname = os.path.dirname(__file__)
 def too_large(e):
     return "File size is large", 413
 
+
+@route_bp.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+
+@route_bp.route("/faq")
+def faq():
+    return render_template("faq.html")
+
+
+@route_bp.route("/resources")
+def documentation():
+    return render_template("documentation.html")
+
 @route_bp.route("/", methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -95,6 +110,11 @@ def upload_file():
 
     return render_template('home.html')
 
+
+@route_bp.route("/early-access", methods=["GET","POST"])
+def early_access():
+    
+    return render_template("early_access.html")
 
 @route_bp.route("/demo", methods=['GET', 'POST'])
 def demo():
@@ -440,7 +460,7 @@ def update_value():
 def update_multiple_values():
     
     form = request.form
-    print(form)
+    
     file_name = session.get('name',None)
     if file_name:
         data = pd.read_table(os.path.join(dirname.replace("\\routes",''),'temp',file_name), sep=",") 
@@ -450,7 +470,7 @@ def update_multiple_values():
         action    = form["action"]
         column    = form['column']
         data_type =form['data_type']
-        print(row)
+        
         # # Check column name if it is for a new column or not
        
         if "new_" in column:
@@ -458,12 +478,12 @@ def update_multiple_values():
             column = re.sub("_[a-z]+$","",column)
         
         values = data[column].loc[row]
-        print(values)
+        
         
         new_values = detre_update_multiple_values(values,action,data_type)
   
             
-        print(new_values)    
+            
         if new_values:
             return jsonify({'error':0,'row': row ,'result':new_values})
         else:

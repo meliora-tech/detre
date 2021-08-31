@@ -244,6 +244,7 @@ def phone_update_value(value,action,data_type):
     
     
     if "text[D]" in action and "tel" in action and "*" not in action:
+        
         digits_pattern    = re.compile("[^\D]+") 
         text_digits_idx   = [m.start() for m in re.finditer('text\[D\]', action)]
         tel_idx           = [m.start() for m in re.finditer('tel', action)]

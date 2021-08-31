@@ -1,0 +1,173 @@
+{%  extends "layout.html" %}
+
+
+{% block custom_head %}
+<style>
+    .has-float-label {
+  display: block;
+  position: relative;
+}
+.has-float-label label, .has-float-label > span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: text;
+  font-size: 60%;
+  opacity: 1;
+  -webkit-transition: all .2s;
+          transition: all .2s;
+}
+.has-float-label select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.has-float-label textarea {
+  width: 100%;
+}
+.has-float-label input, .has-float-label select, .has-float-label textarea {
+  font-size: inherit;
+  padding-top: 1em;
+  margin-bottom: 2px;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+.has-float-label input::-webkit-input-placeholder, .has-float-label select::-webkit-input-placeholder, .has-float-label textarea::-webkit-input-placeholder {
+  opacity: 1;
+  -webkit-transition: all .2s;
+          transition: all .2s;
+}
+.has-float-label input::-moz-placeholder, .has-float-label select::-moz-placeholder, .has-float-label textarea::-moz-placeholder {
+  opacity: 1;
+  transition: all .2s;
+}
+.has-float-label input:-ms-input-placeholder, .has-float-label select:-ms-input-placeholder, .has-float-label textarea:-ms-input-placeholder {
+  opacity: 1;
+  transition: all .2s;
+}
+.has-float-label input::placeholder, .has-float-label select::placeholder, .has-float-label textarea::placeholder {
+  opacity: 1;
+  -webkit-transition: all .2s;
+          transition: all .2s;
+}
+.has-float-label input:placeholder-shown:not(:focus)::-webkit-input-placeholder, .has-float-label select:placeholder-shown:not(:focus)::-webkit-input-placeholder, .has-float-label textarea:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+  opacity: 0;
+}
+.has-float-label input:placeholder-shown:not(:focus)::-moz-placeholder, .has-float-label select:placeholder-shown:not(:focus)::-moz-placeholder, .has-float-label textarea:placeholder-shown:not(:focus)::-moz-placeholder {
+  opacity: 0;
+}
+.has-float-label input:placeholder-shown:not(:focus):-ms-input-placeholder, .has-float-label select:placeholder-shown:not(:focus):-ms-input-placeholder, .has-float-label textarea:placeholder-shown:not(:focus):-ms-input-placeholder {
+  opacity: 0;
+}
+.has-float-label input:placeholder-shown:not(:focus)::placeholder, .has-float-label select:placeholder-shown:not(:focus)::placeholder, .has-float-label textarea:placeholder-shown:not(:focus)::placeholder {
+  opacity: 0;
+}
+.has-float-label input:placeholder-shown:not(:focus) + *, .has-float-label select:placeholder-shown:not(:focus) + *, .has-float-label textarea:placeholder-shown:not(:focus) + * {
+  font-size: 85%;
+  opacity: .5;
+  top: .25em;
+}
+.has-float-label input:focus, .has-float-label select:focus, .has-float-label textarea:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.5);
+}
+.has-float-label select {
+  padding-right: 1em;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.5em bottom 0.25em;
+  background-size: 8px 10px;
+}
+
+
+.input-group .has-float-label {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  margin-bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.input-group .has-float-label .form-control {
+  width: 100%;
+  border-radius: 0.25rem;
+}
+.input-group .has-float-label:not(:last-child), .input-group .has-float-label:not(:last-child) .form-control {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-right: 0;
+}
+.input-group .has-float-label:not(:first-child), .input-group .has-float-label:not(:first-child) .form-control {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+form {
+  position: relative;
+
+  margin: 2rem auto;
+}
+
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<br>
+<br>
+
+<section class="container text-center">
+    <h1 style="font-weight: 900;">Early Access  </h1>
+    <p>They will be a surprise waiting for you once we launch. Trust us you won't be disappointed.  Don't forget to send us your `common edge cases` to info@detre.io</p>
+</section>
+
+
+<br>
+<br>
+
+<div class="container">
+    <form class="form" method="POST">
+  
+        <div class="form-group has-float-label">
+            <input class="form-control" id="email" name="email" type="email" placeholder="info@detre.io"/>
+            <label for="email">Email</label>
+        </div>
+        
+        <div class="form-group">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" name="receive" checked/>
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Receive launch email</span>
+            </label>
+        </div>   
+      
+        <div class="form-group">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" name="subscribe" />
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Subscribe to newsletter</span>
+            </label>
+        </div>   
+
+        <button class="btn btn-block" style="background-color:#8D5A97; color:#fff; border-radius:8px;"   type="submit">    Join</button>
+      </form>
+</div>
+
+  
+
+{% endblock %}

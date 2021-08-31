@@ -1,20 +1,38 @@
 {% extends "layout.html" %}
 
 
+{% block custom_head %} 
+
+<style>
+
+form {
+  position: relative;
+
+  margin: 2rem auto;
+}
+</style>
+
+{% endblock %}
+
+
+
 {% block content %}
 <body > 
-<h1>Select the data type for each column </h1>
-<div>
-    <form action="data" method="POST">
+
+<div class="container">
+    <br>
+    <br>
+    <h2>Select the data type for each column </h2>
+    <form class="form" action="data" method="POST">
     {%  for row in results %}
         {% for r in row.columns %}
         
         <div style="display: flex;">
-            <input type="text" value="{{r}}" readonly>
+            <input class="form-control mt-4 ml-2"  type="text" value="{{r}}" readonly>
             
         
          
-            <select name="{{r}}-{{row.filename}}-select" onchange='selectedOption(this,"{{r}}")'>
+            <select class="form-control mt-4 ml-2" name="{{r}}-{{row.filename}}-select" onchange='selectedOption(this,"{{r}}")'>
                 
                 <option value="date">Date</option>
                 <option value="time">Time</option>
@@ -31,12 +49,12 @@
 
             </select>
             <!-- Phone -->
-            <select id="option-phone-{{r}}" name="{{r}}-country-code-select" hidden>
+            <select class="form-control mt-4 ml-4" id="option-phone-{{r}}" name="{{r}}-country-code-select" hidden>
                   
             </select>
 
             <!-- Text -->
-            <div style="display: flex;" id="text-add-{{r}}" name="{{r}}-text" hidden>
+            <div style="display: flex; margin-top: 1.5rem!important; margin-left: 1.5rem!important" id="text-add-{{r}}" name="{{r}}-text" hidden>
                 <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#textActionModal" data-column="{{r}}" style="font-weight: bold;background-color: #faf8f5;color: #8D5A97; border-color: #8D5A97;" >Add</button>
             </div>
             
@@ -47,7 +65,7 @@
        
     <br>
     <br>
-    <button type="submit" class="btn " style="background-color: #8D5A97;color: white; border-color: #8D5A97; font-weight: bold;" > Submit </button>
+    <button type="submit" class="btn " style="background-color: #8D5A97;color: white; border-color: #8D5A97;" > Submit </button>
 </form>
 </div>
 
@@ -68,7 +86,7 @@
                <select class="form-control">
                 <option value="Remove">Remove</option>
                 <option value="Extract">Extract</option>
-                <option value="Replace">Replace</option>
+                
              </select>
           </div>  
 

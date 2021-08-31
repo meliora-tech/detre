@@ -116,7 +116,7 @@ list-style: none;
     {% for res in all_data %}
          {% for col in res.keys() %}
          <li class="nav-item">
-            <a  class="nav-link ml-4" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px" >{{col}}</a>
+            <a  class="nav-link ml-4" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
           </li>
                 
             
@@ -167,11 +167,10 @@ list-style: none;
             <div class="text-center">
                 <!-- <button class="btn btn-lg" style="font-weight: 900;">Group changes</button> -->
                 <div class="alert alert-success alert-dismissible fade show" role="alert" auto-close="2000" id="{{col}}-alert-result" hidden>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <p id="alert-result-message">  </p>
+                    <p id="alert-result-message"></p>
                 </div>
-                <div id="accept-view-cancel" hidden>
-                    <div class="d-flex" >
+                <div id="accept-view-cancel" class="container" hidden>
+                    <div class="d-flex">
                         <button class="btn ml-2 mr-2" style="width:180px" onclick="acceptAll('{{col}}')" > Accept all</button>
                         <button class="btn ml-2" style="width: 180px;"  id="{{col}}-matches" onclick="matchesOnly('{{col}}')" >View `matches` only</button>
                         <button class="btn mr-2 ml-2" style="width:180px;" onclick="cancelOnly('{{col}}')">Cancel all</button>
@@ -181,7 +180,7 @@ list-style: none;
                 <br>
                 <br>
                 <!--<input type="checkbox" checked data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-onstyle="success" data-offstyle="danger" id="change-all">-->
-                <div class="d-flex" style="margin-left: 200px;"> 
+                <div class="container d-flex" class="text-center" style="float:none; text-align: center;"> 
                     <input style="width: 400px;" type="text" id="all-{{col}}" class="form-input" onfocus="displayAll('all','{{data_types[col]}}')" onfocusout="removeDisplayAll('all','{{data_types[col]}}',window.event)" autocomplete="off" placeholder="Change all">   
                     <button class="btn ml-2" id="button-all" type="button" onclick="submitChange('all-{{col}}','{{data_types[col]}}','true')">Submit</button>
                 </div>
@@ -191,10 +190,10 @@ list-style: none;
                 <div id='all-keys-datetime' style="width: 400px;margin-left: 200px;" hidden>
                 <ul id="all-keyboard">
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">text</span><span class="on">*</span></li>
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" ><span class="off" tabindex="-1">*</span><span class="on">!</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">*</span><span class="on">!</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">a</span><span class="on">@</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">A</span><span class="on">#</span></li>
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" ><span class="off" tabindex="-1">b</span><span class="on">$</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">b</span><span class="on">$</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">B</span><span class="on">%</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">^</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">m</span><span class="on">&amp;</span></li>
@@ -316,7 +315,7 @@ list-style: none;
                <div class="container">  
   
                 <p style="font-weight: 900;">Incorrect values </p>
-                        <table class="table " id='incorrect-values'>
+                        <table class="table table-responsive " id='incorrect-values'>
                             <thead>
                                 <th>  <input type="checkbox" onchange="checkAll()"> </th>
                                 <th>Your value</th>
@@ -337,7 +336,7 @@ list-style: none;
                                          <td> <p> {{values.detre | safe  }}  </p> </td>
                                          <td> <p id="update-{{values.row}}"> {{values.new_value | safe }} </p> </td>
                                          <td>  
-                                            <input type="text" id="{{col}}-row-{{values.row}}" class="form-control" onfocus="display({{values.row}},'{{data_types[col]}}')" onfocusout="removeDisplay('{{values.row}}',window.event)" autocomplete="off" >   
+                                            <input type="text" id="{{col}}-row-{{values.row}}" class="form-control keyboard-input" onfocus="display({{values.row}},'{{data_types[col]}}')" onfocusout="removeDisplay('{{values.row}}',window.event)" autocomplete="off" >   
                                             {% if  data_types[col] == "datetime" %}
                                             
                                             <div class="" id='keys-{{values.row}}' hidden>
@@ -454,7 +453,8 @@ list-style: none;
 
                                           
                                         </td>
-                                        <td> <button class='btn' style="font-weight: 900;" onclick="submitChange('{{col}}-row-{{values.row}}','{{data_types[col]}}')"> Submit </button> </td>
+                                       
+                                        <td> <button class='btn submit' style="font-weight: 900;" onclick="submitChange('{{col}}-row-{{values.row}}','{{data_types[col]}}')"> Submit </button> </td>
                                     </tr>
                                     {% else %}
 
@@ -475,7 +475,7 @@ list-style: none;
             <div class="container"> 
                 <br>
                 <br>
-                <table class="table" id="correct-values"   >
+                <table class="table table-responsive" id="correct-values"   >
                     <thead>
                         <th>Your value </th>
                         <th>Detre value </th>
@@ -543,7 +543,7 @@ list-style: none;
                  {% if all_profile[count-1][col]['duplicates_total'] != 0  %}
                     {% if data_types[col] == "whole" or data_types[col] == "decimal"  %}
 
-                        <table class="table" id="profile-table">
+                        <table class="table table-responsive" id="profile-table">
                             <thead>
                                 <th> Value</th>
                                 <th> Freq</th>
@@ -567,7 +567,7 @@ list-style: none;
 
                 {% if data_types[col] == "phone" or data_types[col] == "currency" or data_types[col] == "date" or data_types[col] == "datetime"  %}
                    
-                        <table class="table" id="profile-table-text">
+                        <table class="table table-responsive" id="profile-table-text">
                             <thead>
                                 <th> Value</th>
                                 <th> Cluster </th>
@@ -1040,6 +1040,38 @@ list-style: none;
             }
                      
         } 
+
+
+
+ function changeLayout(x){
+    var input = document.querySelectorAll("input.keyboard-input");
+    var btn = document.querySelectorAll("button.submit");
+
+     if(x.matches){
+        input.forEach(element => {
+            element.style.cssText = "display:none";
+        });
+
+        btn.forEach(element => {
+            element.style.cssText = "display:none";
+        })
+
+    
+     } else{
+        input.forEach(element => {
+            element.style.cssText = "display:block";
+        });
+
+        btn.forEach(element => {
+            element.style.cssText = "display:block";
+        });
+     }
+ }       
+
+ var x = window.matchMedia("(max-width:992px)");
+
+ changeLayout(x);
+ x.addListener(changeLayout)
 
   </script>
   {% endblock %}

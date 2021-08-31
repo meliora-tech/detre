@@ -17,6 +17,9 @@ from flask_detre.utils.decimal import decimal_update_value
 
 
 def date_update_value(value,action,data_type):
+        """
+        Function to update the `date` value given by action
+        """
         value = value.strip()
        
         holder = {}
@@ -86,6 +89,10 @@ def date_update_value(value,action,data_type):
 
 def detre_update_value(value,action,data_type):
     
+    """
+    Update the given value based on the action
+    """
+    
     if data_type == "date":
         return date_update_value(value,action,data_type)
         
@@ -102,8 +109,13 @@ def detre_update_value(value,action,data_type):
          return decimal_update_value(value,action,data_type)
     elif data_type == "datetime":
          return datetime_update_value(value,action)
+
      
-def detre_update_multiple_values(values,action,data_type):
+def detre_update_multiple_values(values:list,action:str,data_type:str):
+    
+    """
+    Update all values based on the given `action`
+    """
     results = []
     if data_type == "datetime":
         for value in values:
@@ -112,8 +124,64 @@ def detre_update_multiple_values(values,action,data_type):
                 results.append(result)
             except:
                 results.append("None")
+    
+    elif data_type == "phone":
+        
+        for value in values:
+            
+            try:
+                result = phone_update_value(value,action,"phone")
+                
+                results.append(result)
+            except Exception as e:
+                
+                results.append("None")        
 
-    no_none = [ 'none' for n in results if n == 'None']
+    elif data_type == "date":
+        for value in values:
+            
+            try:
+                result = date_update_value(value,action,"date")
+                
+                results.append(result)
+            except Exception as e:
+                
+                results.append("None")        
+
+    elif data_type == "time":
+        for value in values:
+            
+            try:
+                result = time_update_value(value,action,"time")
+                
+                results.append(result)
+            except Exception as e:
+                
+                results.append("None")          
+
+    elif data_type == "whole":
+        for value in values:
+            
+            try:
+                result = wnumber_update_value(value,action,"whole")
+                
+                results.append(result)
+            except Exception as e:
+                
+                results.append("None")            
+    
+    elif data_type == "decimal":
+        for value in values:
+            
+            try:
+                result = decimal_update_value(value,action,"decimal")
+                
+                results.append(result)
+            except Exception as e:
+                
+                results.append("None")          
+
+    no_none = [ 'none' for n in results if n == 'None' or n == None]
     if len(no_none) != len(results): 
         return results
     else:

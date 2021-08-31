@@ -6,9 +6,15 @@ Created on Mon Aug  2 16:09:25 2021
 """
 
 from flask_detre.utils.time import (convert_to_time, detre_time, time_update_value)
+from flask_detre.utils.detre_update_values import detre_update_multiple_values
+
+
 import pandas as pd
 
 def test_time():
+    """
+    Test the util function to convert a string to time
+    """
     time_1 = convert_to_time('23h00','%Hh%M')
     time_2 = convert_to_time('23:00',None)
     
@@ -17,7 +23,9 @@ def test_time():
     
 
 def test_time_return():
-
+    """
+    Test a series with strings can be converted to time 
+    """
     series    = pd.Series(["23h00","23:00","23h55","23H00",'14;00 ',"asdasda sdasd"])
     result    = detre_time(series)
     correct   = len(result[0]["correct"])
@@ -28,6 +36,9 @@ def test_time_return():
     
 
 def test_time_update_value():
+    """
+    Test different strings can be updated to time given an `action`
+    """
     new_value_1   = time_update_value("1500 pm","HMp","time")
     new_value_2   = time_update_value("Dec 1015am","textHMp","time")
     new_value_3   = time_update_value("Dec 10:15am","textH*Mp","time")
@@ -51,3 +62,13 @@ def test_time_update_value():
     assert  new_value_10 == "10:00:00"
      
     
+def test_time_multiple_values():
+    """
+    Test multiple updates based on a given `action`
+    """
+    
+    values = detre_update_multiple_values(["1500 pm","Dec 16, 2010","November 8/10..10: am"],"HMp","time")
+    
+    assert values[0] == "15:00:00"
+    assert values[1] == None
+    assert values[2] == None

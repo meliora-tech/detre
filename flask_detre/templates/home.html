@@ -40,6 +40,24 @@
   line-height: 1em;
   transform-origin: 0 0;
 }
+
+.navbar a .icon {
+    color:#8D5A97 !important;
+    display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-decoration: none;
+}
+
+i .fa-bars {
+    color:#8D5A97 !important;
+}
+
+
+
+
+
 </style>
 
 
@@ -53,13 +71,19 @@
     <!-- Navbar section -->
     <section>    
         <nav class="navbar" style="background-color: #faf8f5;">
-            <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 30px; color:#8D5A97">Detre</a>   
-            <nav class="nav justify-content-end">               
+            <a  href="/" style="text-decoration: none; font-weight: 900;font-size: 30px; color:#8D5A97">Detre</a>  
+            <a  style="display:block" type="button" class="icon navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
+                <span><i class="fa fa-bars"></i></span>
+            </a> 
+
+
+            <div class="nav" id="navbarNav">               
                 <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
                 <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
-                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
-                <a class="nav-link" href="#" style="background-color:#8D5A97; color:#fff; border-radius:8px;  text-decoration: none;">Join Early Access</a>
-              </nav>
+                <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
+                <a class="nav-link" href="{{url_for('route_bp.early_access')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px;  text-decoration: none;">Join Early Access</a>
+            </div>
+
         </nav>
 
     </section>
@@ -68,7 +92,7 @@
     <section style="margin-top: 30px;">  
         <div class="container text-center">            
             <h1 style="font-size: 56px; font-weight: 900;"> Enjoy cleaning your data </h1>
-            <p style="font-size: 20px;">Detre is an easy and secure platform to clean small to medium sized data from different file formats </p>
+            <p style="font-size: 20px;">Messy data is a norm rather than an exception. </p>
         </div>
     </section>
 
@@ -80,15 +104,15 @@
     </section>
 
 
-    <!-- Detre messy data section -->
+    <!-- Detre messy data section  -->
     <section class="container text-center" style="margin-top: 70px;">
-        <h2 class="ml10">
+        <!-- <h2 class="ml10">
             <span class="text-wrapper">
                 <span class="letters"> 
-                    Messy data is a norm rather than an exception. 
+                    
                 </span>
             </span>
-        </h2>
+        </h2> -->
         <br>
             <a class="btn " href="{{url_for('route_bp.demo')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Get started for free</a> 
 
@@ -103,12 +127,12 @@
     <br>
         <!-- Different data types -->
 
-        <section class="container text-center">
+        <section class="data-types container text-center">
             <!-- First row -->
-            <div class="text-center" style="display: flex; text-align: center;padding: 40px 20px; flex: 1 1 10%;" >
+            <div class="type-row text-center" style="display: flex; text-align: center;padding: 40px 20px; flex: 1 1 10%;" >
                
                     
-                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238); margin-bottom: 10px;">
+                        <div class="card col-4" style="border: none; border-right: 1px solid rgb(238, 238, 238); margin-bottom: 10px">
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/date.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                               <h5 class="card-title">Date</h5>
@@ -118,15 +142,15 @@
                     
    
 
-                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
-                        <img class="mx-auto d-block" style="display: block;" src="{{url_for('static',filename='/assets/images/time.png')}}" alt="Card image cap" width="50%" >
+                    <div class="card col-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <img class="mx-auto d-block"  src="{{url_for('static',filename='/assets/images/time.png')}}" alt="Card image cap" width="50%" >
                         <div class="card-body">
                           <h5 class="card-title">Time</h5>
                           <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;" >Watch</a>
                         </div>
                     </div>
     
-                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                    <div class="card col-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/datetime.png')}}" alt="Card image cap" width="50%" >
                         <div class="card-body">
                           <h5 class="card-title">Datetime</h5>
@@ -138,17 +162,17 @@
             </div>
 
             <!-- Second Row -->
-            <div style="display: flex;text-align: center; padding: 40px 20px;">
+            <div class="type-row" style="display: flex;text-align: center; padding: 40px 20px;">
 
                 
-                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                    <div class="card col" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/currency.png')}}" alt="Card image cap" width="50%">
                         <div class="card-body">
                           <h5 class="card-title">Currency</h5>
                           <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
                         </div>
                     </div>
-                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                    <div class="card col" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/country.png')}}" alt="Card image cap" width="50%">
                         <div class="card-body">
                           <h5 class="card-title">Country</h5>
@@ -156,7 +180,7 @@
                         </div>
                     </div>
     
-                    <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                    <div class="card col-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/phone.png')}}" alt="Card image cap" width="50%">
                         <div class="card-body">
                           <h5 class="card-title">Phone number</h5>
@@ -169,9 +193,9 @@
             </div>
 
             <!-- Third Row -->
-            <div style="display: flex;text-align: center; padding: 40px 20px;">
+            <div class="type-row" style="display: flex;text-align: center; padding: 40px 20px;">
                
-                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <div class="card col-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/whole.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                             <h5 class="card-title">Whole Number</h5>
@@ -180,7 +204,7 @@
                         </div>
                     
 
-                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <div class="card col-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/decimal.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                             <h5 class="card-title">Decimal</h5>
@@ -188,7 +212,7 @@
                             </div>
                         </div>
 
-                        <div class="card col-md-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
+                        <div class="card col-4" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/text.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                             <h5 class="card-title">Text</h5>
@@ -243,7 +267,7 @@
             </div>
             <br>
             <div>
-                <a class="btn " href="/" style="background-color:#fff; color:#8D5A97; border-radius:8px; text-decoration: none;width:180px">Join early access</a>
+                <a class="btn " href="{{url_for('route_bp.early_access')}}" style="background-color:#fff; color:#8D5A97; border-radius:8px; text-decoration: none;width:180px">Join early access</a>
             </div>
             <br>
         </section>
@@ -259,7 +283,7 @@
                     <p class="ml-3">2021 Detre </p>
                 </div>
                 <div>
-                    <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Terms & Privacy </a>
+                    <a class="ml-3" href="{{url_for('route_bp.privacy')}}" style="text-decoration: underline; color: black;">Terms & Privacy </a>
                 </div>
             </div>
             
@@ -271,11 +295,11 @@
                         <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Blog </a>
                     </div>
                     <div>
-                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Documentation </a>
+                        <a class="ml-3" href="{{url_for('route_bp.documentation')}}" style="text-decoration: underline; color: black;">Documentation </a>
                     </div>
                     
                     <div>
-                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">FAQ </a>
+                        <a class="ml-3" href="{{url_for('route_bp.faq')}}" style="text-decoration: underline; color: black;">FAQ </a>
                     </div>
                 </div>
             </div>
@@ -304,11 +328,13 @@
     </div>
 </footer>    
 
-<script>
-    var textWrapper = document.querySelector('.ml10 .letters');
-    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-anime.timeline({loop: true})
+<script src="{{url_for('static',filename='/js/mobile_version.js')}}"></script>
+<script>
+    //var textWrapper = document.querySelector('.ml10 .letters');
+    //textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+/*anime.timeline({loop: true})
   .add({
     targets: '.ml10 .letter',
     rotateY: [-90, 0],
@@ -320,6 +346,9 @@ anime.timeline({loop: true})
     duration: 1200,
     easing: "easeOutExpo",
     delay: 1000
-  });
+  }); */
+
+
+
 </script>
 </body>

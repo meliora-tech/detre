@@ -10,7 +10,9 @@ from flask_detre.utils.whole_number import (detre_wnumber,wnumber_update_value)
 
 
 def test_whole():
-    
+    """
+    Test when given a series of values classify them as correct or incorrect    
+    """
     df = pd.Series(["1`000.12","500.12",50,'asdass'])
     ans = detre_wnumber(df)
     
@@ -20,7 +22,12 @@ def test_whole():
     
     
 def test_wnumber_update():
-    
+    """
+    Test the update of a value given an `action`    
+    """
     ans  =  wnumber_update_value("","remove","whole")
     
     assert ans == "remove"
+    
+def test_wnumber_multiple_updates():
+    pass
