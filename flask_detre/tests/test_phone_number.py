@@ -72,6 +72,7 @@ def test_phone_update_more_numbers_start_and_end():
             sess['country_code'] = '93'
         
         rv = c.get(url)
+        
         value = phone_update_value("073;421;8472222","text[D]dd*ddd*ddddtext[D]text[D]text[D]","phone")
         
         assert value == "93734218472"

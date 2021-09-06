@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="english" itemscope itemtype="http://schema.org/Person">
+<head>
+  <meta charset="utf-8">
+  <!-- Site Meta Data -->
+  <title>Use Detre to clean dates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Detre Team">
+
+
+  <!-- schema.org -->
+  <meta itemprop="name" content="Detre Blog">
+  <meta itemprop="image" content="">
+  <meta itemprop="description" content="">
+
+  <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap' rel='stylesheet' type='text/css'>
+  <!-- Style Meta Data -->
+  <link rel="stylesheet" href="/theme/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+  <linK rel='stylesheet' href='http://localhost:8100/static/css/home.css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap');
+    html,body{
+        font-family: 'Poppins', sans-serif !important;
+        height: 100%
+    }
+
+    .ml10 {
+  position: relative;
+  font-size: 2em;
+}
+
+.ml10 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.2em;
+  padding-right: 0.05em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+}
+
+.ml10 .letter {
+  display: inline-block;
+  line-height: 1em;
+  transform-origin: 0 0;
+}
+
+.navbar a .icon {
+    color:#8D5A97 !important;
+    display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-decoration: none;
+}
+
+i .fa-bars {
+    color:#8D5A97 !important;
+}
+
+
+
+
+
+</style>
+
+
+
+  <!-- Feed Meta Data -->
+
+  <!-- Twitter Feed -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="">
+  <meta name="twitter:image" content="">
+
+<meta name="twitter:creator" content="">
+<meta name="twitter:url" content="/use-detre-to-clean-dates.html">
+<meta name="twitter:title" content="Detre Blog ~ Use Detre to clean dates">
+<meta name="twitter:description" content="<p>Messy (or dirty) dates can be a challenge to clean. They come in many different formats, and handling each is not
+feasible when you have 100s or 1000s of rows in your data.  In the image below, an excel
+user wanted to transform the messy dates into the desired format …</p>">
+
+<!-- Facebook Meta Data -->
+<meta property="og:title" content="Detre Blog ~ Use Detre to clean dates" />
+<meta property="og:description" content="<p>Messy (or dirty) dates can be a challenge to clean. They come in many different formats, and handling each is not
+feasible when you have 100s or 1000s of rows in your data.  In the image below, an excel
+user wanted to transform the messy dates into the desired format …</p>" />
+<meta property="og:image" content="" />
+</head>
+
+<body>
+
+      <!-- Navbar section -->
+      <section>    
+        <nav class="navbar" style="background-color: #faf8f5;">
+            <a  href="/" style="text-decoration: none; font-weight: 900;font-size: 30px; color:#8D5A97">Detre</a>  
+            <a  style="display:block" type="button" class="icon navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
+                <span><i class="fa fa-bars"></i></span>
+            </a> 
+
+
+            <div class="nav" id="navbarNav">               
+                <a class="nav-link" href="http://localhost:8000" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
+                <a class="nav-link" href="http://localhost:8100/faq" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
+                <a class="nav-link" href="http://localhost:8100/" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
+                <a class="nav-link" href="http://localhost:8100/join" style="background-color:#8D5A97; color:#fff; border-radius:8px;  text-decoration: none;">Join Early Access</a>
+            </div>
+
+        </nav>
+
+    </section>
+
+
+
+  <!-- Content -->
+  <article>
+<section id="content">
+    <article>
+        <h2 class="post_title post_detail"><a href="/use-detre-to-clean-dates.html" rel="bookmark" title="Permalink to Use Detre to clean dates">Use Detre to clean dates</a></h2>
+        <div class="entry-content blog-post">
+            <p>Messy (or dirty) dates can be a challenge to clean. They come in many different formats, and handling each is not
+feasible when you have 100s or 1000s of rows in your data.  In the image below, an excel
+user wanted to transform the messy dates into the desired format. However, for an average excel user to make
+the necessary transformations would be challenging at scale. We understand why the user looked for help from the community because
+no standard click, click, click would solve the problem.  </p>
+<p><img src='/images/messy-dates.png' width="75%"></p>
+<p>We built Detre to help someone who faces such a problem with their data. They don't need to have above-average Excel skills or know how to program. They need to upload the data, select the correct data type and be aware of how Detre <code>sees</code> such data.</p>
+<p>When we look at the dates shown in the image, they have common attributes.  These are:</p>
+<ol>
+<li>
+<p>White-space</p>
+</li>
+<li>
+<p>Special characters (*, etc.)</p>
+</li>
+<li>
+<p>Text</p>
+</li>
+<li>
+<p>Numbers</p>
+</li>
+<li>
+<p>Date Text</p>
+</li>
+</ol>
+<p>The user will provide the guide as to what attributes are present in the given messy date.  For example, <code>8/12/04 (scholarship)</code>
+has numbers (i.e. 8,12,04), special characters (i.e. /, (, and ) ) and text (i.e. scholarship) and the task for Detre would be
+to remove the special characters and text while interpreting the numbers as a date. Fortunately, the ISO 8601 standard, used
+universally, has symbols to represent days, months and years. The date <code>8/12/04</code> is 'd/m/y' in ISO 8601 format. For Detre to clean the messy date data, the user would provide the following guidance:   d<em>m</em>y<em>text</em>. In the table below, we show the user's hint for each messy date.   The user can change dirty dates with the same pattern at one go as well. </p>
+<p>The platform, now, makes certain assumptions related to messy dates.  First, there are no spelling mistakes for the months. Second, there are no multiple dates in the field and if there is, then use the first one. Third,
+all numbers are related to dates. These a quite strong assumptions given how messy dates are in the wild. We are working on fixing this.</p>
+<p>As we have shown, Detre can indeed help to clean your messy dates with relative ease. Cleaning data with ease is in line with our mission to <code>half the time spent on data cleaning</code>. Are you ready to join?
+Then send us your story of messy dates so we can improve our platform for everyone. Or start using the platform today.</p>
+        </div>
+        <div class="post_list">
+            <span>By </span>
+            <a href="/author/detre-team.html">@Detre Team</a>  
+            <span> in </span>
+            <span class="post_category"><a href="/category/blog.html" rel="bookmark" title="Permalink to blog">[ blog ]</a></span>
+            <span class="post_date">Fri 03 September 2021</span>
+            <div>
+            </div>
+
+
+        </div>
+    </article>
+</section>
+  </article>
+
+  <!-- Footer -->
+ 
+
+  <script src='http://localhost:8100/static/js/mobile_version.js'></script>
+
+
+</body>
+</html>

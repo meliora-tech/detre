@@ -1,6 +1,12 @@
 <!doctype html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="{{url_for('static',filename='assets/images/favicon/favicon.ico')}}"  type="image/ico" >
+<link rel="icon" href="{{url_for('static',filename='assets/images/favicon/favicon-16x16.png')}}" sizes="16x16" type="image/png">
+<link rel="icon" href="{{url_for('static',filename='assets/images/favicon/favicon-32x32.png')}}" sizes="32x32" type="image/png">
+
+
+
 
 <linK rel='stylesheet' href='{{url_for("static",filename="css/dropzone.min.css") }}'>
 <linK rel='stylesheet' href='{{url_for("static",filename="css/home.css") }}'>
@@ -64,8 +70,8 @@ footer{
             </a> 
 
             <div class="nav" id="navbarNav">               
-                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
-                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
+                <a class="nav-link" href="{{url_for('route_bp.blog')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
+                <a class="nav-link" href="{{url_for('route_bp.faq')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
                 <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
                 <a class="nav-link" href="{{url_for('route_bp.early_access')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Join Early Access</a>
             </div>
@@ -99,14 +105,14 @@ footer{
                     <div>
                         <b>Resources</b>
                         <div>
-                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Blog </a>
+                            <a class="ml-3" href="{{url_for('route_bp.blog')}}" style="text-decoration: underline; color: black;">Blog </a>
                         </div>
                         <div>
-                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Documentation </a>
+                            <a class="ml-3" href="{{url_for('route_bp.documentation')}}" style="text-decoration: underline; color: black;">Documentation </a>
                         </div>
                         
                         <div>
-                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">FAQ </a>
+                            <a class="ml-3" href="{{url_for('route_bp.faq')}}" style="text-decoration: underline; color: black;">FAQ </a>
                         </div>
                     </div>
                 </div>

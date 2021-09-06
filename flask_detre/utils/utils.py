@@ -8,6 +8,7 @@ Created on Sun Jul 18 15:53:15 2021
 import pandas as pd
 import re
 from collections import Counter
+from flask_detre.utils.profile import detre_profile
 
 
 def detre_find_months(holder,action,value):
@@ -474,4 +475,17 @@ def get_correct_values_as_series(detre_data):
     
     df_correct      = pd.DataFrame(correct_arr)
     
-    return df_correct["value"]
+    if "detre" in df_correct.columns.tolist():
+        return df_correct["detre"]
+    else:
+        return []
+    
+def get_data_profile(df_correct,clean_k,all_profile, data_type):
+    if len(df_correct) != 0:
+        profile = detre_profile(df_correct,data_type)
+        
+        
+        
+        all_profile.append({clean_k:profile})
+    else:
+        all_profile.append({clean_k:[]}) # No profile for the column

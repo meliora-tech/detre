@@ -62,7 +62,7 @@ def detre_profile(df,type_):
     
     # ans["empty_total"] = empty_total
     
-    if type_ == "text" or type_=="country" or type_ == "phone" or type_=="datetime":
+    if type_ == "text" or type_=="country" or type_ == "phone" or type_=="datetime" or type_=="date":
         dict_ = {}
         
         for v in df:

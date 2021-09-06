@@ -11,7 +11,7 @@ from flask_detre.utils.utils import (excel_number_conversion,remove_entry,no_tex
 from flask_detre.utils.phone_number import phone_update_value
 from flask_detre.utils.time import time_update_value
 from flask_detre.utils.datetime_ import datetime_update_value
-from flask_detre.utils.detre_text_update import text_email_update
+from flask_detre.utils.detre_text_update import (text_email_update, text_url_update)
 from flask_detre.utils.whole_number import wnumber_update_value
 from flask_detre.utils.decimal import decimal_update_value
 
@@ -92,17 +92,21 @@ def detre_update_value(value,action,data_type):
     """
     Update the given value based on the action
     """
-    
+    print(action)
+    print(data_type)
     if data_type == "date":
         return date_update_value(value,action,data_type)
         
-    elif data_type == "phone":
+    elif data_type == "phone" or data_type == "text-phone" :
         return phone_update_value(value,action,data_type)
     elif data_type == "time":
         return time_update_value(value,action,data_type)
-    elif data_type == "text-email":
+    elif data_type == "text-email" or data_type == "email" :
         
         return text_email_update(value,action,data_type)
+    
+    elif data_type == "text-url":
+        return text_url_update(value, action, data_type)
     elif data_type == "whole":
          return wnumber_update_value(value,action,data_type)
     elif data_type == "decimal":
@@ -116,6 +120,8 @@ def detre_update_multiple_values(values:list,action:str,data_type:str):
     """
     Update all values based on the given `action`
     """
+    print(action)
+    print(data_type)
     results = []
     if data_type == "datetime":
         for value in values:
@@ -125,7 +131,7 @@ def detre_update_multiple_values(values:list,action:str,data_type:str):
             except:
                 results.append("None")
     
-    elif data_type == "phone":
+    elif data_type == "phone" or data_type == "text-phone" :
         
         for value in values:
             
@@ -179,7 +185,10 @@ def detre_update_multiple_values(values:list,action:str,data_type:str):
                 results.append(result)
             except Exception as e:
                 
-                results.append("None")          
+                results.append("None")       
+                
+    elif data_type == "text-phone":
+        pass
 
     no_none = [ 'none' for n in results if n == 'None' or n == None]
     if len(no_none) != len(results): 

@@ -13,7 +13,6 @@ from flask import Flask
 
 
 db = SQLAlchemy()
-#app.config["SESSION_SQLALCHEMY"]  = db
 sess = Session()
 
 

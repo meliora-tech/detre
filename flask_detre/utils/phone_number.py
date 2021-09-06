@@ -379,7 +379,7 @@ def phone_update_value(value,action,data_type):
                 
             
     else:
-        pass
+        return "remove"
         
 if __name__ == "__main__":
 

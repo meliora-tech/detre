@@ -7,7 +7,7 @@ Created on Mon Aug 16 18:29:25 2021
 
 
 from flask_detre.utils.text import detre_text
-from flask_detre.utils.detre_text_update import text_email_update
+from flask_detre.utils.detre_text_update import text_email_update, text_url_update
 import pandas as pd
 
 
@@ -38,5 +38,11 @@ def test_text_extract_email():
 def test_text_update_email():
     new_value_1 = text_email_update("asdsa +245555","None","text-email")
 
-    assert new_value_1 == "None"
+    assert new_value_1 == "remove"
     
+    
+def test_text_extract_url_update():
+    
+    new_value  = text_url_update("jkbk ln asd adas.com asdasd","domain.tld","text-url")
+    
+    assert new_value[0] == "adas.com"

@@ -107,7 +107,7 @@ list-style: none;
 <br>
 
 <div class="text-center">
-    <a class="btn btn-lg" style="font-weight: 900; background-color: #B8EBD0; text-decoration: none; color: #000;" href='{{url_for('route_bp.excel_download')}}' >Download xlsx</a>
+    <a class="btn btn-lg" style="font-weight: 900; background-color: #B8EBD0; text-decoration: none; color: #000;" href='{{url_for('route_bp.excel')}}' >Download xlsx</a>
 </div>
 <br>
 
@@ -212,16 +212,21 @@ list-style: none;
                 <br>
                 <br>
               </div>   
-              {% elif data_types[col] == "phone" %}
+              {% elif  "phone" in data_types[col]  %}
 
               <div class="" id='all-keys-phone' style="width: 400px;margin-left: 200px;" hidden>
                 <ul id="all-keyboard">
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:75px"><span class="off" tabindex="-1" >text[D]</span></li>
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">tel</span><span class="on">!</span></li>
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">*</span><span class="on">@</span></li>
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">d</span><span class="on">^</span></li>
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">remove</span><span class="on">&amp;</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:75px"><span class="off"  tabindex="-1">text[D]</span><span class="on">text[D]</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">tel</span><span class="on">tel</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">*</span><span class="on">*</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">d</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:100px"><span class="off"  tabindex="-1">remove</span><span class="on">remove</span></li>
+                    {% if data_types[col] == "text-phone" %}
+                      <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:75px"><span class="off"  tabindex="-1">text</span><span class="on">text</span></li>
+                    {% endif %}
+
                 </ul>
+                <br>
               </div> 
 
               {% elif data_types[col] == "date" %}
@@ -258,15 +263,15 @@ list-style: none;
                 </ul>
               </div>   
 
-              {% elif data_types[col] == "text-email" %}
-              <div class="" id='all-keys-text-email' style="width: 400px;margin-left: 200px;" hidden>
+              {% elif  "email" in data_types[col]  %}
+              <div class="" id='all-keys-email' style="width: 400px;margin-left: 200px;" hidden>
                 <ul id="all-keyboard">
-                   <!--  <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off"  tabindex="-1">@</span></li>
-                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">LP</span></li>
-                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:60px"><span class="off" tabindex="-1">domain</span></li>
-                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">*</span></li>
-                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">.</span></li> -->
-                    <li class="symbol" onclick="keyboardValue('{{col}}',this)" style="width:50px"><span class="off" tabindex="-1">None</span></li>
+                   <!--  <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" ><span class="off"  tabindex="-1">@</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">LP</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:60px"><span class="off" tabindex="-1">domain</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">*</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">.</span></li> -->
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:75px"><span class="off" tabindex="-1">remove</span></li>
                 </ul>
               </div>   
 
@@ -291,7 +296,6 @@ list-style: none;
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off" tabindex="-1">.</span></li>
                 </ul>
               </div>
-
 
               {% else %}
               <div class="" id='all-keys' style="width: 400px;margin-left: 200px;" hidden>
@@ -340,36 +344,39 @@ list-style: none;
                                             {% if  data_types[col] == "datetime" %}
                                             
                                             <div class="" id='keys-{{values.row}}' hidden>
-                                            <ul id="keyboard">
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">text</span><span class="on">*</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">*</span><span class="on">!</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">a</span><span class="on">@</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">A</span><span class="on">#</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">b</span><span class="on">$</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">B</span><span class="on">%</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">^</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">m</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">w</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">y</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">Y</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">H</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">I</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">p</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">M</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">S</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">Excel</span><span class="on">&amp;</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">remove</span><span class="on">&amp;</span></li>
-                                            </ul>
-                                          </div>   
-                                          {% elif data_types[col] == "phone" %}
+                                                <ul id="keyboard">
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">text</span><span class="on">*</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">*</span><span class="on">!</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">a</span><span class="on">@</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">A</span><span class="on">#</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">b</span><span class="on">$</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">B</span><span class="on">%</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">^</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">m</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">w</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">y</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">Y</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">H</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">I</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">p</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">M</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">S</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">Excel</span><span class="on">&amp;</span></li>
+                                                    <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">remove</span><span class="on">&amp;</span></li>
+                                                </ul>
+                                            </div>   
+                                          {% elif "phone" in data_types[col] %}
 
                                           <div class="" id='keys-{{values.row}}' hidden>
                                             <ul id="keyboard">
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1" >text[D]</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">tel</span><span class="on">!</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">*</span><span class="on">@</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">d</span><span class="on">^</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">remove</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off"  tabindex="-1">text[D]</span><span class="on">text[D]</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">tel</span><span class="on">tel</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">*</span><span class="on">*</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">d</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:100px"><span class="off"  tabindex="-1">remove</span><span class="on">remove</span></li>
+                                                {% if data_types[col] == "text-phone" %}
+                                                  <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off"  tabindex="-1">text</span><span class="on">text</span></li>
+                                                {% endif %}
                                             </ul>
                                           </div> 
 
@@ -415,9 +422,26 @@ list-style: none;
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:60px"><span class="off" tabindex="-1">domain</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">*</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">.</span></li> -->
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:50px"><span class="off" tabindex="-1">None</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">remove</span></li>
                                             </ul>
-                                          </div>   
+                                          </div>  
+                                          
+                                          {% elif "url" in data_types[col] %}
+                                          <div class="" id='keys-{{values.row}}' hidden>
+                                            <ul id="keyboard">
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">domain</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:105px"><span class="off" tabindex="-1">domain[text]</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off"  tabindex="-1">protocol</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">tld</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">text</span></li> 
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">/</span></li> 
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">.</span></li> 
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">:</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">*</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">remove</span></li>
+                                            </ul>
+                                          </div>  
+
 
                                           {% elif data_types[col] == "whole" %}
                                           <div class="" id='keys-{{values.row}}' hidden>
@@ -440,6 +464,29 @@ list-style: none;
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">.</span></li>
                                             </ul>
                                           </div>
+                                          {% elif "text" in data_types[col] %}
+                                          <div class="" id='keys-{{values.row}}' hidden>
+                                            <ul id="keyboard">
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">text</span><span class="on">*</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">*</span><span class="on">!</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">a</span><span class="on">@</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off" tabindex="-1">A</span><span class="on">#</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">b</span><span class="on">$</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">B</span><span class="on">%</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">^</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">m</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">w</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">y</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">Y</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">H</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">I</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">p</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">M</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">S</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">Excel</span><span class="on">&amp;</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">remove</span><span class="on">&amp;</span></li>
+                                            </ul>
+                                        </div> 
 
 
                                           {% else %}
@@ -541,32 +588,34 @@ list-style: none;
                  <br>
 
                  {% if all_profile[count-1][col]['duplicates_total'] != 0  %}
-                    {% if data_types[col] == "whole" or data_types[col] == "decimal"  %}
+                    {% if data_types[col] == "whole" or data_types[col] == "decimal" or data_types[col] == "currency" %}
 
-                        <table class="table table-responsive" id="profile-table">
-                            <thead>
-                                <th> Value</th>
-                                <th> Freq</th>
-                            </thead>
-                            <tbody>
-                                {% for dict_item in all_profile[count-1][col]['freq']  %}
-                                     {% for key, value in dict_item.items() %} 
-                                        <tr> 
-                                            <td> {{key}} </td>
-                                            <td> {{value}}</td>
-                                        </tr>
-                                    {% endfor %}    
-                                {% endfor %}
-                            </tbody>
-                        </table>  
-                    
+                        {% if all_profile[count-1][col] != [] %} 
+                            <table class="table table-responsive" id="profile-table">
+                                <thead>
+                                    <th> Value</th>
+                                    <th> Freq</th>
+                                </thead>
+                                <tbody>
+                                    {% for dict_item in all_profile[count-1][col]['freq']  %}
+                                        {% for key, value in dict_item.items() %} 
+                                            <tr> 
+                                                <td> {{key}} </td>
+                                                <td> {{value}}</td>
+                                            </tr>
+                                        {% endfor %}    
+                                    {% endfor %}
+                                </tbody>
+                            </table>  
+                            {% endif %}
 
                         {% endif %}
                 {% endif %}
 
 
-                {% if data_types[col] == "phone" or data_types[col] == "currency" or data_types[col] == "date" or data_types[col] == "datetime"  %}
+                {% if data_types[col] == "phone"  or data_types[col] == "date" or data_types[col] == "datetime" or "text" in data_types[col]  %}
                    
+                       {% if all_profile[count-1][col] != [] %} 
                         <table class="table table-responsive" id="profile-table-text">
                             <thead>
                                 <th> Value</th>
@@ -583,6 +632,8 @@ list-style: none;
                                 {% endfor %}
                             </tbody>
                         </table>  
+                        {% endif %}
+
                 {% endif %}
 
                 
@@ -647,8 +698,12 @@ list-style: none;
     }
 
     function displayAll(key,dataType){
+       if(dataType.includes("text")){
+        document.getElementById('all-keys-'+dataType.split("-")[1]).removeAttribute('hidden');
+       } else{
+        document.getElementById('all-keys-'+dataType).removeAttribute('hidden');
+       }
        
-       document.getElementById('all-keys-'+dataType).removeAttribute('hidden');
    }
 
 
@@ -672,15 +727,19 @@ list-style: none;
 
     function removeDisplayAll(key,data_type,event){
 
-
-
         if(event.relatedTarget != null){
   	        if(event.relatedTarget.tagName == 'SPAN'){
   	         return
   	    }
  
         }
+
+          if(data_type.includes("text")){
+            document.getElementById('all-keys-'+data_type.split("-")[1]).setAttribute('hidden','');
+          } else{
             document.getElementById('all-keys-'+data_type).setAttribute('hidden','');
+          }
+            
     }
 
 
@@ -691,12 +750,10 @@ list-style: none;
     function keyboardValue(id,e){
 
         // keep on focus
-        //console.log(e.querySelectorAll('span')[0].innerHTML)
-
+       console.log(id);
         document.getElementById(id).value +=  '' + e.querySelectorAll('span')[0].innerHTML;
 
         document.getElementById(id).focus();
-        //console.log(e.innerHTML);
 
 
     }
@@ -705,7 +762,6 @@ list-style: none;
 
         var url  = window.location.protocol +"//" +location.host;
         
-        console.log(input_id)
         // Change all or not 
 
         // Manage for multiple changes
@@ -720,8 +776,9 @@ list-style: none;
                     if(action_value == 'remove'){
                         alert("You are about to drop all your observations. ")
                     } else{
-                        let column_name = input_id.split('-')[1];
-                        console.log(input_id);
+                        let input_arr   = input_id.split("-");
+                        let column_name = input_arr.slice(1,).join("-");
+
                         var rows  = [];
                         document.getElementById(column_name+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
                              
@@ -793,7 +850,7 @@ list-style: none;
                                                 var btn   = document.createElement('button');
                                                 var btnText = document.createTextNode('Accept');
                                                 btn.setAttribute('class','btn btn-success');
-                                                btn.setAttribute('onclick','acceptChange('+ row +')');
+                                                btn.setAttribute('onclick','acceptChange('+ row+',"'+ column_name +'")');
                                                 btn.setAttribute('style','font-weight:900');
                                                 btn.append(btnText);
                                                 td.append(btn);
@@ -827,11 +884,12 @@ list-style: none;
 
 
         } else{
-
+                
                 // Manage for a single change
                 if(document.getElementById(input_id).value != '' ){
-                    let column_name = input_id.split('-')[0];
-                    let row         = input_id.split('-')[2];
+                    let input_arr   = input_id.split("-");
+                    let column_name = input_arr.slice(0,input_arr.length - 2).join("-");
+                    let row         = input_arr[input_arr.length - 1];
                     let action      = document.getElementById(input_id).value;
                     let data_type   = datatype;
                     
@@ -865,7 +923,7 @@ list-style: none;
                                     var btn   = document.createElement('button');
                                     var btnText = document.createTextNode('Accept');
                                     btn.setAttribute('class','btn btn-success');
-                                    btn.setAttribute('onclick','acceptChange('+ final_result['row'] +')');
+                                    btn.setAttribute('onclick','acceptChange('+ final_result['row'] + ',"' + column_name +'")');
                                     btn.setAttribute('style','font-weight:900');
                                     btn.append(btnText);
                                     td.append(btn);
@@ -901,8 +959,8 @@ list-style: none;
 
 
     // Accept change
-    function acceptChange(id){
-
+    function acceptChange(id,column_name){
+        console.log(column_name);
         // Confirm change has been accepted
         var url       = window.location.protocol +"//" +location.host;
         var row       = document.getElementById('row-'+id);
@@ -911,7 +969,8 @@ list-style: none;
         var data = 
             'row='+ id+'&'+
             'new_value='+tds[3].innerText+'&'+
-            'old_value='+tds[1].innerText
+            'old_value='+tds[1].innerText+'&'+
+            'column_name='+column_name
         
         
         var xhttp = new XMLHttpRequest();

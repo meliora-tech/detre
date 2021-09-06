@@ -5,6 +5,10 @@
 <linK rel='stylesheet' href='{{url_for("static",filename="css/dropzone.min.css") }}'>
 <linK rel='stylesheet' href='{{url_for("static",filename="css/home.css") }}'>
 
+    <link rel="icon" href="{{url_for('static',filename='assets/images/favicon/favicon.ico')}}"  type="image/ico" >
+    <link rel="icon" href="{{url_for('static',filename='assets/images/favicon/favicon-16x16.png')}}" sizes="16x16" type="image/png">
+    <link rel="icon" href="{{url_for('static',filename='assets/images/favicon/favicon-32x32.png')}}" sizes="32x32" type="image/png">
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
@@ -78,8 +82,8 @@ i .fa-bars {
 
 
             <div class="nav" id="navbarNav">               
-                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
-                <a class="nav-link" href="#" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
+                <a class="nav-link" href="{{url_for('route_bp.blog')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
+                <a class="nav-link" href="{{url_for('route_bp.faq')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
                 <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
                 <a class="nav-link" href="{{url_for('route_bp.early_access')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px;  text-decoration: none;">Join Early Access</a>
             </div>
@@ -115,7 +119,7 @@ i .fa-bars {
         </h2> -->
         <br>
             <a class="btn " href="{{url_for('route_bp.demo')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Get started for free</a> 
-
+            <p style="font-size: 13px; font-weight: 500;">No sign up required</p>
     </section>
 
     <section class="container text-center" style="margin-top: 70px;">
@@ -292,7 +296,7 @@ i .fa-bars {
                 <div>
                     <b>Resources</b>
                     <div>
-                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Blog </a>
+                        <a class="ml-3" href="{{url_for('route_bp.blog')}}" style="text-decoration: underline; color: black;">Blog </a>
                     </div>
                     <div>
                         <a class="ml-3" href="{{url_for('route_bp.documentation')}}" style="text-decoration: underline; color: black;">Documentation </a>

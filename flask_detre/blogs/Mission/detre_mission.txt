@@ -1,0 +1,28 @@
+Detre Mission : Half the time to clean your data
+
+Data scientist mention that one of the least enjoyable parts of their work is data cleaning.  This sentiment has
+been recorded by a number of surveys over time and it has not changed. Not only do they not enjoy data cleaning, it
+happens to form part of the bulk of the work they need to do. Nonetheless, they do have powerful and useful tools at
+their disposal to get the job done.
+
+Now imagine how a non data scientist working with data feels about data cleaning? Take for an example this post where a user has to 
+clean the dates of his/her data set. The image below shows the messy dates and the desired clean dates. 
+ Making the neccessary transformations to get clean dates is a non-trivial task if the dataset has 100s, or 1000s of rows. He/She will need to have above average skills in Excel or may use a programming language such as Python or R. Learning
+to program and/or developing above average skills in Excel do take time, meanwhile the deadline is looming.
+
+The tools that are available do not easily cater for what we call `common edge cases`. The term may sound contradictory because by its nature an edge case is uncommon.
+However, the situation that the user has is  met by a number of people needing to make non-trivial data cleaning transformations. Having a tool that will make it
+easy and intuitive to clean your data will be indispensable to people's toolkit. Hence the birth of Detre.
+ 
+Detre will allow non data scientist (i.e sales people, marketing managers, etc) to clean their small to medium sized data with relative easy.  The user will not be
+expected to have any coding skills or Excel/Google sheets knowledge.  Simply upload your data, and guide us to your desired output.
+
+Our mission is to half the time spent on cleaning data. We know it wont be easy, but its worth striving for.  You joining us on this mission? Send us your
+`common edge case` and lets get started.
+
+
+
+
+
+
+[https://www.mrexcel.com/board/threads/how-to-clean-up-and-format-very-messy-date-and-non-date-date.1017938/]

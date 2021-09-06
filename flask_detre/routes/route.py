@@ -22,7 +22,7 @@ from pyexcel_xlsx import get_data
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from flask import Blueprint,Flask, flash ,request, jsonify, render_template, url_for, redirect,send_file, session
-from flask_detre.utils.utils import (detre_date, get_correct_values_as_series)
+from flask_detre.utils.utils import (detre_date, get_correct_values_as_series, get_data_profile)
 from flask_detre.utils.detre_update_values import (detre_update_value, detre_update_multiple_values)
 from flask_detre.utils.phone_number import detre_phone
 from flask_detre.utils.time import detre_time
@@ -43,6 +43,8 @@ from openpyxl import Workbook
 from io import BytesIO
 
 
+BLOG_URL = "http://127.0.0.1:8000"
+
 route_bp  = Blueprint("route_bp",__name__)
 
 #db.create_all()
@@ -51,25 +53,60 @@ dirname = os.path.dirname(__file__)
 
 @route_bp.errorhandler(413)
 def too_large(e):
+    """
+    Error handling when a large file has been uploaded
+    
+    """
     return "File size is large", 413
 
 
+@route_bp.errorhandler(405)
+def method_not_allowed(e):
+    """
+    Handle for 405 error
+    """
+    return "Method not allowed.", 405
+
+
+
+@route_bp.route("/blog")
+def blog():
+    """
+    Display the blog page
+    """
+    return redirect(BLOG_URL)
+
 @route_bp.route("/privacy")
 def privacy():
+    """
+    Display the privacy and terms & conditions page
+    """
     return render_template("privacy.html")
 
 
 @route_bp.route("/faq")
 def faq():
+    """
+    Display the FAQ page
+    """
     return render_template("faq.html")
 
 
 @route_bp.route("/resources")
 def documentation():
+    """
+    Display the resources page
+    """
     return render_template("documentation.html")
 
 @route_bp.route("/", methods=['GET', 'POST'])
 def upload_file():
+    
+    """
+    POST: Handle the upload of the data file.
+    
+    GET: Display the home screen
+    """
     if request.method == 'POST':
         file =  request.files['file']
         
@@ -77,7 +114,7 @@ def upload_file():
         f = secure_filename(file.filename)
         
         
-       
+        
         f  = str(uuid.uuid4()) + "- " + f
         # save to temp folder
         file.save(os.path.join(dirname.replace("\\routes",''),'temp',f))
@@ -113,48 +150,63 @@ def upload_file():
 
 @route_bp.route("/early-access", methods=["GET","POST"])
 def early_access():
+    """
+    GET : Display the sign up page for early access
     
+    POST: {}
+    """
     return render_template("early_access.html")
 
-@route_bp.route("/demo", methods=['GET', 'POST'])
+@route_bp.route("/demo", methods=['GET'])
 def demo():
-    if request.method == 'POST':
-        file =  request.files['file']
+    
+    """
+     POST: Handle the uploaded file
+     GET:
+    """
+    # if request.method == 'POST':
+    #     file =  request.files['file']
         
-        all_names = []
-        f = secure_filename(file.filename)
+    #     all_names = []
+    #     f         = secure_filename(file.filename)
         
-        dict_        = pe.get_dict(file_contents=file)
-        data_xls     = pd.DataFrame(dict_)        
+    #     dict_        = pe.get_dict(file_contents=file)
+    #     data_xls     = pd.DataFrame(dict_)        
         
-        
-        #data_xls = pd.read_table(file, sep=",")
-        data = {
-                "filename": f,
-                "columns": [c.strip() for c in list(data_xls.columns)]
-            }
-        all_names.append(data)
        
-        session['all_names'] = all_names
-        session["name"] = f
-        # Write the file to temp folder
-        data_xls.to_csv( os.path.join(dirname.replace("\\routes",''),'temp',f), index=None, sep=',')        
+    #     #data_xls = pd.read_table(file, sep=",")
+    #     data = {
+    #             "filename": f,
+    #             "columns": [c.strip() for c in list(data_xls.columns)]
+    #         }
+    #     all_names.append(data)
        
-        # for idx,file in enumerate(file_list):
-        #    f = secure_filename(file.filename)
+    #     session['all_names'] = all_names
+    #     session["name"] = f
+    #     # Write the file to temp folder
+    #     data_xls.to_csv( os.path.join(dirname.replace("\\routes",''),'temp',f), index=None, sep=',')        
+       
+    #     """
+    #     Below code is kept for multiple file uploads handling. 
+    #     To be used 
+    #     """
+        
+        
+    #     # for idx,file in enumerate(file_list):
+    #     #    f = secure_filename(file.filename)
            
-        #    data_xls = pd.read_table(file, sep=",")
-        #    data = {
-        #            "filename": f,
-        #            "columns": list(data_xls.columns)
-        #        }
-        #    all_names.append(data)
+    #     #    data_xls = pd.read_table(file, sep=",")
+    #     #    data = {
+    #     #            "filename": f,
+    #     #            "columns": list(data_xls.columns)
+    #     #        }
+    #     #    all_names.append(data)
            
-        #    session["name"] = f
-        #    # Write the file to temp folder
-        #    data_xls.to_csv('temp/'+f, index=None, sep=',')
+    #     #    session["name"] = f
+    #     #    # Write the file to temp folder
+    #     #    data_xls.to_csv('temp/'+f, index=None, sep=',')
             
-        return '', 204 #data_xls.to_html()    
+    #     return '', 204 #data_xls.to_html()    
     
     return render_template("demo.html")
 
@@ -162,7 +214,10 @@ def demo():
 
 @route_bp.route("/survey", methods=["GET","POST"])
 def survey():
-    
+    """
+    POST : Handle the uploaded Survey Monkey file
+    GET  : Upload page for `Survey Monkey` file.
+    """
     if request.method == "POST":
         file = request.files['file']
         
@@ -192,7 +247,9 @@ def survey():
 
 @route_bp.route("/survey/analysis", methods=["GET"])
 def survey_analysis():
-    
+    """
+    API that runs the data cleaning on the Survey Monkey entries
+    """
    
     if session.get('name'):
        
@@ -219,7 +276,9 @@ def survey_analysis():
 
 @route_bp.route("/survey/analysis", methods=["GET"])
 def download_survey():
-    
+    """
+    Download the cleaned `Survey Monkey` file
+    """
     if session.get("survey_name"):
         try:
             file_ = os.path.join(dirname.replace("\\routes",''),'temp',session["survey_name"])
@@ -233,13 +292,25 @@ def download_survey():
 
 @route_bp.route('/columns')
 def data_columns():
+    """
+    Display the column selection type page
+    """
+    if session.get('updated_value'):
+        session["updated_value"] = None
+        
+    if session.get("all_columns"):
+        session["all_columns"] = None
+        
     all_names = session['all_names']
     return render_template("results.html",results= all_names  )
         
         
-@route_bp.route("/data", methods=["GET","POST"])
+@route_bp.route("/data", methods=["POST"])
 def data():
-    
+    """
+    Main function to run the data profile, find issues and correct values base on the given column type provided by
+    the user
+    """
     if request.method == "POST":
         form = request.form
         
@@ -249,7 +320,9 @@ def data():
         
         # Get the form keys
         form_keys = form.keys()
-        file_name = session.get('name','')
+        
+        file_name = session.get('name','3fc3f606-d51a-4b4c-95bf-bb6c1bc7247a- date.csv')
+       
         f         = file_name.split("- ")[1]
         
         
@@ -260,6 +333,9 @@ def data():
             
             if f in key:
                 file_keys.append(key)
+        
+        # All columns (new ones also included)
+        all_columns = session.get("all_names",[])[0]['columns']
         
         # Grab column name and type for a given 'filename'
         
@@ -292,11 +368,12 @@ def data():
                 
                 df_correct    = get_correct_values_as_series(phone_data)
                 
-                phone_profile = detre_profile(df_correct, "phone")
-                
                 all_data.append({clean_k:phone_data})
-                all_profile.append({clean_k: phone_profile })
+                
+                get_data_profile(df_correct,clean_k,all_profile,"phone")
                 data_types[clean_k] = "phone"
+                
+                all_columns.append(clean_k)
                 
             elif dtype == "date":
                 
@@ -305,77 +382,96 @@ def data():
                 date_data    = detre_date(df[clean_k],format_)
                 
                 df_correct   = get_correct_values_as_series(date_data)
-                date_profile = detre_profile(df_correct,"date")
-                
-                
                 all_data.append({clean_k:date_data})
-                all_profile.append(date_profile)
+                
+                if len(df_correct) != 0:
+                    date_profile = detre_profile(df_correct,"date")
+                    
+                    
+                    
+                    all_profile.append({clean_k:date_profile})
+                else:
+                    all_profile.append({clean_k:[]}) # No profile for the column
+                    
                 data_types[clean_k] = "date"
-               
+                all_columns.append(clean_k)
+                
                 
             elif dtype == "time":
                 
                 time_data           = detre_time(df[clean_k])
                 df_correct          = get_correct_values_as_series(time_data)
-                time_profile        = detre_profile(df_correct, "time")
                 
                 all_data.append({clean_k:time_data})
-                all_profile.append({clean_k:time_profile})
+                
+                get_data_profile(df_correct,clean_k,all_profile,"time")
                 data_types[clean_k] = "time"  
+                
+                all_columns.append(clean_k)
                 
             elif dtype == "datetime":
                 datetime_data           = detre_datetime(df[clean_k])
                 
                 df_correct              = get_correct_values_as_series(datetime_data)
-                datetime_profile        = detre_profile(df_correct,"datetime")
-                
+                 
                 all_data.append({clean_k:datetime_data})
-                all_profile.append({clean_k:datetime_profile})
+                
+                get_data_profile(df_correct,clean_k,all_profile,"datetime")
                 data_types[clean_k] = "datetime"     
+                
+                all_columns.append(clean_k)
                 
             elif dtype == "currency":
                 currency_data           = detre_currency(df[clean_k])
                 df_correct              = get_correct_values_as_series(currency_data)
                 
-                currency_profile        = detre_profile(df_correct,"currency")
+               
+                all_data.append({clean_k   : currency_data})
+                get_data_profile(df_correct,clean_k,all_profile,"currency")
                 
-                all_data.append({clean_k   : date_data})
-                all_profile.append({clean_k: currency_profile })
+                
                 data_types[clean_k] = "currency"    
-
+                all_columns.append(clean_k)
+                
             elif dtype == "whole":
                 whole_data    = detre_wnumber(df[clean_k])
                 df_correct    = get_correct_values_as_series(whole_data)
                 
-                whole_profile = detre_profile(df_correct,"whole")
                 
                 all_data.append({clean_k:whole_data})
-                all_profile.append({clean_k:whole_profile})
+                
+                get_data_profile(df_correct,clean_k,all_profile,"whole")
                 
                 data_types[clean_k] = "whole"
+                
+                all_columns.append(clean_k)
                 
             elif dtype == "decimal":
                 decimal_data    = detre_decimal(df[clean_k])
                 df_correct      = df_correct   = get_correct_values_as_series(decimal_data)
 
-                decimal_profile = detre_profile(df_correct,"decimal")
                 all_data.append({clean_k: decimal_data})
                 
-                all_profile.append({clean_k:decimal_profile})
                 
+                
+                get_data_profile(df_correct,clean_k,all_profile,"decimal")
                 data_types[clean_k]  = "decimal"
                 
+                all_columns.append(clean_k)
                 
             elif dtype == "country":
                 country_data    = detre_country(df[clean_k])
                 df_correct      = get_correct_values_as_series(country_data)
                 
-                country_profile = detre_profile(df_correct, "country") 
                 all_data.append({clean_k:country_data})
-                all_profile.append({clean_k :country_profile })
+                
+                get_data_profile(df_correct,clean_k,all_profile,"country")
                 data_types[clean_k] = "country" 
-
+                
+                all_columns.append(clean_k)
+                
             elif dtype == "text":
+                 
                  remove_actions, extract_actions, replace_actions = [], [], []
                  remove_items, extract_items, replace_items       = [], [], []
                  
@@ -403,27 +499,46 @@ def data():
                      text_data_remove  = detre_text(df[clean_k], remove_actions, remove_items)
                      all_data.append({clean_k:text_data_remove})
                      data_types[clean_k] = "text"
+                     
+                     all_columns.append(clean_k)
                  
                  if len(extract_actions) > 0:
                      for action, item in zip(extract_actions,extract_items):
                          text_data_extract = detre_text(df[clean_k],extract_actions,extract_items)
-                         all_data.append({  "new_"+clean_k+"_"+item:text_data_extract})
+                         df_correct        = get_correct_values_as_series(text_data_extract)
+                         
+                         extract_profile   = detre_profile(df_correct, "text")
+                         all_data.append({"new_"+clean_k+"_"+item:text_data_extract})
+                         all_profile.append({"new_"+clean_k+"_"+item :extract_profile })
+                        
                          data_types["new_" + clean_k + "_" + item] = "text-"+item.strip().lower()                     
-                
+                         
+                         # Save the column name
+                         all_columns.append("new_" + clean_k + "_" + item)
+                         
+                         # Save the correct data associated with the column
+                         
+                         session["new_" + clean_k + "_" + item] = text_data_extract[0]['correct']
+                         
                  if len(replace_actions) > 0:
                      
                      text_data_replace  = detre_text(df[clean_k], replace_actions, replace_items)
 
                  
-                
+        # session 
+        session["all_columns"] = all_columns        
         return render_template('clean.html',
                                all_data=all_data, data_types = data_types,
                                all_profile = all_profile)
+    
+    return redirect(url_for("demo"))
 
 
 @route_bp.route("/update/value", methods=["POST"])
 def update_value():
-    
+    """
+    Use the given `action` to run an update for the provided row value
+    """
     form = request.form
     
     file_name = session.get('name',None)
@@ -458,7 +573,11 @@ def update_value():
 
 @route_bp.route("/update/multiple/values", methods=["POST"])
 def update_multiple_values():
+    """
+    Run the `action` across all values within the column.  
     
+    Only values that have not been `accepted` or `removed` will be run
+    """
     form = request.form
     
     file_name = session.get('name',None)
@@ -471,7 +590,7 @@ def update_multiple_values():
         column    = form['column']
         data_type =form['data_type']
         
-        # # Check column name if it is for a new column or not
+        # Check column name if it is for a new column or not
        
         if "new_" in column:
             column = column.replace("new_","")
@@ -495,12 +614,15 @@ def update_multiple_values():
     
 @route_bp.route("/accept/update", methods=["POST"])
 def accept_change():
+    """
+    A user accepts the Detre update for the provided `action`
+    """
     if session.get('updated_value'):
         
         form = request.form
-       
+        
         update = {
-                   
+                     'column_name': form['column_name'],
                      'new_value': form['new_value'],
                      'old_value': form['old_value']
                      
@@ -513,8 +635,9 @@ def accept_change():
         
     else:
         form = request.form
+       
         update = {
-                  
+                     'column_name': form['column_name'], 
                      'new_value': form['new_value'],
                      'old_value': form['old_value']
                      
@@ -527,8 +650,18 @@ def accept_change():
         
     return "True"
 
-@route_bp.route('/excel/download', methods=["GET"])
-def excel_download():
+@route_bp.route('/download/excel')
+def excel():
+    
+    """
+    API to download the results as an `xlsx` file
+    
+    There are two major parts:
+        1. No changes were made
+        2. Changes were made via user provided `actions`
+        
+    Within each part, a new column could have been created via the `extract` action. 
+    """
     wb = Workbook()
     ws = wb.active
     
@@ -544,30 +677,148 @@ def excel_download():
         
         updated_values_keys = session.get('updated_value').keys()
         update_values       = session.get('updated_value')
-        for idx,td in enumerate(df.iloc[:,0]):
-            if str(idx) in updated_values_keys:
-                data = update_values[str(idx)]
-                ws.append(data['new_value'])
-                
-            else:
-                
-                ws.append([td])
         
+        #===================================================================
+        # 1. Get all the columns from the uploaded file 
+        # 2. Get all columns from (1) above and also new one(s) if created 
+        #====================================================================
+        df_columns = df.columns.tolist()
+        data_columns = session.get("all_columns",None)
+
+        
+        if data_columns is not None:
+            if len(data_columns) == len(df_columns):
+                
+                #=========================
+                # No new columns created
+                #==========================
+                ws.append(df.columns.tolist())
+                for idx, td in df.iterrows():
+                    if str(idx) in updated_values_keys:
+                        data = update_values[str(idx)]
+                        
+                        sub_df  = df.iloc[idx,:]
+                        
+                        sub_df[data["column_name"]] = data['new_value']
+                        
+                        
+                        ws.append(sub_df.tolist())
+                        
+                    else:
+                        
+                        ws.append(td.tolist())
+                        
+            else:
+                for col in data_columns:
+                    # Check if a new column 
+                    if col not in df_columns: 
+                        
+                        # New column derived from which column
+                        if "new_" in col:
+                            column = col.replace("new_","")
+                            column = re.sub("_[a-z]+$","",column)                    
+                        
+                        
+                        # Get all the 'correct' rows
+                        rows = { r['row']:idx for idx,r in enumerate(session[col]) }
+                        
+                        
+                        column_values = []
+                        for idx, td in enumerate(df.loc[:,column]):
+                            if idx in list(rows.keys()):
+                                    
+                                    index = rows[idx]
+                                    column_values.append(session[col][index]['detre'] )
+                            else:
+                                     column_values.append("")
+                        
+                        # Make a series with new column name 
+                        series = pd.Series(column_values,name=col)
+                        #series.name(col)
+                        
+                        # Join with df
+                        df = df.join(series)     
+                        
+                
+                # Get the updated values for the respective columns
+                ws.append(df.columns.tolist())
+                for idx, td in df.iterrows():
+                    if str(idx) in updated_values_keys:
+                        data = update_values[str(idx)]
+                        sub_df  = df.iloc[idx,:]
+                        sub_df[data["column_name"]] = data['new_value']
+                        
+                        
+                        ws.append(sub_df.tolist())
+                        
+                    else:
+                        
+                        ws.append(td.tolist())                
+            
+        else:
+            return redirect(url_for("demo"))
         
         
     else:
-        # No values were updated
-        for idx,td in enumerate(df.iloc[:,0]):
-            ws.append([td])
+        #============================
+        # No values were updated but new column(s) could
+        # have been created via `extract`
+        #===============================
+        
+        
+        # 1. Get all the columns from the uploaded file 
+        # 2. Get all columns from (1) above and also new one(s) if created 
+        df_columns = df.columns.tolist()
+        data_columns = session.get("all_columns",None)
+        
+        if data_columns is not None:
+            for col in data_columns:
+                # Check if a new column was created
+                if col not in df_columns: 
+                    
+                    # New column derived from which column
+                    if "new_" in col:
+                        column = col.replace("new_","")
+                        column = re.sub("_[a-z]+$","",column)                    
+                    
+                    # Get all the 'correct' rows
+                    rows = { r['row']:idx for idx,r in enumerate(session[col]) }
+                    
+                    column_values = []
+                    for idx, td in enumerate(df.loc[:,column]):
+                        if idx in list(rows.keys()):
+                            
+                                index = rows[idx]
+                                column_values.append(session[col][index]['detre'] )
+                        else:
+                                 column_values.append("")
+                    
+                    # Make a series with new column name 
+                    series = pd.Series(column_values,name=col)
+                    #series.name(col)
+                    
+                    # Join with df
+                    df = df.join(series)
+        else:
+            return redirect(url_for("demo"))
+        
+        ws.append(df.columns.tolist())
+        for idx,td in df.iterrows():
+            ws.append(td.tolist())
     
     file_stream = BytesIO()
     wb.save(file_stream)
     file_stream.seek(0)
 
-    return send_file(file_stream, attachment_filename="detre.xlsx", as_attachment=True), 200
+
+    return send_file(file_stream, attachment_filename="Detre Output.xlsx", as_attachment=True), 200
+
 
 @route_bp.route("/country_codes")
 def country_codes():
+    """
+    API to get all the phone country codes
+    """
     country_codes = CountryCodes.query.all()
     
     

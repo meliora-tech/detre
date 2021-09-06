@@ -17,6 +17,7 @@ class DevConfig:
     
     SECRET_KEY              = environ.get("SECRET_KEY")
     SESSION_TYPE            = 'sqlalchemy'
+    SESSION_PERMANENT       = False
     MAX_CONTENT_LENGTH      = int(environ.get("MAX_UPLOAD_SIZE")) 
     UPLOAD_FOLDER           = environ.get('UPLOAD_FOLDER') 
     STATIC_FOLDER           = environ.get('STATIC_FOLDER') 

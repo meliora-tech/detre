@@ -31,7 +31,7 @@ def detre_currency(df):
     
     all_data.append({"correct":correct_})
     all_data.append({"incorrect":incorrect})            
-        
+    print(all_data)    
     return all_data
 
 def convert_currency(df):

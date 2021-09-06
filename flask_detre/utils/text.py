@@ -24,8 +24,9 @@ def _email(text):
 
 
 def _url(text):
+    all_urls  = [] 
     if URL_REGEX.search(text) != None:    
-        all_urls  = [] 
+       
         urls      = re.finditer(URL_REGEX, text)
         
         for url in urls:
@@ -156,7 +157,7 @@ def detre_text(df,actions,types_):
         if "remove" in actions:
             for action, type_ in zip(actions,types_):
                 ans, value = detre_text_remove(value, type_)
-                print(value)
+                
             if ans == "incorrect":
                 incorrect.append({"row":idx, "value":vtext, "detre": value})
             else:
@@ -182,7 +183,7 @@ def detre_text(df,actions,types_):
             elif action == "extract":
                 
                 ans, value = detre_text_extract(text,type_)
-                print(f"{ans} {value}")
+               
                 if ans == "incorrect":
                     incorrect.append({"row":idx, "value":vtext, "detre": value})
                 else:
@@ -199,7 +200,7 @@ def detre_text(df,actions,types_):
 
     all_data.append({"correct":correct_})
     all_data.append({"incorrect":incorrect})            
-        
+    print(all_data)    
     return all_data
                
             

@@ -83,9 +83,10 @@ form {
         <div class="modal-body">
           <div class="form-group">
                <label for="Action"> Action </label> 
-               <select class="form-control">
-                <option value="Remove">Remove</option>
+               <select class="form-control" onchange="selectedAction(this)">
                 <option value="Extract">Extract</option>
+                <option value="Remove">Remove</option>
+               
                 
              </select>
           </div>  
@@ -96,7 +97,7 @@ form {
             <select class="form-control">
                 <option value="URL">URL</option>
                 <option value="Phone">Phone Number</option>
-                <option value="Punct">Punctuation</option>
+                <option value="Punct" id="punct" hidden>Punctuation</option>
                 <option value="Email">Email</option>
                 <option Value="Numbers">Numbers</option>
             </select>
@@ -114,6 +115,18 @@ form {
 
 
 <script>
+
+   function selectedAction(e){
+      
+      if("Extract"==e.querySelectorAll('option')[e.selectedIndex].value){
+
+        document.getElementById("punct").setAttribute("hidden","");
+      }else{
+        document.getElementById("punct").removeAttribute("hidden");
+      }
+   }
+
+
     function selectedOption(e,column){
         
         var selected = e.querySelectorAll('option')[e.selectedIndex].value;
@@ -190,6 +203,7 @@ form {
        // div.style.cssText("display:flex");
 
         var input = document.createElement('input');
+        input.setAttribute("class","ml-2");
         input.setAttribute("readonly","");
         var count = document.getElementById("text-add-"+column).querySelectorAll("input").length;
         input.setAttribute("name",column+"-text-action-item-"+count);
