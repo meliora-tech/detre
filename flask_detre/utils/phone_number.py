@@ -71,8 +71,11 @@ def phone_number(number,country_codes):
         # Replace the special character(s)
         new_value = number
         for char in char_in_number:
-            new_value = new_value.replace(char,'')
-            
+            if char != ".":
+                new_value = new_value.replace(char,'')
+            else:
+                "incorrect", "Has '.' character(s) but no text."
+                
         return phone_check(new_value,country_codes,"Has special characters but no text. Provide guidanace")
     
     # Check if its only numbers

@@ -15,5 +15,5 @@ def test_currency():
     
     new_value = detre_currency(pd.Series(["$120.22","R24,00"]))
     
-    assert new_value[0]["correct"][0]['detre'] == "120.22"
-    assert new_value[0]["correct"][1]['detre'] == "24,00"
+    assert new_value[0]["correct"][0]['detre'] == float("120.22")
+    assert new_value[1]["incorrect"][0]['value'] == "R24,00"

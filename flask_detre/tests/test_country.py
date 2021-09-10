@@ -13,7 +13,7 @@ import pandas as pd
 
 def test_country():
     
-    df = pd.Series(["SA","South Africa","England","Fin","Match"])
+    df = pd.Series(["SA","South Africa","England","Fin","Match",""])
     
     values = detre_country(df)
     
@@ -22,3 +22,4 @@ def test_country():
     assert values[0]["correct"][2]['detre'] == "United Kingdom"
     assert values[0]["correct"][3]['detre'] == "Finland"
     assert values[1]["incorrect"][0]['detre'] == "Please provide guidance"
+    assert values[1]["incorrect"][1]['detre'] == "Empty value"

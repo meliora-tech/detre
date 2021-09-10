@@ -12,7 +12,13 @@
         class="dropzone"
         id="myAwesomeDropzone" placeholder="Drop file here to upload" style="border-radius: 5px; border-color: #8D5A97;border-style: dashed;">
         <div class="dz-message">  
-            Drop file here to upload
+            Drop `xlsx` or `csv` file here to upload (max 1 MB).  First row must be column names.
+        </div>
+        <div class="" style="display: none;" >
+            <input id="fallback-file" name="file" type="file" onchange="showProceed()" />
+        </div>
+        <div class="fallback">
+            <input name="file" type="file" onchange="showProceed()" />
         </div>
 
         </form>
@@ -26,9 +32,10 @@
 <script>
     Dropzone.options.myAwesomeDropzone = {
         maxFiles: 1,
-        maxFilesize: 2, // MB
+        maxFilesize: 1, // MB
         accept: function(file, done) {
-            if (file.type == "application/vnd.ms-excel" || file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  ) {
+            
+            if (file.type == "application/vnd.ms-excel" || file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.type == "text/csv" ) {
 
                 if(file.size < 200000){
                     done(document.getElementById('proceed').removeAttribute('hidden') ) ;
@@ -41,6 +48,18 @@
             else { done("Not one of the supported file types"); }
         }
 };
+
+
+
+function showProceed(){
+
+
+    document.getElementById("myAwesomeDropzone").setAttribute("enctype","multipart/form-data");
+    document.getElementById("myAwesomeDropzone").setAttribute("method","post")
+    document.getElementById("myAwesomeDropzone").submit(); 
+    
+    document.getElementById('proceed').removeAttribute('hidden');
+}
 </script>
 
 {% endblock content %}

@@ -107,7 +107,7 @@ list-style: none;
 <br>
 
 <div class="text-center">
-    <a class="btn btn-lg" style="font-weight: 900; background-color: #B8EBD0; text-decoration: none; color: #000;" href='{{url_for('route_bp.excel')}}' >Download xlsx</a>
+    <a id="download-file" class="btn btn-lg" style="font-weight: 900; background-color: #B8EBD0; text-decoration: none; color: #000;" href='{{url_for('route_bp.excel')}}' >Download xlsx</a>
 </div>
 <br>
 
@@ -115,10 +115,15 @@ list-style: none;
     <ul class="nav nav-pills nav-fill">
     {% for res in all_data %}
          {% for col in res.keys() %}
-         <li class="nav-item">
-            <a  class="nav-link ml-4" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
-          </li>
-                
+            {% if loop.index == 1 %}
+                <li class="nav-item">
+                    <a  class="nav-link ml-4 active show" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a  class="nav-link ml-4" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
+                </li>      
+            {% endif %}         
             
          {% endfor %}
     {% endfor%}
@@ -139,7 +144,7 @@ list-style: none;
             <ul class="nav nav-tabs" id="myTab-{{col}}" role="tablist">
             
                         <li class="nav-item">
-                            <a class="nav-link active" id="{{col}}-correct-tab" data-toggle="tab" href="#{{col}}-correct" role="tab" aria-controls="{{col}}" aria-selected="false">Correct</a>
+                            <a class="nav-link active show" id="{{col}}-correct-tab" data-toggle="tab" href="#{{col}}-correct" role="tab" aria-controls="{{col}}" aria-selected="false">Correct</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="{{col}}-issues-tab" data-toggle="tab" href="#{{col}}-issues" role="tab" aria-controls="{{col}}" aria-selected="false">Issues</a>

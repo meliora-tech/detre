@@ -13,17 +13,17 @@ import pandas as pd
 
 def test_profile_phone():
    df   = pd.Series(["2706086412","270556422",""]) 
-   data = detre_profile(df,"phone")
+   data = detre_profile(df,[],"phone")
    
-   assert data["duplicates_total"] == 0 
+   assert data["n_unique"] == 3
 
    
    
 def test_profile_email():
    df   = pd.Series(["ntuthuko@ta.com","asd@as.com","ntuthuko@ta.com"]) 
-   data = detre_profile(df,"text")
+   data = detre_profile(df,[],"text")
     
-   assert len(data["text_cluster"]["ntuthukotacom"]) == 2  
+   assert len(data["text_cluster"]["ntuthukotacom"].split(",")) == 2  
    
    
 def test_profile_time():
@@ -31,11 +31,11 @@ def test_profile_time():
     result    = detre_time(series)
     correct   = result[0]["correct"]
     df        = pd.DataFrame(correct)
-    profile   = detre_profile(df["detre"],"time")
+    profile   = detre_profile(df["detre"],[],"time")
     
     assert profile['duplicates_total'] == 2
     assert profile['n_unique']         == 3
-    assert len(profile['freq'])        == 1
+    assert profile['total_correct']    == 5
     
 
 def test_profile_datetime():
@@ -44,10 +44,10 @@ def test_profile_datetime():
     result    = detre_datetime(series)
     correct   = result[0]["correct"]
     df        = pd.DataFrame(correct)
-    profile   = detre_profile(df['detre'],'datetime')
+    profile   = detre_profile(df['detre'],[],'datetime')
     
     assert profile['duplicates_total'] == 0
     assert profile['n_unique']         == 4
-    assert len(profile['freq'])        == 0
+    assert profile['total_correct']    == 4
 
          

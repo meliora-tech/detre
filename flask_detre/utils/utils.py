@@ -390,75 +390,80 @@ def detre_date(df,format_):
             else:
                 incorrect.append({"row":idx,"value":v,"new_value":"","detre":'Not a date'})                
         except Exception as e:
-            num_ = pattern.findall(v)
             
-            if len(num_) == 0:
-                incorrect.append({"row":idx,"value":v,"new_value":"","detre":'Number(s) found. Potentially has a date pattern'})
-                #print(f"No number found. {v}")
+            try:
+                num_ = pattern.findall(v)
                 
-                
-            elif len(num_) >=1 and len(num_) <=3:
-                
-                
-                # Check if there is a year
-                year_range = range(1655,2955)
-                if len(num_) == 1:   # Assume its a year
+                if len(num_) == 0:
+                    incorrect.append({"row":idx,"value":v,"new_value":"","detre":'Number(s) found. Potentially has a date pattern'})
+                    #print(f"No number found. {v}")
                     
-                    # Check how many letters it has
-                    len_  = len(num_[0])
-                    if len_ == 2:       
+                    
+                elif len(num_) >=1 and len(num_) <=3:
+                    
+                    
+                    # Check if there is a year
+                    year_range = range(1655,2955)
+                    if len(num_) == 1:   # Assume its a year
                         
-                        incorrect.append({"row":idx,"value":v,"new_value":"","detre":'year2'})
-                        #print(f"Is this a year? 20{num_[0]} or 19{num_[0]}")
-                    elif len_ == 4 :
-                        # Check if it falls within the range
-                        if num_[0] in year_range:
-                            incorrect.append({"row":idx,"value":v,"new_value":"","detre":'year4' })
-                            #print(pd.to_datetime(num_[0]))
-                            #print(f"{num_[0]}")
+                        # Check how many letters it has
+                        len_  = len(num_[0])
+                        if len_ == 2:       
+                            
+                            incorrect.append({"row":idx,"value":v,"new_value":"","detre":'year2'})
+                            #print(f"Is this a year? 20{num_[0]} or 19{num_[0]}")
+                        elif len_ == 4 :
+                            # Check if it falls within the range
+                            if num_[0] in year_range:
+                                incorrect.append({"row":idx,"value":v,"new_value":"","detre":'year4' })
+                                #print(pd.to_datetime(num_[0]))
+                                #print(f"{num_[0]}")
+                            else:
+                                incorrect.append({"row":idx,"value":v,"new_value":"","detre":'Guidance'})
+                                #print(f"Is this number of days from Epoch? Is the format mm/yy or yy/mm? Is it dd/mm or mm/dd? {num_[0]}")
                         else:
                             incorrect.append({"row":idx,"value":v,"new_value":"","detre":'Guidance'})
-                            #print(f"Is this number of days from Epoch? Is the format mm/yy or yy/mm? Is it dd/mm or mm/dd? {num_[0]}")
+                            #print(f"No idea what to do: {num_[0]}")
+                            
+                    elif len(num_) == 2: # Assume its a year and month
+                        
+                        try:
+                            year_month = pd.to_datetime("-".join(num_)).strftime(format_)
+                            correct_.append({"row":idx,"value":v,"detre":year_month})
+                        except Exception as e:
+                            sum_len = sum([len(n)  for n in num_])    
+                            # Case 1:  4 & 2
+                            if sum_len == 6:
+                                incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yyyymm'})
+                                # print("Is this yyyymm or mmyyyy? ")
+                            # Case 2:  4 & 4
+                            elif sum_len == 8:
+                                incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yyyymmdd'})
+                                # print("Is this yyyymmdd or mmddyyy or ddmmyyyy?")
+                            # Case 3:  1 & 2 
+                            elif sum_len == 3: 
+                               incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yym'}) 
+                               # print("Is this myy or yym?")
+                            # Case 4:  1 & 4
+                            elif sum_len == 5:
+                                incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yyyym'})
+                                # print("Is this myyyy or yyyym?")
+                            
+                            
+                
+                            
                     else:
-                        incorrect.append({"row":idx,"value":v,"new_value":"","detre":'Guidance'})
-                        #print(f"No idea what to do: {num_[0]}")
-                        
-                elif len(num_) == 2: # Assume its a year and month
+                        a = "-".join(num_)
+                        incorrect.append({"row":idx,"value":v,"new_value":"","detre":'There is a date pattern with some text.'})
+                        #print(f"Has year/month/day. {a}")
+                elif len(num_) > 3:
                     
-                    try:
-                        year_month = pd.to_datetime("-".join(num_)).strftime(format_)
-                        correct_.append({"row":idx,"value":v,"detre":year_month})
-                    except Exception as e:
-                        sum_len = sum([len(n)  for n in num_])    
-                        # Case 1:  4 & 2
-                        if sum_len == 6:
-                            incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yyyymm'})
-                            # print("Is this yyyymm or mmyyyy? ")
-                        # Case 2:  4 & 4
-                        elif sum_len == 8:
-                            incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yyyymmdd'})
-                            # print("Is this yyyymmdd or mmddyyy or ddmmyyyy?")
-                        # Case 3:  1 & 2 
-                        elif sum_len == 3: 
-                           incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yym'}) 
-                           # print("Is this myy or yym?")
-                        # Case 4:  1 & 4
-                        elif sum_len == 5:
-                            incorrect.append({"row":idx,"value":v,"new_value":"","detre":'guidance-yyyym'})
-                            # print("Is this myyyy or yyyym?")
-                        
-                        
+                    incorrect.append({"row":idx,"value":v,"new_value":"","detre":'datetime'})
+                    #print("Has year/month/day hh/min/ss. Select the closest option to your data.")
             
-                        
-                else:
-                    a = "-".join(num_)
-                    incorrect.append({"row":idx,"value":v,"new_value":"","detre":'There is a date pattern with some text.'})
-                    #print(f"Has year/month/day. {a}")
-            elif len(num_) > 3:
-                pd.to_datetime("-".join(num_))
+            except:
                 incorrect.append({"row":idx,"value":v,"new_value":"","detre":'datetime'})
-                #print("Has year/month/day hh/min/ss. Select the closest option to your data.")
-
+                
     all_data.append({"correct":correct_})
     all_data.append({"incorrect":incorrect})
     return all_data
@@ -480,9 +485,24 @@ def get_correct_values_as_series(detre_data):
     else:
         return []
     
-def get_data_profile(df_correct,clean_k,all_profile, data_type):
+    
+def get_incorrect_values_as_df(detre_data):
+    """
+    Fuction that gets the incorrect values for a given detre_XXXX output function. This outputs a
+    DataFrame that is used in the detre_profile function
+    """
+    
+    incorrect_arr = detre_data[1]["incorrect"]
+    
+    if len(incorrect_arr) > 0:
+        df_incorrect = pd.DataFrame(incorrect_arr)
+        return df_incorrect
+    else:
+       return []
+    
+def get_data_profile(df_correct,df_incorrect,clean_k,all_profile, data_type):
     if len(df_correct) != 0:
-        profile = detre_profile(df_correct,data_type)
+        profile = detre_profile(df_correct,df_incorrect,data_type)
         
         
         

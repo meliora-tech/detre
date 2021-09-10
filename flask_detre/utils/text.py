@@ -147,7 +147,14 @@ def detre_text(df,actions,types_):
     incorrect = []    
     
 
-    
+    if len(actions) == 0 and len(types_) == 0:
+        for idx, vtext in enumerate(df):
+            correct_.append({"row":idx, "value":vtext, "detre": vtext})
+            
+        all_data.append({"correct":correct_})
+        all_data.append({"incorrect":incorrect})            
+         
+        return all_data        
     
     
     for idx, vtext in enumerate(df):
@@ -200,7 +207,7 @@ def detre_text(df,actions,types_):
 
     all_data.append({"correct":correct_})
     all_data.append({"incorrect":incorrect})            
-    print(all_data)    
+     
     return all_data
                
             

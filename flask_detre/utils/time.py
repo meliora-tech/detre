@@ -47,70 +47,75 @@ def detre_time(df):
     incorrect = []
     
     for idx, time_value in enumerate(df):
-        time_value = time_value.strip()
+        
+        time_value = str(time_value).strip()
         try:
             result = convert_to_time(time_value, format_=None)
             correct_.append({"row":idx,"value":time_value,"detre":result})
         except Exception as e:
             
-            # Check if time_value is int or float
-            if isinstance(time_value, int) or  isinstance(time_value, float):
-                result = convert_to_time(time_value, format_=None)
-                correct_.append({"row":idx,"value":time_value,"detre":result})                
-                
-            
-            # Check if time_value has h:m(:s:ms) format
-            number_pattern = re.compile("(\d+:\d+(:\d+)?(\.\d+)?)")
-            time_found = number_pattern.findall(time_value)
-            
-            if len(time_found) != 0:
-                
-                # Find if it has AM/PM 
-                if time_value.lower().find("pm") != -1 or time_value.lower().find("p.m.") != -1 :
+            try:
+                # Check if time_value is int or float
+                if isinstance(time_value, int) or  isinstance(time_value, float):
+                    result = convert_to_time(time_value, format_=None)
+                    correct_.append({"row":idx,"value":time_value,"detre":result})                
                     
-                    value_arr = time_found[0][0].split(':')
+                
+                # Check if time_value has h:m(:s:ms) format
+                number_pattern = re.compile("(\d+:\d+(:\d+)?(\.\d+)?)")
+                time_found = number_pattern.findall(time_value)
+                
+                if len(time_found) != 0:
                     
-                    if len(value_arr) == 2:
+                    # Find if it has AM/PM 
+                    if time_value.lower().find("pm") != -1 or time_value.lower().find("p.m.") != -1 :
                         
-                        result = pd.to_datetime(time_value,format="%H:%M").time().strftime("%H:%M:%S")
-                        correct_.append({"row":idx,"value":time_value,"detre":result})
-                    elif len(value_arr) == 3 and time_found[0][0].find('.') == -1:
-                        result = pd.to_datetime(time_value,format="%H:%M:%S").time().strftime("%H:%M:%S")
-                        correct_.append({"row":idx,"value":time_value,"detre":result})                        
-                    elif len(value_arr) == 3 and time_found[0][0].find('.') != -1:
-                        result = pd.to_datetime(time_value,format="%H:%M:%S.%f").time().strftime("%H:%M:%S.%f")
-                        correct_.append({"row":idx,"value":time_value,"detre":result})
-                    else:
-                        incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'Found too many numbers to convert. Provide guidance'})
-                    
-                elif time_value.lower().find("am") != -1 or time_value.lower().find("a.m.") != -1:
-                         am_pm_detection(time_found,idx, time_value ,correct_, incorrect)
-                         
-            
-            else:
-                # Check if it has a single non-digit value (e.g h)
-                nondigit_pattern = re.compile("[\D]+")
-                non_digit_arr    = nondigit_pattern.findall(time_value)
-                
-                                # Check if there is a digit
-                no_digit_pattern = re.compile("[\d]+")
-                no_digit_arr     = no_digit_pattern.findall(time_value)
-                
-                if len(non_digit_arr) == 1:
-                    if len(non_digit_arr[0].strip()) == 1:
-                        format_ = "%H"+non_digit_arr[0]+"%M"
-                        result = pd.to_datetime(time_value,format=format_).time().strftime("%H:%M:%S")
-                        correct_.append({"row":idx,"value":time_value,"detre":result})                    
-                    else:
-                        incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'Please provide guidance'})    
-
-                
-                elif len(no_digit_arr) == 0:
-                    incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'No digit was found. Suggest to remove'})
+                        value_arr = time_found[0][0].split(':')
+                        
+                        if len(value_arr) == 2:
+                            
+                            result = pd.to_datetime(time_value,format="%H:%M").time().strftime("%H:%M:%S")
+                            correct_.append({"row":idx,"value":time_value,"detre":result})
+                        elif len(value_arr) == 3 and time_found[0][0].find('.') == -1:
+                            result = pd.to_datetime(time_value,format="%H:%M:%S").time().strftime("%H:%M:%S")
+                            correct_.append({"row":idx,"value":time_value,"detre":result})                        
+                        elif len(value_arr) == 3 and time_found[0][0].find('.') != -1:
+                            result = pd.to_datetime(time_value,format="%H:%M:%S.%f").time().strftime("%H:%M:%S.%f")
+                            correct_.append({"row":idx,"value":time_value,"detre":result})
+                        else:
+                            incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'Found too many numbers to convert. Provide guidance'})
+                        
+                    elif time_value.lower().find("am") != -1 or time_value.lower().find("a.m.") != -1:
+                             am_pm_detection(time_found,idx, time_value ,correct_, incorrect)
+                             
                 
                 else:
-                    incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'Please provide guidance'})    
+                    # Check if it has a single non-digit value (e.g h)
+                    nondigit_pattern = re.compile("[\D]+")
+                    non_digit_arr    = nondigit_pattern.findall(time_value)
+                    
+                                    # Check if there is a digit
+                    no_digit_pattern = re.compile("[\d]+")
+                    no_digit_arr     = no_digit_pattern.findall(time_value)
+                    
+                    if len(non_digit_arr) == 1:
+                        if len(non_digit_arr[0].strip()) == 1:
+                            format_ = "%H"+non_digit_arr[0]+"%M"
+                            result = pd.to_datetime(time_value,format=format_).time().strftime("%H:%M:%S")
+                            correct_.append({"row":idx,"value":time_value,"detre":result})                    
+                        else:
+                            incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'Please provide guidance'})    
+    
+                    
+                    elif len(no_digit_arr) == 0:
+                        incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'No digit was found. Suggest to remove'})
+                    
+                    else:
+                        incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'Please provide guidance'})    
             
+            
+            except:
+                incorrect.append({"row":idx,"value":time_value,"new_value":"","detre":'Please provide guidance'})   
             
     all_data.append({"correct":correct_})
     all_data.append({"incorrect":incorrect})

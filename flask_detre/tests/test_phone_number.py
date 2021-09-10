@@ -14,6 +14,17 @@ app = Flask(__name__)
 app.secret_key = 'my-seCret_KEy'
 
 url = "http://localhost:8100"
+
+
+def test_decimal_phone_number():
+    with app.test_client() as c:
+        with c.session_transaction() as sess:
+            sess['country_code'] = '27'
+            
+        rv  = c.get(url)      
+        new_value = phone_number("0.608314773","27")
+        assert "incorrect" == new_value[0]
+    
 def test_phone_number():
     
     """ Make sure that phone number is true given a country code"""

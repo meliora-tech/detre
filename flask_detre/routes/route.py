@@ -22,7 +22,7 @@ from pyexcel_xlsx import get_data
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from flask import Blueprint,Flask, flash ,request, jsonify, render_template, url_for, redirect,send_file, session
-from flask_detre.utils.utils import (detre_date, get_correct_values_as_series, get_data_profile)
+from flask_detre.utils.utils import (detre_date, get_correct_values_as_series, get_data_profile, get_incorrect_values_as_df)
 from flask_detre.utils.detre_update_values import (detre_update_value, detre_update_multiple_values)
 from flask_detre.utils.phone_number import detre_phone
 from flask_detre.utils.time import detre_time
@@ -138,10 +138,10 @@ def upload_file():
             session["name"]      = f
 
                 
-            return '', 204         
+            return redirect(url_for("route_bp.data_columns")), 204         
         except Exception as e:
             
-            return redirect(url_for("route_bp.upload_file"))
+            return redirect(url_for("route_bp.upload_file")), 401
         
         
 
@@ -164,49 +164,49 @@ def demo():
      POST: Handle the uploaded file
      GET:
     """
-    # if request.method == 'POST':
-    #     file =  request.files['file']
+    if request.method == 'POST':
+        file =  request.files['file']
         
-    #     all_names = []
-    #     f         = secure_filename(file.filename)
+        all_names = []
+        f         = secure_filename(file.filename)
         
-    #     dict_        = pe.get_dict(file_contents=file)
-    #     data_xls     = pd.DataFrame(dict_)        
+        dict_        = pe.get_dict(file_contents=file)
+        data_xls     = pd.DataFrame(dict_)        
         
        
-    #     #data_xls = pd.read_table(file, sep=",")
-    #     data = {
-    #             "filename": f,
-    #             "columns": [c.strip() for c in list(data_xls.columns)]
-    #         }
-    #     all_names.append(data)
+        #data_xls = pd.read_table(file, sep=",")
+        data = {
+                "filename": f,
+                "columns": [c.strip() for c in list(data_xls.columns)]
+            }
+        all_names.append(data)
        
-    #     session['all_names'] = all_names
-    #     session["name"] = f
-    #     # Write the file to temp folder
-    #     data_xls.to_csv( os.path.join(dirname.replace("\\routes",''),'temp',f), index=None, sep=',')        
+        session['all_names'] = all_names
+        session["name"] = f
+        # Write the file to temp folder
+        data_xls.to_csv( os.path.join(dirname.replace("\\routes",''),'temp',f), index=None, sep=',')        
        
-    #     """
-    #     Below code is kept for multiple file uploads handling. 
-    #     To be used 
-    #     """
+        """
+        Below code is kept for multiple file uploads handling. 
+        To be used 
+        """
         
         
-    #     # for idx,file in enumerate(file_list):
-    #     #    f = secure_filename(file.filename)
+        # for idx,file in enumerate(file_list):
+        #    f = secure_filename(file.filename)
            
-    #     #    data_xls = pd.read_table(file, sep=",")
-    #     #    data = {
-    #     #            "filename": f,
-    #     #            "columns": list(data_xls.columns)
-    #     #        }
-    #     #    all_names.append(data)
+        #    data_xls = pd.read_table(file, sep=",")
+        #    data = {
+        #            "filename": f,
+        #            "columns": list(data_xls.columns)
+        #        }
+        #    all_names.append(data)
            
-    #     #    session["name"] = f
-    #     #    # Write the file to temp folder
-    #     #    data_xls.to_csv('temp/'+f, index=None, sep=',')
+        #    session["name"] = f
+        #    # Write the file to temp folder
+        #    data_xls.to_csv('temp/'+f, index=None, sep=',')
             
-    #     return '', 204 #data_xls.to_html()    
+        return '', 204 #data_xls.to_html()    
     
     return render_template("demo.html")
 
@@ -367,10 +367,11 @@ def data():
                 phone_data    = detre_phone(df[clean_k], country_code)
                 
                 df_correct    = get_correct_values_as_series(phone_data)
+                df_incorrect            = get_incorrect_values_as_df(phone_data)
                 
                 all_data.append({clean_k:phone_data})
                 
-                get_data_profile(df_correct,clean_k,all_profile,"phone")
+                get_data_profile(df_correct,df_incorrect,clean_k,all_profile,"phone")
                 data_types[clean_k] = "phone"
                 
                 all_columns.append(clean_k)
@@ -382,10 +383,12 @@ def data():
                 date_data    = detre_date(df[clean_k],format_)
                 
                 df_correct   = get_correct_values_as_series(date_data)
+                df_incorrect = get_incorrect_values_as_df(date_data)
+                
                 all_data.append({clean_k:date_data})
                 
                 if len(df_correct) != 0:
-                    date_profile = detre_profile(df_correct,"date")
+                    date_profile = detre_profile(df_correct,df_incorrect,"date")
                     
                     
                     
@@ -401,10 +404,12 @@ def data():
                 
                 time_data           = detre_time(df[clean_k])
                 df_correct          = get_correct_values_as_series(time_data)
+                df_incorrect        = get_incorrect_values_as_df(time_data)
+                
                 
                 all_data.append({clean_k:time_data})
                 
-                get_data_profile(df_correct,clean_k,all_profile,"time")
+                get_data_profile(df_correct, df_incorrect, clean_k,all_profile,"time")
                 data_types[clean_k] = "time"  
                 
                 all_columns.append(clean_k)
@@ -413,10 +418,11 @@ def data():
                 datetime_data           = detre_datetime(df[clean_k])
                 
                 df_correct              = get_correct_values_as_series(datetime_data)
-                 
+                df_incorrect            = get_incorrect_values_as_df(datetime_data)
+                
                 all_data.append({clean_k:datetime_data})
                 
-                get_data_profile(df_correct,clean_k,all_profile,"datetime")
+                get_data_profile(df_correct,df_incorrect,clean_k,all_profile,"datetime")
                 data_types[clean_k] = "datetime"     
                 
                 all_columns.append(clean_k)
@@ -424,23 +430,23 @@ def data():
             elif dtype == "currency":
                 currency_data           = detre_currency(df[clean_k])
                 df_correct              = get_correct_values_as_series(currency_data)
-                
+                df_incorrect            = get_incorrect_values_as_df(currency_data) 
                
                 all_data.append({clean_k   : currency_data})
-                get_data_profile(df_correct,clean_k,all_profile,"currency")
+                get_data_profile(df_correct,df_incorrect,clean_k,all_profile,"currency")
                 
-                
+               
                 data_types[clean_k] = "currency"    
                 all_columns.append(clean_k)
                 
             elif dtype == "whole":
                 whole_data    = detre_wnumber(df[clean_k])
                 df_correct    = get_correct_values_as_series(whole_data)
-                
+                df_incorrect            = get_incorrect_values_as_df(whole_data)
                 
                 all_data.append({clean_k:whole_data})
                 
-                get_data_profile(df_correct,clean_k,all_profile,"whole")
+                get_data_profile(df_correct,df_incorrect,clean_k,all_profile,"whole")
                 
                 data_types[clean_k] = "whole"
                 
@@ -449,12 +455,13 @@ def data():
             elif dtype == "decimal":
                 decimal_data    = detre_decimal(df[clean_k])
                 df_correct      = df_correct   = get_correct_values_as_series(decimal_data)
-
+                df_incorrect            = get_incorrect_values_as_df(decimal_data)
+                
                 all_data.append({clean_k: decimal_data})
                 
                 
                 
-                get_data_profile(df_correct,clean_k,all_profile,"decimal")
+                get_data_profile(df_correct,df_incorrect,clean_k,all_profile,"decimal")
                 data_types[clean_k]  = "decimal"
                 
                 all_columns.append(clean_k)
@@ -462,10 +469,11 @@ def data():
             elif dtype == "country":
                 country_data    = detre_country(df[clean_k])
                 df_correct      = get_correct_values_as_series(country_data)
+                df_incorrect    = get_incorrect_values_as_df(country_data)
                 
                 all_data.append({clean_k:country_data})
                 
-                get_data_profile(df_correct,clean_k,all_profile,"country")
+                get_data_profile(df_correct,df_incorrect,clean_k,all_profile,"country")
                 data_types[clean_k] = "country" 
                 
                 all_columns.append(clean_k)
@@ -494,6 +502,18 @@ def data():
                              replace_actions.append("replace")
                              replace_items.append(item)
                  
+                 # No action was provided but data type was selected as `text`   
+                 if  len(remove_actions) == 0 and len(extract_actions) == 0:
+                     text_data  = detre_text(df[clean_k],[],[])
+                     all_data.append({clean_k:text_data})
+                     
+                     df_correct              = get_correct_values_as_series(text_data)
+                     df_incorrect            = get_incorrect_values_as_df(text_data)
+                     data_types[clean_k] = "text"
+                     
+                     get_data_profile(df_correct, df_incorrect, clean_k, all_profile, "text")
+
+                     all_columns.append(clean_k)                     
                  
                  if len(remove_actions) > 0:
                      text_data_remove  = detre_text(df[clean_k], remove_actions, remove_items)
@@ -505,9 +525,11 @@ def data():
                  if len(extract_actions) > 0:
                      for action, item in zip(extract_actions,extract_items):
                          text_data_extract = detre_text(df[clean_k],extract_actions,extract_items)
-                         df_correct        = get_correct_values_as_series(text_data_extract)
                          
-                         extract_profile   = detre_profile(df_correct, "text")
+                         df_correct              = get_correct_values_as_series(text_data_extract)
+                         df_incorrect            = get_incorrect_values_as_df(text_data_extract)
+                         
+                         extract_profile   = detre_profile(df_correct,df_incorrect ,"text")
                          all_data.append({"new_"+clean_k+"_"+item:text_data_extract})
                          all_profile.append({"new_"+clean_k+"_"+item :extract_profile })
                         

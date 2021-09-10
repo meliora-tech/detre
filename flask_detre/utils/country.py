@@ -18,7 +18,11 @@ def detre_country(df):
     
     for idx, v in enumerate(df):
         
-        v    = re.sub("[^A-Za-z ]","",v).lower()
+        v    = re.sub("[^A-Za-z ]","",str(v)).lower()
+        
+        if v == "" or v == " ":
+            incorrect.append({"row":idx,"value":v,"detre":"Empty value"})
+            continue
     
         try:
              ans    = pycountry.countries.search_fuzzy(v)
