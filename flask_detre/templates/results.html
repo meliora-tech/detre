@@ -81,26 +81,35 @@ form {
           </button>
         </div>
         <div class="modal-body">
+
+          <!-- Action select option  -->
           <div class="form-group">
                <label for="Action"> Action </label> 
                <select class="form-control" onchange="selectedAction(this)">
-                <option value="Extract">Extract</option>
-                <option value="Remove">Remove</option>
-               
-                
+                  <option value="Extract">Extract</option>
+                  <option value="Remove">Remove</option>
              </select>
           </div>  
 
+          <!-- Item select option -->
           <div class="form-group">
+              <label for="item">Item</label>
+              <select class="form-control" onchange="selectedItem(this)">
+                  <option value="URL">URL</option>
+                  <option value="Phone">Phone Number</option>
+                  <option value="Punct" id="punct" hidden>Punctuation</option>
+                  <option value="Email">Email</option>
+                  <option value="Numbers">Numbers</option>
+                  <option value="Date" id="text-date" >Date</option>
+              </select>
+          </div>
 
-            <label for="item">Item</label>
-            <select class="form-control">
-                <option value="URL">URL</option>
-                <option value="Phone">Phone Number</option>
-                <option value="Punct" id="punct" hidden>Punctuation</option>
-                <option value="Email">Email</option>
-                <option Value="Numbers">Numbers</option>
-            </select>
+          <!-- Date Format option  -->
+          <div class="form-group"  id="div-text-date" hidden>
+              
+              <select class="form control js-basic-multiple" id="option-date-format" name="text-date-format" multiple="multiple" >
+
+              </select>
           </div>
 
         </div>
@@ -116,6 +125,13 @@ form {
 
 <script>
 
+      $(document).ready(function() {
+          $('.form-control .js-basic-multiple').select2({
+            width: 'resolve'}
+          );
+      });
+
+
    function selectedAction(e){
       
       if("Extract"==e.querySelectorAll('option')[e.selectedIndex].value){
@@ -123,6 +139,24 @@ form {
         document.getElementById("punct").setAttribute("hidden","");
       }else{
         document.getElementById("punct").removeAttribute("hidden");
+      }
+   }
+
+   function selectedItem(e){
+      
+      if("Date"==e.querySelectorAll('option')[e.selectedIndex].value){
+
+        document.getElementById("div-text-date").style.cssText = "display: block !important; width: 100% !important;";
+        document.getElementById("option-date-format").style.cssText = "display: block !important; width: 100% !important;";
+        document.getElementById("div-text-date").removeAttribute("hidden");
+        //document.querySelector("textarea.select2-search__field").style.cssText = "display: block !important; width: 100% !important;";
+        
+      }else{
+        document.getElementById("div-text-date").removeAttribute("style");
+        document.getElementById("option-date-format").removeAttribute("style");
+        document.getElementById("div-text-date").setAttribute("hidden","");
+        //document.querySelector("textarea.select2-search__field").removeAttribute("style");
+
       }
    }
 
@@ -184,6 +218,43 @@ form {
 
 
 
+    $(document).ready(function() {
+      
+      var url  = window.location.protocol +"//" +location.host;
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200) {
+                  var raw_result = JSON.parse(this.responseText);
+                  var result     = raw_result["result"];
+
+                  var select_date_format = document.getElementById("option-date-format")
+
+                  result.forEach((element,index) => {
+                     console.log(element);
+                      var option = document.createElement('option');
+                      var optionText = document.createTextNode(element);
+
+                      option.setAttribute("value",index)
+                      option.append(optionText);
+
+                      select_date_format.append(option);
+
+                      
+                      
+                  });
+              }
+          }
+
+          xhttp.open("GET", url+"/dates/constants", true);
+          xhttp.send();   
+
+
+          
+
+
+      });
+
+
     function addTextAction(column){
  
         
@@ -193,6 +264,24 @@ form {
         var select_arr = modal.querySelectorAll('select');
         var action_selected = select_arr[0].querySelectorAll('option')[select_arr[0].selectedIndex].value;
         var item_selected   = select_arr[1].querySelectorAll('option')[select_arr[1].selectedIndex].value;
+        var item_count      = '';
+
+        if(item_selected == 'Date'){
+          item_count+= select_arr[2].selectedOptions.length;
+          var idx  = '';
+          for(var i=0; i<select_arr[2].selectedOptions.length; i++){
+
+            if(idx == ''){
+               idx+=select_arr[2].selectedOptions[i].value;
+            } else {
+              idx+= ',' + select_arr[2].selectedOptions[i].value;
+            }
+            
+              console.log(idx);
+          }
+            
+    
+        }
 
         // dismiss modal
         $('#textActionModal').modal('hide');
@@ -209,9 +298,20 @@ form {
         input.setAttribute("name",column+"-text-action-item-"+count);
         
         var del_btn = document.createElement('button');
-        input.value = action_selected + " : " + item_selected;
+        input.value = item_count == '' ? action_selected + " : " + item_selected :  action_selected + " : " + item_selected + " (" + item_count + ")";
 
-        document.getElementById("text-add-"+column).append(input);
+        if(item_count == ''){
+          document.getElementById("text-add-"+column).append(input);
+        } else{
+          var input_2 = document.createElement('input');
+          input_2.setAttribute("hidden","");
+          input_2.setAttribute("name","text-date");
+          input_2.value = idx;
+          document.getElementById("text-add-"+column).append(input);
+          document.getElementById("text-add-"+column).append(input_2);
+        }
+
+        
 
 
 

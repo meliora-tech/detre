@@ -9,8 +9,13 @@ from collections import Counter
 
 import pandas as pd
 import re
+import html
+
 
 def detre_currency(df):
+    """
+    Main function to deal with currency data type
+    """
     
     all_data = []
     correct_ = []
@@ -18,6 +23,7 @@ def detre_currency(df):
     
     
     for idx,v in enumerate(df):
+        v  = html.escape(str(v))
         try:
             v                 = str(v)
             

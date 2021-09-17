@@ -67,7 +67,7 @@ def date_update_value(value,action,data_type):
         elif action.find('*') != -1 and action.find('text') != -1:            
            
             if action.find('b') == -1 and action.find('B') == -1: # Both are not present
-                              
+                print("Both are present")              
                 new_value     = text_and_char(value, action)
                 return new_value
             
@@ -92,9 +92,8 @@ def detre_update_value(value,action,data_type):
     """
     Update the given value based on the action
     """
-    print(action)
-    print(data_type)
-    if data_type == "date":
+
+    if data_type == "date" or data_type == "text-date":
         return date_update_value(value,action,data_type)
         
     elif data_type == "phone" or data_type == "text-phone" :
@@ -120,8 +119,8 @@ def detre_update_multiple_values(values:list,action:str,data_type:str):
     """
     Update all values based on the given `action`
     """
-    print(action)
-    print(data_type)
+    # print(action)
+    # print(data_type)
     results = []
     if data_type == "datetime":
         for value in values:
@@ -138,12 +137,13 @@ def detre_update_multiple_values(values:list,action:str,data_type:str):
             try:
                 result = phone_update_value(value,action,"phone")
                 
-                results.append(result)
+                if result != '':
+                    results.append(result)
             except Exception as e:
                 
                 results.append("None")        
 
-    elif data_type == "date":
+    elif data_type == "date" or data_type == "text-date":
         for value in values:
             
             try:

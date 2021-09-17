@@ -37,6 +37,8 @@ from flask_detre.utils.survey_monkey import survey_monkey_analysis
 
 
 from flask_detre.models.models import CountryCodes
+from flask_detre.utils.text_constants import (DATE_ARR)
+
 
 from werkzeug.utils import secure_filename
 from openpyxl import Workbook
@@ -67,7 +69,11 @@ def method_not_allowed(e):
     """
     return "Method not allowed.", 405
 
+@route_bp.route("/dates/constants")
 
+def date_constants():
+    
+    return jsonify({"result":DATE_ARR})
 
 @route_bp.route("/blog")
 def blog():
@@ -351,7 +357,7 @@ def data():
         dict_        = pe.get_dict(file_name=filename_)
         df           = pd.DataFrame(dict_)        
 
-        
+
         # Match the excel data types with pandas data types
         type_dict = {}
         for k,dtype in kv.items():
@@ -489,7 +495,12 @@ def data():
                          
                          action = form[key].split(":")[0].strip().lower()
                          item   = form[key].split(":")[1].strip().lower()
-                 
+                         
+                         if "date" in item:
+                             item = re.sub(r'[\d\()]+','',item).strip()
+                             date_fmt = form["text-date"].split(",")
+                    
+                         
                          if action == "remove":
                              remove_actions.append("remove")
                              remove_items.append(item)
@@ -524,7 +535,10 @@ def data():
                  
                  if len(extract_actions) > 0:
                      for action, item in zip(extract_actions,extract_items):
-                         text_data_extract = detre_text(df[clean_k],extract_actions,extract_items)
+                         if item!= "date":
+                             text_data_extract = detre_text(df[clean_k],extract_actions,extract_items)
+                         else:
+                             text_data_extract = detre_text(df[clean_k],extract_actions,extract_items,date_fmt=date_fmt)
                          
                          df_correct              = get_correct_values_as_series(text_data_extract)
                          df_incorrect            = get_incorrect_values_as_df(text_data_extract)
@@ -551,7 +565,7 @@ def data():
         session["all_columns"] = all_columns        
         return render_template('clean.html',
                                all_data=all_data, data_types = data_types,
-                               all_profile = all_profile)
+                               all_profile = all_profile,no_footer=True)
     
     return redirect(url_for("demo"))
 
@@ -817,10 +831,11 @@ def excel():
                     
                     # Make a series with new column name 
                     series = pd.Series(column_values,name=col)
+                    print(series)
                     #series.name(col)
-                    
+                    print(df)
                     # Join with df
-                    df = df.join(series)
+                    df = df.merge(series, left_index=True, right_index=True)
         else:
             return redirect(url_for("demo"))
         

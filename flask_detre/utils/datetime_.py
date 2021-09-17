@@ -6,7 +6,7 @@ Created on Wed Aug  4 14:07:10 2021
 """
 
 import pandas as pd
-
+import html
 from flask_detre.utils.time import time_update_value
 from flask_detre.utils.date import date_update_value
 
@@ -22,6 +22,7 @@ def detre_datetime(df):
     incorrect = []
     
     for idx, dt_value in enumerate(df):
+        dt_value = html.escape(str(dt_value))
         dt_value = str(dt_value).strip()
         try:
             result = pd.to_datetime(dt_value).strftime("%Y-%m-%d %H:%M:%S")

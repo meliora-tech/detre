@@ -115,17 +115,15 @@ list-style: none;
     <ul class="nav nav-pills nav-fill">
     {% for res in all_data %}
          {% for col in res.keys() %}
-            {% if loop.index == 1 %}
-                <li class="nav-item">
-                    <a  class="nav-link ml-4 active show" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
-                </li>
-            {% else %}
+           
                 <li class="nav-item">
                     <a  class="nav-link ml-4" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
-                </li>      
-            {% endif %}         
+                </li>
+ 
+                     
             
          {% endfor %}
+           
     {% endfor%}
       </ul>
 
@@ -140,23 +138,19 @@ list-style: none;
 <!-- Create the tab for each column -->
 {% for res in all_data %}
     {% for col in res.keys() %}
-    <div class="tab-pane fade" id="{{col}}-column" role="tabpanel" aria-labelledby="{{col}}-column-tab"> 
-            <ul class="nav nav-tabs" id="myTab-{{col}}" role="tablist">
             
-                        <li class="nav-item">
-                            <a class="nav-link active show" id="{{col}}-correct-tab" data-toggle="tab" href="#{{col}}-correct" role="tab" aria-controls="{{col}}" aria-selected="false">Correct</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="{{col}}-issues-tab" data-toggle="tab" href="#{{col}}-issues" role="tab" aria-controls="{{col}}" aria-selected="false">Issues</a>
-                        </li>
-                       <!-- <li class="nav-item">
-                            <a class="nav-link" id="{{col}}-guidance-tab" data-toggle="tab" href="#{{col}}-guidance" role="tab" aria-controls="{{col}}" aria-selected="false">Guidance</a>
-                        </li> --> 
-                        <li class="nav-item">
-                            <a class="nav-link" id="{{col}}-profile-tab" data-toggle="tab" href="#{{col}}-profile" role="tab" aria-controls="{{col}}" aria-selected="false">Profile</a>
-                        </li>             
-            </ul>
-        </div>
+        <div class="tab-pane fade" id="{{col}}-column" role="tabpanel" aria-labelledby="{{col}}-column-tab"> 
+                <ul class="nav nav-tabs" id="myTab-{{col}}" role="tablist">
+                
+                            <li class="nav-item">
+                                <a class="nav-link" id="{{col}}-correct-tab" data-toggle="tab" href="#{{col}}-correct" role="tab" aria-controls="{{col}}" aria-selected="false">Correct</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="{{col}}-issues-tab" data-toggle="tab" href="#{{col}}-issues" role="tab" aria-controls="{{col}}" aria-selected="false">Issues</a>
+                            </li>             
+                </ul>
+            </div>
+
     {% endfor %}
   {% endfor%}
 
@@ -221,8 +215,8 @@ list-style: none;
 
               <div class="" id='all-keys-phone' style="width: 400px;margin-left: 200px;" hidden>
                 <ul id="all-keyboard">
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:75px"><span class="off"  tabindex="-1">text[D]</span><span class="on">text[D]</span></li>
-                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">tel</span><span class="on">tel</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">x</span><span class="on">x</span></li>
+                    <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">+</span><span class="on">+</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">*</span><span class="on">*</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">d</span></li>
                     <li class="symbol" onclick="keyboardValue('all-{{col}}',this)" style="width:100px"><span class="off"  tabindex="-1">remove</span><span class="on">remove</span></li>
@@ -326,7 +320,7 @@ list-style: none;
                 <p style="font-weight: 900;">Incorrect values </p>
                         <table class="table table-responsive " id='incorrect-values'>
                             <thead>
-                                <th>  <input type="checkbox" onchange="checkAll()"> </th>
+                                <th>  <input type="checkbox" onchange="checkAll()"></th>
                                 <th>Your value</th>
                                 <th>Detre Guidance </th>
                                 <th>Updated Value</th>
@@ -374,8 +368,8 @@ list-style: none;
 
                                           <div class="" id='keys-{{values.row}}' hidden>
                                             <ul id="keyboard">
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off"  tabindex="-1">text[D]</span><span class="on">text[D]</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">tel</span><span class="on">tel</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">+</span><span class="on">+</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">x</span><span class="on">x</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">*</span><span class="on">*</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)"><span class="off"  tabindex="-1">d</span><span class="on">d</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:100px"><span class="off"  tabindex="-1">remove</span><span class="on">remove</span></li>
@@ -434,14 +428,15 @@ list-style: none;
                                           {% elif "url" in data_types[col] %}
                                           <div class="" id='keys-{{values.row}}' hidden>
                                             <ul id="keyboard">
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">domain</span></li>
+                                                <!--<li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">domain</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:105px"><span class="off" tabindex="-1">domain[text]</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off"  tabindex="-1">protocol</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">tld</span></li>
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">text</span></li> 
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">/</span></li> 
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">.</span></li> 
-                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">:</span></li>
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">tld</span></li> -->
+                                                <!-- <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">url</span></li>-->
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px" ><span class="off" tabindex="-1">text</span></li> 
+                                                <!--<li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px" ><span class="off" tabindex="-1">scheme</span></li> -->
+                                                <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">host</span></li> 
+                                                <!-- <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">:</span></li> -->
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" ><span class="off" tabindex="-1">*</span></li>
                                                 <li class="symbol" onclick="keyboardValue('{{col}}-row-{{values.row}}',this)" style="width:75px"><span class="off" tabindex="-1">remove</span></li>
                                             </ul>
@@ -507,6 +502,7 @@ list-style: none;
                                         </td>
                                        
                                         <td> <button class='btn submit' style="font-weight: 900;" onclick="submitChange('{{col}}-row-{{values.row}}','{{data_types[col]}}')"> Submit </button> </td>
+                                        <td id="empty-{{col}}-row-{{values.row}}" hidden></td>
                                     </tr>
                                     {% else %}
 
@@ -558,94 +554,7 @@ list-style: none;
               </div>
         </div>
 
-        <!-- Tab for Duplicates -->
-        <div class="tab-pane fade" id="{{col}}-profile" role="tabpanel" aria-labelledby="{{col}}-profile-tab">
-            <div class="container">
-                <div class="text-center mt-4">
-                    <h5> Profile based on correct values only </h5>
-                </div>
 
-                <br>
-                {% set _ = inner_count.append(1) %}
-                {% set count = inner_count| length %} 
-
-                 <div style="display: flex; border-radius: .25rem; flex-wrap: wrap;">
-                    <div class="col">
-                        <h2 style="font-size: .875rem; line-height: 1; font-weight: 500; white-space: nowrap;"> Duplicates</h2>
-                        <p style="font-size: 1.75rem; line-height: 1; margin-bottom: 0; white-space: nowrap;"> {{all_profile[count-1][col]['duplicates_total'] }} </p>
-                     </div>
-                     <div class="col">
-                        <h2 style="font-size: .875rem; line-height: 1; font-weight: 500; white-space: nowrap;"> Min</h2>
-                        <p style="font-size: 1.75rem; line-height: 1; margin-bottom: 0; white-space: nowrap;"> {{all_profile[count-1][col]['min'] }} </p>
-                     </div>
-                     <div class="col">
-                        <h2 style="font-size: .875rem; line-height: 1; font-weight: 500; white-space: nowrap;"> Max</h2>
-                        <p style="font-size: 1.75rem; line-height: 1; margin-bottom: 0; white-space: nowrap;"> {{all_profile[count-1][col]['max'] }} </p>
-                     </div>                    
-                     <div class="col">
-                        <h2 style="font-size: .875rem; line-height: 1; font-weight: 500; white-space: nowrap;"> Unique </h2>
-                        <p style="font-size: 1.75rem; line-height: 1; margin-bottom: 0; white-space: nowrap;"> {{all_profile[count-1][col]['n_unique'] }} </p>
-                     </div>
-
-                 </div>
-
-                 <br>
-                 <br>
-
-                 {% if all_profile[count-1][col]['duplicates_total'] != 0  %}
-                    {% if data_types[col] == "whole" or data_types[col] == "decimal" or data_types[col] == "currency" %}
-
-                        {% if all_profile[count-1][col] != [] %} 
-                            <table class="table table-responsive" id="profile-table">
-                                <thead>
-                                    <th> Value</th>
-                                    <th> Freq</th>
-                                </thead>
-                                <tbody>
-                                    {% for dict_item in all_profile[count-1][col]['freq']  %}
-                                        {% for key, value in dict_item.items() %} 
-                                            <tr> 
-                                                <td> {{key}} </td>
-                                                <td> {{value}}</td>
-                                            </tr>
-                                        {% endfor %}    
-                                    {% endfor %}
-                                </tbody>
-                            </table>  
-                            {% endif %}
-
-                        {% endif %}
-                {% endif %}
-
-
-                {% if data_types[col] == "phone"  or data_types[col] == "date" or data_types[col] == "datetime" or "text" in data_types[col]  %}
-                   
-                       {% if all_profile[count-1][col] != [] %} 
-                        <table class="table table-responsive" id="profile-table-text">
-                            <thead>
-                                <th> Value</th>
-                                <th> Cluster </th>
-                            </thead>
-                            <tbody>
-                                {% for key, value in all_profile[count-1][col]['text_cluster'].items()  %}
-                                    
-                                        <tr> 
-                                            <td> {{key}} </td>
-                                            <td> {{value}}</td>
-                                        </tr>
-                                    
-                                {% endfor %}
-                            </tbody>
-                        </table>  
-                        {% endif %}
-
-                {% endif %}
-
-                
-                
-                    
-            </div>
-      </div>
 
      {% endfor %}
   {% endfor%}
@@ -654,6 +563,13 @@ list-style: none;
 
 
   <script>
+
+      // No Footer
+     $(document).ready( function () {
+document.querySelector("footer").setAttribute("hidden","");
+     }); 
+
+
     // Correct values table  
     $(document).ready( function () {
        $('#correct-values').DataTable({
@@ -668,7 +584,7 @@ list-style: none;
        $('#incorrect-values').DataTable({
            select : true,
            bFilter: false 
-
+            
        });
      });     
 
@@ -749,13 +665,13 @@ list-style: none;
 
 
     function checkAll(){
-        console.log(' dd dd');
+      
     }
 
     function keyboardValue(id,e){
 
         // keep on focus
-       console.log(id);
+       
         document.getElementById(id).value +=  '' + e.querySelectorAll('span')[0].innerHTML;
 
         document.getElementById(id).focus();
@@ -772,7 +688,7 @@ list-style: none;
         // Manage for multiple changes
         if(for_all=='true'){
 
-            console.log("Multiple changes");
+            
             if(document.getElementById(input_id).value != ''){
 
                     // Remove for multiple
@@ -785,16 +701,28 @@ list-style: none;
                         let column_name = input_arr.slice(1,).join("-");
 
                         var rows  = [];
-                        document.getElementById(column_name+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
-                             
-                             if(element.style.backgroundColor == ''){
-                                rows.push(element.getAttribute('id').split("-")[1]);
+
+                        var s  =  document.getElementById(column_name+'-issues');
+
+                        //var all_unselected_rows = Object.values($("#"+column_name+'-issues' +' #incorrect-values').DataTable().tables().rows()["context"][0]["aIds"]);
+
+                        var total_pagination = $("#"+column_name+'-issues' +' #incorrect-values').DataTable().tables().page.info()["pages"];
+                        for(var i =1; i<total_pagination+1; i++){
+                                // Select the page
+                                document.querySelector("a[data-dt-idx='"+i+"']").click()
+
+                                document.getElementById(column_name+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
+                                
+                                if(element.style.backgroundColor == ''){
+                                    rows.push(element.getAttribute('id').split("-")[1]);
 
 
-                             }
+                                }
 
 
-                        });
+                            }); 
+                        }    
+
 
                         var data = "column="+column_name+'&'+
                                     "rows="+rows+'&'+
@@ -827,23 +755,34 @@ list-style: none;
                                     var all_results = final_result["result"];
                                     var all_rows    = final_result["row"];
 
-                                    console.log(all_rows)
+                                   
                                     // Message how many were changed.
                                     var p_elem  = document.getElementById("alert-result-message");
-                                    console.log(p_elem);
+                                   
                                     p_elem.innerHTML = count_ +" of " + total_count + " were changed";
                                     
                                     // Display alert message for x seconds
                                     alertAutoDisplayAndClose(column_name)
                                     
 
-
+                                    var dt_idx=0;
+                                    var page_length = $("#"+column_name+'-issues' +' #incorrect-values').DataTable().tables().page.info()["length"];
                                     for(var i=0;i<all_results.length;i++){
                                         var result = all_results[i];
+                                         
+                                        if(i==0){
+                                            dt_idx += 1;
+                                        } else if(i%page_length==0){
+                                            dt_idx += 1;
+                                        }
 
                                         if(result!='None' && result!= null && result!= undefined){
                                             var row  = all_rows[i];
-                                            console.log(row);
+
+
+                                            document.querySelector("a[data-dt-idx='"+dt_idx+"']").click()
+
+                                            console.log(document.getElementById("update-"+row).innerText);
                                             document.getElementById("update-"+row).innerText = result;
                                 
                                             // Check if the button already exists
@@ -965,7 +904,7 @@ list-style: none;
 
     // Accept change
     function acceptChange(id,column_name){
-        console.log(column_name);
+      
         // Confirm change has been accepted
         var url       = window.location.protocol +"//" +location.host;
         var row       = document.getElementById('row-'+id);
@@ -1035,7 +974,7 @@ list-style: none;
     document.getElementById(column+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
                              element.removeAttribute("hidden");   
                              var element_td_count = element.querySelectorAll('td').length;   
-                             if(element.style.backgroundColor == '' && element_td_count == 7){
+                             if(element.style.backgroundColor == '' && element_td_count == 8){
                                 //rows.push(element.getAttribute('id').split("-")[1]);
                                 element.style.backgroundColor = '#b8ebd0';
 
@@ -1054,7 +993,7 @@ list-style: none;
                             element.removeAttribute("hidden");
 
                              var element_td_count = element.querySelectorAll('td').length;   
-                             if(element.style.backgroundColor == '' && element_td_count == 7){
+                             if(element.style.backgroundColor == '' && element_td_count == 8){
                                 element.style.backgroundColor = '';
 
                                 // remove `accept` btn
@@ -1072,7 +1011,7 @@ list-style: none;
    }     
   
    function matchesOnly(column){
-            console.log(document.getElementById(column+"-matches").innerHTML== "View all")
+           
             if(document.getElementById(column+"-matches").innerHTML == "View all" ){
                
                 document.getElementById(column+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
@@ -1088,7 +1027,7 @@ list-style: none;
                 document.getElementById(column+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
 
                         var element_td_count = element.querySelectorAll('td').length;   
-                        if(element.style.backgroundColor == '' && element_td_count == 6){
+                        if(element.style.backgroundColor == '' && element_td_count == 7){
                             element.setAttribute("hidden","");
 
 

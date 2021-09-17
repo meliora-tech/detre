@@ -6,8 +6,6 @@
 <link rel="icon" href="{{url_for('static',filename='assets/images/favicon/favicon-32x32.png')}}" sizes="32x32" type="image/png">
 
 
-
-
 <linK rel='stylesheet' href='{{url_for("static",filename="css/dropzone.min.css") }}'>
 <linK rel='stylesheet' href='{{url_for("static",filename="css/home.css") }}'>
 
@@ -16,11 +14,16 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- <style>
     .footerfix{height:4rem;}
 footer{
@@ -38,10 +41,11 @@ footer{
         font-family: 'Poppins', sans-serif !important;
         height: 100%
     }
-    .footerfix{    min-height: 100%;
-    position:relative;}
+  /* .footerfix{    min-height: 100%;
+    position:relative;}*/
+
 footer{
-  position: fixed;
+  position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
@@ -49,7 +53,6 @@ footer{
   
     width:100%;
 }
-
 </style>
 
 {% block custom_head %}
@@ -60,7 +63,7 @@ footer{
 </head>
 
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- Navbar section -->
     <section>    
         <nav class="navbar" style="background-color: #faf8f5;">

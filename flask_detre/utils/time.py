@@ -7,6 +7,7 @@ Created on Mon Aug  2 16:12:42 2021
 
 import pandas as pd
 import re
+import html
 
 # Convert the given string in time to H:M:S
 def convert_to_time(time_str,format_):
@@ -47,7 +48,7 @@ def detre_time(df):
     incorrect = []
     
     for idx, time_value in enumerate(df):
-        
+        time_value = html.escape(str(time_value))
         time_value = str(time_value).strip()
         try:
             result = convert_to_time(time_value, format_=None)

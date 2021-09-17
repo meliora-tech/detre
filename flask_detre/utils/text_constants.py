@@ -8,6 +8,40 @@ Created on Tue Aug 17 18:43:36 2021
 import re
 import unicodedata
 import sys
+import itertools 
+
+
+date_arr = []
+YEARS_CONSTANT  = ["YY","YYYY"]
+MONTHS_CONSTANT = ["M","MM","MMM"]
+DAYS_CONSTANT   = ["D","DD"]
+DATE_CHAR       = ["-"," ","/","."]
+
+
+
+# Year, month, day
+for i in itertools.product(YEARS_CONSTANT,MONTHS_CONSTANT,DAYS_CONSTANT):
+    for char in DATE_CHAR:
+        date_arr.append(char.join(i))
+        
+# Year, day, month    
+for i in itertools.product(YEARS_CONSTANT,DAYS_CONSTANT,MONTHS_CONSTANT):
+    for char in DATE_CHAR:
+        date_arr.append(char.join(i))
+
+#  month, day, year
+for i in itertools.product(MONTHS_CONSTANT,DAYS_CONSTANT,YEARS_CONSTANT):
+    for char in DATE_CHAR:
+        date_arr.append(char.join(i))
+
+# day, month, year    
+for i in itertools.product(DAYS_CONSTANT,MONTHS_CONSTANT,YEARS_CONSTANT):
+    for char in DATE_CHAR:
+        date_arr.append(char.join(i))    
+    
+
+DATE_ARR = date_arr
+
 
 EMAIL_REGEX = re.compile(
     r"(?:^|(?<=[^\w@.)]))([\w+-](\.(?!\.))?)*?[\w+-](@|[(<{\[]at[)>}\]])(?:(?:[a-z\\u00a1-\\uffff0-9]-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\.(?:[a-z\\u00a1-\\uffff0-9]-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\.(?:[a-z\\u00a1-\\uffff]{2,}))?",
@@ -27,6 +61,7 @@ URL_DOMAIN_TLD_REGEX = re.compile(
 
 # Url 
 URL_REGEX = re.compile(
+   
     r"(?:^|(?<![\w\/\.]))"
     # protocol identifier
     # r"(?:(?:https?|ftp)://)"  <-- alt?
@@ -64,6 +99,10 @@ URL_REGEX = re.compile(
 )
 
 
+# Numbers
+NUMBERS_REGEX = re.compile(
+    r"(?:^|(?<=[^\w,.]))[+–-]?(([1-9]\d{0,2}(,\d{3})+(\.\d*)?)|([1-9]\d{0,2}([ .]\d{3})+(,\d*)?)|(\d*?[.,]\d+)|\d+)(?:$|(?=\b))"
+)
 
 # Replace punct with ""
 PUNCT_TRANSLATE_UNICODE = dict.fromkeys(
@@ -75,3 +114,17 @@ PUNCT_TRANSLATE_UNICODE = dict.fromkeys(
 PHONE_REGEX = re.compile(
     r"((?:^|(?<=[^\w)]))(((\+?[01])|(\+\d{2}))[ .-]?)?(\(?\d{3,4}\)?/?[ .-]?)?(\d{3}[ .-]?\d{4})(\s?(?:ext\.?|[#x-])\s?\d{2,6})?(?:$|(?=\W)))|\+?\d{4,5}[ .-/]\d{6,9}"
 )
+
+
+PHONE_REGEX_ = re.compile(
+  
+   r'(\+?[-()\s\d]+?)+'
+    )
+
+PHONE_REGEX_UNIVERSAL = re.compile(
+  
+   r"(\+\d{1,3}( )?|\+\s\d{1,3}\s|\+\s?\d{1,3}\s?\(\d{1,2}\)|\(?\d{1,2}-?\)?\s?)?((\(\d{1,3}\))|\d{1,3})[- .]?\d{3,4}[- .]?\d{4,}"
+    )
+
+
+ # r'\+?[-()\s\d]+?(?=\s*[+<])'

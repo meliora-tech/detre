@@ -8,6 +8,7 @@ Created on Mon Aug 16 13:29:22 2021
 import pandas as pd
 import pycountry
 import re
+import html
 
 
 def detre_country(df):
@@ -17,7 +18,7 @@ def detre_country(df):
     incorrect = []    
     
     for idx, v in enumerate(df):
-        
+        v    = html.escape(str(v)) 
         v    = re.sub("[^A-Za-z ]","",str(v)).lower()
         
         if v == "" or v == " ":

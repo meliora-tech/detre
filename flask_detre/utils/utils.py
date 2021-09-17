@@ -5,6 +5,7 @@ Created on Sun Jul 18 15:53:15 2021
 @author: Detre
 """
 
+import html
 import pandas as pd
 import re
 from collections import Counter
@@ -279,9 +280,12 @@ def text_no_char(value:str,action:str):
     
 
 def text_and_char(value:str, action:str):
+    
     if action.find('b') == -1 and action.find('B') == -1: # Both are not present
+        
         alpha_pattern = re.compile(r'[A-Za-z]+')                
         new_value     = get_value(value,action,[],alpha_pattern,'')
+        
         return new_value
         
         
@@ -315,21 +319,22 @@ def get_value(value:str,action:str,months_found:list,alpha_pattern:str,directive
     update_value   = value if len(months_found) == 0 else value.lower().replace(months_found[0],'') 
     found_alpha    = alpha_pattern.findall(update_value)     
     clean_value    = update_value
-    
+    print(clean_value)
     for w in found_alpha:
         clean_value = clean_value.replace(w,'')
         
     clean_value = clean_value.strip()    
-    
-    punc_pattern = re.compile(r'[^\d\w]+')
+    print(clean_value)
+    punc_pattern = re.compile(r'[^\d]+') # Prev r'[^\d\w]+'
     matches = punc_pattern.findall(clean_value)
     
     for char in matches:
         clean_value = clean_value.replace(char,'') 
+    print(clean_value)
     
     clean_action = action.replace('text','').strip()
     clean_action = clean_action.replace("*",'').strip()
-    
+    print(clean_action)
     
     action_format = ''
     
@@ -381,6 +386,7 @@ def detre_date(df,format_):
     #format_  = "%Y-%m-%d"
     pattern = re.compile(r'[\D]+')
     for idx,v in enumerate(df):
+        v = html.escape(str(v))
         try:
             #df.astype({"datetime":"datetime64[ns]"})
             #print(pd.to_datetime(v))

@@ -6,6 +6,7 @@ Created on Fri Jul 30 10:56:46 2021
 """
 
 import re
+import html
 from flask import session
 
 
@@ -23,7 +24,7 @@ def detre_phone(df,country_code):
     
     
     for idx,v in enumerate(df):
-        
+        v = html.escape(str(v))
         ans,value = phone_number(str(v), country_code)
         
         if ans == "incorrect":
@@ -241,9 +242,56 @@ def phone_update_value(value,action,data_type):
     Main function used to update phone number based on the user given `action`
     """
     
+    # Check if only acceptable tokens provide
     
-    if "tel" in action and "d" in action:  # Not supported yet.  User has to choose "tel" or "d"
-        return None
+    # for token in action:
+    #     if token not in ["+","x","*","d","text"]:
+            
+    #         return None
+    
+    if data_type == "text-phone":
+        if "remove" in action:
+            return "remove"
+        
+        if "+" in action:
+            action = action.replace('+',"[\+]?").strip()  
+      
+        if "text" in action:
+            action = action.replace('text',"").strip()
+            value  = re.sub("[A-Za-z]+?","",value).strip()
+    
+            
+        if "d" in action:
+            
+            action = action.replace('d',"\\d").strip()
+            
+        if "*" in action:
+            
+            action = action.replace("*","[\.\-\\s\( \)]+?").strip()
+        
+        #action_pattern = re.compile(action)
+        ans = [m.group() for m in re.finditer(action, value)]
+       
+        if len(ans) > 0:
+            all_numbers = ''
+            digits_pattern    = re.compile("[^\D]+") 
+            
+            for idx,num in enumerate(ans):
+                all_digits = re.findall(digits_pattern,num)
+               
+                if len(all_digits) > 0:
+                    if len("".join(all_digits)) >= 9:
+                        print("".join(all_digits))
+                        if all_numbers == '':
+                            all_numbers+= num
+                        else:
+                            all_numbers+= ', ' + num
+                
+                    
+            return all_numbers                
+        else:
+            return None
+    
     
     
     if "text[D]" in action and "tel" in action and "*" not in action:
@@ -343,12 +391,12 @@ def phone_update_value(value,action,data_type):
                         else: # The next text[D] is not adjacent (i.e. next) to the first one
                            
                              
-                             if text_digits_idx[mid_tel_count-1] == 0:
-                                 step = (idx - text_digits_idx[mid_tel_count-1])%7 + 2
-                             else:
-                                 step = (idx - text_digits_idx[mid_tel_count-1])%7 + 1
+                              if text_digits_idx[mid_tel_count-1] == 0:
+                                  step = (idx - text_digits_idx[mid_tel_count-1])%7 + 2
+                              else:
+                                  step = (idx - text_digits_idx[mid_tel_count-1])%7 + 1
                                  
-                             remove_numbers.append(text_digits_idx[mid_tel_count-1] + step)
+                              remove_numbers.append(text_digits_idx[mid_tel_count-1] + step)
                           
                         mid_tel_total+=1
         
@@ -385,5 +433,5 @@ def phone_update_value(value,action,data_type):
         return "remove"
         
 if __name__ == "__main__":
-
+    phone_update_value('df.info +1 (415)-555-1212"','text*+d*ddd*ddd*dddd','phone')
     phone_number("27608314773", "27")        

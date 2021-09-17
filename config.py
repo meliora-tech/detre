@@ -13,6 +13,14 @@ basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
 
+class ProdConfig:
+    pass
+
+
+class StagingConfig:
+    pass
+
+
 
 class DevConfig:
     

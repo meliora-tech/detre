@@ -7,7 +7,7 @@ Created on Fri Aug 20 14:31:21 2021
 
 import pandas as pd
 import re
-
+import html
 
 def detre_wnumber(df):
     
@@ -20,7 +20,7 @@ def detre_wnumber(df):
     df_clean = df.apply(lambda x: re.sub("[^0-9,\.]",'',x))
     
     for idx, v in enumerate(df_clean):
-        
+        v  = html.escape(str(v))
         try:
             value  = int(v) 
             correct_.append({"row":idx,"value":v,"detre":value})
