@@ -10,7 +10,8 @@
           
         <form action="{{url_for('route_bp.upload_file')}}"
         class="dropzone"
-        id="myAwesomeDropzone" placeholder="Drop file here to upload" style="border-radius: 5px; border-color: #8D5A97;border-style: dashed;">
+        id="myAwesomeDropzone" placeholder="Drop file here to upload" style="border-radius: 5px; border-color: #8D5A97;border-style: dashed;" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
         <div class="dz-message">  
             Drop `xlsx` or `csv` file here to upload (max 1000 rows).  First row must be column names.
         </div>
@@ -18,7 +19,8 @@
             <input id="fallback-file" name="file" type="file" onchange="showProceed()" />
         </div>
         <div class="fallback">
-            <input name="file" type="file" onchange="showProceed()" />
+            <input name="file" type="file" onchange="showProceed()"/>
+
         </div>
 
         </form>

@@ -9,7 +9,8 @@
           
         <form action="{{url_for('route_bp.survey')}}"
         class="dropzone"
-        id="myAwesomeDropzone" placeholder="Drop file here to upload" style="border-radius: 5px; border-color: #B8EBD0;border-style: dashed;">
+        id="myAwesomeDropzone" placeholder="Drop file here to upload" style="border-radius: 5px; border-color: #B8EBD0;border-style: dashed;" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
         <div class="dz-message">
             Drop `Survey Monkey` file here to upload
         </div>

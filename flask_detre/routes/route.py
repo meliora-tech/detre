@@ -14,15 +14,17 @@ import os
 import re
 import json
 import uuid
+import logging
 
 import pyexcel as pe
 from pyexcel_xlsx import get_data
 
-
+#from flask_detre import db
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from flask import Blueprint,Flask, flash ,request, jsonify, render_template, url_for, redirect,send_file, session
-from flask_detre.utils.utils import (detre_date, get_correct_values_as_series, get_data_profile, get_incorrect_values_as_df)
+from flask_detre.utils.utils import (detre_date, get_correct_values_as_series, get_data_profile, 
+                                     get_incorrect_values_as_df)
 from flask_detre.utils.detre_update_values import (detre_update_value, detre_update_multiple_values)
 from flask_detre.utils.phone_number import detre_phone
 from flask_detre.utils.time import detre_time
@@ -35,23 +37,33 @@ from flask_detre.utils.whole_number import detre_wnumber
 from flask_detre.utils.decimal import detre_decimal
 from flask_detre.utils.survey_monkey import survey_monkey_analysis
 
-
+from flask_detre.models.models import EarlyAccess
 from flask_detre.models.models import CountryCodes
 from flask_detre.utils.text_constants import (DATE_ARR)
 
+from flask_detre.utils.db_session import session_scope
 
 from werkzeug.utils import secure_filename
 from openpyxl import Workbook
 from io import BytesIO
 
 
-BLOG_URL = "http://127.0.0.1:8000"
 
+from flask_detre.forms.forms import (EarlyAccessForm, SurveyMonkeyForm, DetreUploadForm)
+
+
+#from defusedxml.ElementTree import parse, fromstring
+# Directory of the current file
+dirname = os.path.dirname(__file__)
+
+BLOG_URL = "http://127.0.0.1:8000"
+LOG_FILE = os.path.join(dirname.replace("\\routes",'\\logs'),'app.log')
+logging.basicConfig(level=logging.DEBUG,filename=LOG_FILE, format='%(asctime)s %(name)s %(levelname)s:%(message)s')
+logger = logging.getLogger(__name__)
 route_bp  = Blueprint("route_bp",__name__)
 
 #db.create_all()
-# Directory of the current file
-dirname = os.path.dirname(__file__)
+
 
 @route_bp.errorhandler(413)
 def too_large(e):
@@ -59,6 +71,7 @@ def too_large(e):
     Error handling when a large file has been uploaded
     
     """
+    logger.error("Large file uploaded")
     return "File size is large", 413
 
 
@@ -67,12 +80,15 @@ def method_not_allowed(e):
     """
     Handle for 405 error
     """
+    logger.error("Method not allowed error." + str(e))
     return "Method not allowed.", 405
 
 @route_bp.route("/dates/constants")
 
 def date_constants():
-    
+    """
+    Get all the date formats from which the user can select for `extract` date
+    """
     return jsonify({"result":DATE_ARR})
 
 @route_bp.route("/blog")
@@ -113,7 +129,8 @@ def upload_file():
     
     GET: Display the home screen
     """
-    if request.method == 'POST':
+    
+    if request.method == 'POST' and session["detre_csrf"] == request.form['csrf_token']:
         file =  request.files['file']
         
         all_names = []
@@ -146,7 +163,7 @@ def upload_file():
                 
             return redirect(url_for("route_bp.data_columns")), 204         
         except Exception as e:
-            
+            logger.exception("Upload file error: " + str(e))
             return redirect(url_for("route_bp.upload_file")), 401
         
         
@@ -161,7 +178,25 @@ def early_access():
     
     POST: {}
     """
-    return render_template("early_access.html")
+    
+    form = EarlyAccessForm()
+    if form.validate_on_submit():
+        email       = form.data['email']
+        launch_sub  = form.data['launch_sub']
+        letter_sub  = form.data['letter_sub']
+        
+        
+        with session_scope() as session:
+            early_access = EarlyAccess(email=email,launch_sub=launch_sub,letter_sub=letter_sub)
+            
+            session.add(early_access)
+            
+        
+    
+    
+    
+    
+    return render_template("early_access.html",form=form)
 
 @route_bp.route("/demo", methods=['GET'])
 def demo():
@@ -170,6 +205,8 @@ def demo():
      POST: Handle the uploaded file
      GET:
     """
+    form = DetreUploadForm()
+    
     if request.method == 'POST':
         file =  request.files['file']
         
@@ -214,7 +251,8 @@ def demo():
             
         return '', 204 #data_xls.to_html()    
     
-    return render_template("demo.html")
+    session["detre_csrf"] = form.csrf_token.current_token
+    return render_template("demo.html",form=form)
 
 
 
@@ -224,16 +262,24 @@ def survey():
     POST : Handle the uploaded Survey Monkey file
     GET  : Upload page for `Survey Monkey` file.
     """
-    if request.method == "POST":
+    
+    form = SurveyMonkeyForm()
+    if request.method == "POST" and session['user_csrf'] == request.form['csrf_token'] :
         file = request.files['file']
         
         f    = secure_filename(file.filename)
+        
+        # Check if its secure
+        
+        
         
         f  = str(uuid.uuid4()) + "- " + f
         # save to temp folder
         file.save(os.path.join(dirname.replace("\\routes",''),'temp',f))
         
         filename_    = os.path.join(dirname.replace("\\routes",''),'temp',f) 
+        
+
         survey_df    = pd.read_excel(filename_, header=[0,1])
         
         # Check if indeed a survey monkey file
@@ -248,8 +294,8 @@ def survey():
              flash(url_for("survey"),"Not a Survey Monkey survey")
              return redirect(url_for("route_bp.survey"))
         
-    
-    return render_template("survey.html")
+    session['user_csrf'] = form.csrf_token.current_token
+    return render_template("survey.html",form=form)
 
 @route_bp.route("/survey/analysis", methods=["GET"])
 def survey_analysis():
@@ -272,8 +318,8 @@ def survey_analysis():
            return send_file(file_, attachment_filename="Clean Survey Monkey Output.xlsx", as_attachment=True), 200
        
        except Exception as e:
-             
-             flash(url_for("survey"),"Something went wrong while cleaning your survey.")
+             logger.exception("Survey monkey analysis error: "+ str(e))
+             flash(url_for("route_bp.survey"),"Something went wrong while cleaning your survey.")
              return redirect(url_for("route_bp.survey"))           
        
     else:
@@ -311,7 +357,7 @@ def data_columns():
     return render_template("results.html",results= all_names  )
         
         
-@route_bp.route("/data", methods=["POST"])
+@route_bp.route("/data", methods=["GET","POST"])
 def data():
     """
     Main function to run the data profile, find issues and correct values base on the given column type provided by
@@ -527,7 +573,12 @@ def data():
                      all_columns.append(clean_k)                     
                  
                  if len(remove_actions) > 0:
-                     text_data_remove  = detre_text(df[clean_k], remove_actions, remove_items)
+                     for action, item in zip(remove_actions,remove_items):
+                         if item != "date":
+                             text_data_remove  = detre_text(df[clean_k], remove_actions, remove_items)
+                         else:
+                            text_data_remove  = detre_text(df[clean_k], remove_actions, remove_items,date_fmt=date_fmt)
+                        
                      all_data.append({clean_k:text_data_remove})
                      data_types[clean_k] = "text"
                      
@@ -567,7 +618,9 @@ def data():
                                all_data=all_data, data_types = data_types,
                                all_profile = all_profile,no_footer=True)
     
-    return redirect(url_for("demo"))
+    # 
+    
+    return redirect(url_for("route_bp.demo"))
 
 
 @route_bp.route("/update/value", methods=["POST"])
@@ -831,9 +884,9 @@ def excel():
                     
                     # Make a series with new column name 
                     series = pd.Series(column_values,name=col)
-                    print(series)
+                    
                     #series.name(col)
-                    print(df)
+                   
                     # Join with df
                     df = df.merge(series, left_index=True, right_index=True)
         else:

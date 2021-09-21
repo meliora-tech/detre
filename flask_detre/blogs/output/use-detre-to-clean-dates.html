@@ -154,8 +154,39 @@ no standard click, click, click would solve the problem.  </p>
 </ol>
 <p>The user will provide the guide as to what attributes are present in the given messy date.  For example, <code>8/12/04 (scholarship)</code>
 has numbers (i.e. 8,12,04), special characters (i.e. /, (, and ) ) and text (i.e. scholarship) and the task for Detre would be
-to remove the special characters and text while interpreting the numbers as a date. Fortunately, the ISO 8601 standard, used
-universally, has symbols to represent days, months and years. The date <code>8/12/04</code> is 'd/m/y' in ISO 8601 format. For Detre to clean the messy date data, the user would provide the following guidance:   d<em>m</em>y<em>text</em>. In the table below, we show the user's hint for each messy date.   The user can change dirty dates with the same pattern at one go as well. </p>
+to remove the special characters and text while interpreting the numbers as a date. Fortunately, the ISO 8601 standard, used universally, has symbols to represent days, months and years. The date <code>8/12/04</code> is 'm/d/y' in ISO 8601 format. For Detre to clean the messy date data, the user would provide the following guidance:   d<em>m</em>y<em>text</em>. In the table below, we show the user's hint for each messy date.   The user can change dirty dates with the same pattern at one go as well. </p>
+<table>
+<thead>
+<tr>
+<th>Messy date</th>
+<th>Detre Gudiance</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nov,`02</td>
+<td>b**y</td>
+<td>2002-11-01</td>
+</tr>
+<tr>
+<td>Jan/Feb 2011</td>
+<td>b*bY</td>
+<td>2011-01-01</td>
+</tr>
+<tr>
+<td>8/12/04 (scholarship)</td>
+<td>mdytext</td>
+<td>2004-08-12</td>
+</tr>
+<tr>
+<td>Deposited money in 2001</td>
+<td>textY</td>
+<td>2001-01-01</td>
+</tr>
+</tbody>
+</table>
+<p>To see the transformations in action, you can watch it on our <a href="https://www.youtube.com/channel/UCB4xcEMbw-0-pLzKfvDHFbw">Youtube channel</a></p>
 <p>The platform, now, makes certain assumptions related to messy dates.  First, there are no spelling mistakes for the months. Second, there are no multiple dates in the field and if there is, then use the first one. Third,
 all numbers are related to dates. These a quite strong assumptions given how messy dates are in the wild. We are working on fixing this.</p>
 <p>As we have shown, Detre can indeed help to clean your messy dates with relative ease. Cleaning data with ease is in line with our mission to <code>half the time spent on data cleaning</code>. Are you ready to join?

@@ -12,15 +12,15 @@ from flask_detre.utils.phone_number import phone_update_value
 import pandas as pd
 
 
-
-def test_text_remove():
-   """
-   Test when remove placed for given text 
-   """     
-   df     = pd.Series(["asd ad ntuthuko@asd.com da asdad www.loop.com www.lty.com - a1 $ 3.,,,"])
-   values = detre_text(df,["remove","remove","remove"],["url","email","punct"])
+# Can only remove one at a time
+# def test_text_remove():
+#    """
+#    Test when remove placed for given text 
+#    """     
+#    df     = pd.Series(["asd ad ntuthuko@asd.com da asdad www.loop.com www.lty.com - a1 $ 3.,,,"])
+#    values = detre_text(df,["remove","remove","remove"],["url","email","punct"])
    
-   assert values[0]['correct'][0]['detre'] == 'asd ad  da asdad    a1 $ 3'
+#    assert values[0]['correct'][0]['detre'] == 'asd ad  da asdad    a1 $ 3'
    
    
 def test_text_extract_url():
@@ -62,14 +62,14 @@ def test_text_extract_phone_number():
     assert values[0]['correct'][3]['detre'] == '+1 (415)-555-1212'
 
 
-def test_text_date_extract():
+def test_text_extract_date():
     """
     Test when date is extracted from text 
     """    
     
-    df      = pd.Series(["2021-12-13 asd asd ads","zero (eg: 03/12/2008","Single digit months can start with a leading zero (eg: 03/12/2008)",
+    df      = pd.Series(["2021-12-13 asd asd ads","zero (eg: 03/12/2008","Single digit months can start with a leading zero (eg: 2008/03/12)",
                          "CANNOT include February 30 or February 31 (eg: 2/31/2008)"])
-    values  = detre_text(df,["extract"],["date"],[0,1,2,3,4])
+    values  = detre_text(df,["extract"],["date"],["36","37","38"])
     
     assert  values[0]['correct'][0]['detre']   == '2021-12-13'
     assert  values[0]['correct'][1]['detre']   == '2008-03-12'
@@ -107,7 +107,80 @@ def test_text_extract_phone_update():
 
 
 
+def test_text_remove_url():
+    """
+    Test to remove URL
+    """
+    df      = pd.Series(["asdas (035) 845 7895","asd asdasd","+135 111 111 1111 asdasd adasd ad www.google.com",
+                         "detre@gmail.com +44 457 894 4444 at 11 Best street", "Recorded at 2021/05/08" ])
     
+    values  = detre_text(df,["remove"],["url"])
+    
+    assert  values[0]['correct'][0]['detre']   == '+135 111 111 1111 asdasd adasd ad '
+    assert  values[0]['correct'][0]['value']   ==  '+135 111 111 1111 asdasd adasd ad www.google.com'
+
+
+def test_text_remove_phone_number():
+    """
+    Test to remove phone number
+    """
+    
+    df      = pd.Series(["asdas (035) 845 7895","asd asdasd","+135 111 111 1111 asdasd adasd ad www.google.com",
+                         "detre@gmail.com +44 457 894 4444 at 11 Best street", "Recorded at 2021/05/08" ])
+    
+    values  = detre_text(df,["remove"],["phone"])
+    
+    assert  values[0]['correct'][0]['detre']   == 'asdas '
+    assert  values[0]['correct'][0]['value']   ==  'asdas (035) 845 7895'
+
+
+def test_text_remove_punct():
+    
+    """
+    Test to remove punctuation
+    """
+    pass
+
+
+def test_text_remove_email():
+    """
+    Test to remove email
+    """
+    
+    df      = pd.Series(["asdas (035) 845 7895","asd asdasd","+135 111 111 1111 asdasd adasd ad www.google.com",
+                         "detre@gmail.com +44 457 894 4444 at 11 Best street", "Recorded at 2021/05/08" ])
+    
+    values  = detre_text(df,["remove"],["email"])
+    
+    assert  values[0]['correct'][0]['detre']   == ' +44 457 894 4444 at 11 Best street'
+    
+
+def test_text_remove_numbers():
+    """
+    Test to remove numbers
+    """
+    
+    df      = pd.Series(["asdas (035) 845 7895","asd asdasd","+135 111 111 1111 asdasd adasd ad www.google.com",
+                         "detre@gmail.com +44 457 894 4444 at 11 Best street", "Recorded at 2021/05/08" ])
+    
+    values  = detre_text(df,["remove"],["numbers"])
+    
+    assert  values[1]['incorrect'][0]['value']   == 'asd asdasd'
+    assert  values[0]['correct'][0]['detre']     == 'asdas ()  '
+
+
+def test_text_remove_date():
+    """
+    Test to remove date
+    """
+    df      = pd.Series(["asdas (035) 845 7895","asd asdasd","+135 111 111 1111 asdasd adasd ad www.google.com",
+                         "detre@gmail.com +44 457 894 4444 at 11 Best street", "Recorded at 2021/05/08" ])
+    
+    values  = detre_text(df,["remove"],["date"],["36","37","38"])
+    
+    assert  values[0]['correct'][0]['detre']     == '2021-05-08'
+
+
     
     
     

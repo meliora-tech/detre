@@ -9,3 +9,11 @@ consistent structure. In sone instances, its day/month/year and in other cases i
 
 Such a request is common that there should be a button one click which produces reasonable results. In the table,
 we list some of the `common edge cases` we have come across.
+
+
+surveys: https://visit.figure-eight.com/rs/416-ZBE-142/images/Crowdflower_Data_Scientist_Survey2015.pdf
+         https://visit.figure-eight.com/rs/416-ZBE-142/images/CrowdFlower_DataScienceReport_2016.pdf
+        https://visit.figure-eight.com/rs/416-ZBE-142/images/CrowdFlower_DataScienceReport.pdf
+        https://www.anaconda.com/state-of-data-science-2020?utm_medium=press&utm_source=anaconda&utm_campaign=sods-2020&utm_content=report
+        
+        https://blog.ldodds.com/2020/01/31/do-data-scientists-spend-80-of-their-time-cleaning-data-turns-out-no/

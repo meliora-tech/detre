@@ -14,3 +14,13 @@ class CountryCodes(db.Model):
     phone_code   = db.Column(db.String(255))
     country_code = db.Column(db.String(255))
     
+    
+class EarlyAccess(db.Model):
+    
+    id         = db.Column(db.Integer, primary_key=True)
+    email      = db.Column(db.String(255))
+    launch_sub = db.Column(db.Boolean)
+    letter_sub = db.Column(db.Boolean)
+    
+    
+    

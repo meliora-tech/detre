@@ -15,18 +15,18 @@
     <script src="http://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"> </script>
 
     <style>
-  .form-input{
-    
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  }
+        .form-input{
+            
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
 
 
         #keyboard, #all-keyboard {
@@ -113,16 +113,24 @@ list-style: none;
 
 <div class="container text-center">
     <ul class="nav nav-pills nav-fill">
+    {% set inner_count = 1  %}   
     {% for res in all_data %}
-         {% for col in res.keys() %}
-           
-                <li class="nav-item">
-                    <a  class="nav-link ml-4" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
-                </li>
- 
-                     
-            
-         {% endfor %}
+
+            {% for col in res.keys() %}
+                    
+                    <li class="nav-item">
+                        
+                        
+                           
+                          <a  class="nav-link ml-4" id="{{col}}-column-tab" data-toggle="tab" href="#{{col}}-column" role="tab" aria-controls="{{col}}-column" aria-selected="false" style="background-color: #8D5A97;color: #f9f9f9;width:250px;margin-top:8px" >{{col}}</a>
+                       
+                           
+                         
+                        
+                          
+                    </li>    
+
+            {% endfor %}
            
     {% endfor%}
       </ul>
@@ -523,7 +531,7 @@ list-style: none;
             <div class="container"> 
                 <br>
                 <br>
-                <table class="table table-responsive" id="correct-values"   >
+                <table class="table table-responsive" id="correct-values">
                     <thead>
                         <th>Your value </th>
                         <th>Detre value </th>
@@ -543,7 +551,6 @@ list-style: none;
                     </tbody>
                 </table>
             </div>
-
         </div> 
 
         <!-- Tab for Guidance -->
@@ -565,8 +572,8 @@ list-style: none;
   <script>
 
       // No Footer
-     $(document).ready( function () {
-document.querySelector("footer").setAttribute("hidden","");
+     $(document).ready( function () {       
+            document.querySelector("footer").setAttribute("hidden","");
      }); 
 
 
@@ -707,6 +714,7 @@ document.querySelector("footer").setAttribute("hidden","");
                         //var all_unselected_rows = Object.values($("#"+column_name+'-issues' +' #incorrect-values').DataTable().tables().rows()["context"][0]["aIds"]);
 
                         var total_pagination = $("#"+column_name+'-issues' +' #incorrect-values').DataTable().tables().page.info()["pages"];
+
                         for(var i =1; i<total_pagination+1; i++){
                                 // Select the page
                                 document.querySelector("a[data-dt-idx='"+i+"']").click()
@@ -782,7 +790,6 @@ document.querySelector("footer").setAttribute("hidden","");
 
                                             document.querySelector("a[data-dt-idx='"+dt_idx+"']").click()
 
-                                            console.log(document.getElementById("update-"+row).innerText);
                                             document.getElementById("update-"+row).innerText = result;
                                 
                                             // Check if the button already exists
@@ -916,7 +923,8 @@ document.querySelector("footer").setAttribute("hidden","");
             'old_value='+tds[1].innerText+'&'+
             'column_name='+column_name
         
-        
+
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
@@ -971,41 +979,60 @@ document.querySelector("footer").setAttribute("hidden","");
    } 
 
    function acceptAll(column){
-    document.getElementById(column+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
-                             element.removeAttribute("hidden");   
-                             var element_td_count = element.querySelectorAll('td').length;   
-                             if(element.style.backgroundColor == '' && element_td_count == 8){
-                                //rows.push(element.getAttribute('id').split("-")[1]);
-                                element.style.backgroundColor = '#b8ebd0';
 
-                             }
+   
+    var pages = $("#"+column+'-issues' +' #incorrect-values').DataTable().tables().page.info()["pages"];
+    for(var page=1; page<pages+1;page++){
+
+        document.querySelector("a[data-dt-idx='"+page+"']").click();
+
+        document.getElementById(column+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
+                                element.removeAttribute("hidden");   
+                                var element_td_count = element.querySelectorAll('td').length;   
+                                if(element.style.backgroundColor == '' && element_td_count == 8){
+                                    //rows.push(element.getAttribute('id').split("-")[1]);
+                                    element.style.backgroundColor = '#b8ebd0';
+
+                                }
 
 
-                        }); 
+                            }); 
 
-                        document.getElementById("accept-view-cancel").setAttribute("hidden","");         
-   }
+
+    }
+
+
+                            document.getElementById("accept-view-cancel").setAttribute("hidden","");         
+    }
 
 
   function cancelOnly(column){
-    document.getElementById(column+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
+    var pages = $("#"+column+'-issues' +' #incorrect-values').DataTable().tables().page.info()["pages"];
 
-                            element.removeAttribute("hidden");
+    for(var page=1; page<pages+1;page++){
 
-                             var element_td_count = element.querySelectorAll('td').length;   
-                             if(element.style.backgroundColor == '' && element_td_count == 8){
-                                element.style.backgroundColor = '';
+        document.querySelector("a[data-dt-idx='"+page+"']").click();
 
-                                // remove `accept` btn
-                                element.removeChild(element.childNodes[element.childNodes.length -1]);
+        document.getElementById(column+'-issues').querySelector('table').querySelectorAll("tr[id^='row']").forEach(element => {
 
-                                // Clear the `detre` value
-                                
-                                element.childNodes[7].querySelector('p').innerHTML = "" 
-                             }
+                element.removeAttribute("hidden");
+
+                var element_td_count = element.querySelectorAll('td').length;   
+                if(element.style.backgroundColor == '' && element_td_count == 8){
+                    element.style.backgroundColor = '';
+
+                    // remove `accept` btn
+                    element.removeChild(element.childNodes[element.childNodes.length -1]);
+
+                    // Clear the `detre` value
+                    
+                    element.childNodes[7].querySelector('p').innerHTML = "" 
+                }
+
+        });         
 
 
-                        }); 
+    }
 
     document.getElementById("accept-view-cancel").setAttribute("hidden","");         
    }     

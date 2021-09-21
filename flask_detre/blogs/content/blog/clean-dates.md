@@ -28,10 +28,17 @@ When we look at the dates shown in the image, they have common attributes.  Thes
 
 The user will provide the guide as to what attributes are present in the given messy date.  For example, `8/12/04 (scholarship)`
 has numbers (i.e. 8,12,04), special characters (i.e. /, (, and ) ) and text (i.e. scholarship) and the task for Detre would be
-to remove the special characters and text while interpreting the numbers as a date. Fortunately, the ISO 8601 standard, used
-universally, has symbols to represent days, months and years. The date `8/12/04` is 'd/m/y' in ISO 8601 format. For Detre to clean the messy date data, the user would provide the following guidance:   d*m*y*text*. In the table below, we show the user's hint for each messy date.   The user can change dirty dates with the same pattern at one go as well. 
+to remove the special characters and text while interpreting the numbers as a date. Fortunately, the ISO 8601 standard, used universally, has symbols to represent days, months and years. The date `8/12/04` is 'm/d/y' in ISO 8601 format. For Detre to clean the messy date data, the user would provide the following guidance:   d*m*y*text*. In the table below, we show the user's hint for each messy date.   The user can change dirty dates with the same pattern at one go as well. 
 
 
+| Messy date               | Detre Gudiance  | Result      |
+| --------------------     | -----------     | ----------- |
+| Nov,`02                  | b**y            | 2002-11-01  |
+| Jan/Feb 2011             | b*bY            | 2011-01-01  |
+| 8/12/04 (scholarship)    | mdytext         | 2004-08-12  |
+| Deposited money in 2001  | textY           | 2001-01-01  |
+
+To see the transformations in action, you can watch it on our [Youtube channel](https://www.youtube.com/channel/UCB4xcEMbw-0-pLzKfvDHFbw)
 
 The platform, now, makes certain assumptions related to messy dates.  First, there are no spelling mistakes for the months. Second, there are no multiple dates in the field and if there is, then use the first one. Third,
 all numbers are related to dates. These a quite strong assumptions given how messy dates are in the wild. We are working on fixing this.

@@ -27,11 +27,11 @@ def _date(text:str,fmt : List, all_dates: List ):
     for idx in fmt:
         try:
           ans = arrow.get(text,DATE_ARR[int(idx)]).datetime.date()
-          #print(ans)
+          
           all_dates.append(str(ans))
           fmt.pop(0)
         except Exception as e:
-            # print(e)
+            
             fmt.pop(0)
             if len(fmt) > 0:
                 _date(text,fmt,all_dates)
@@ -218,12 +218,12 @@ def detre_text_extract(text,type_,date_fmt=None):
 
 
 
-def detre_text_remove(text, type_):
+def detre_text_remove(text, type_,date_fmt=None):
         """
             Function used to remove a given 'type' of string
         """
 
-    
+
         if type_ == "url":
             all_urls = _url(text)
             if len(all_urls) == 0:
@@ -240,12 +240,32 @@ def detre_text_remove(text, type_):
              else:
                  text       = remove(text, all_emails)
                  return "correct", text
-             
+        
+        if type_ == "numbers":
+            all_numbers = _numbers(text)
+            
+            if len(all_numbers) == 0:
+                return "incorrect", "No numbers found"
+            else:
+                text   = remove(text,all_numbers)
+                return "correct", text       
                 
         if type_ == "punct":
             text    = _punct(text)
             return "correct", text
             
+
+        if type_ == "date":
+            
+            cdate_fmt = date_fmt.copy()
+            all_dates = _date(text,cdate_fmt,[])
+            
+            if len(all_dates) > 0:
+                return "correct", ";".join(all_dates)
+            
+            return "incorrect", "No date found."        
+        
+        
         if type_ == "phone":
              all_phones = _phone(text)
              if len(all_phones) == 0:
@@ -280,28 +300,22 @@ def detre_text(df,actions,types_, date_fmt=None):
     
     
     for idx, vtext in enumerate(df):
-        
-        # Remove
-        value  = vtext
-        if "remove" in actions:
-            for action, type_ in zip(actions,types_):
-                ans, value = detre_text_remove(value, type_)
-                
-            if ans == "incorrect":
-                incorrect.append({"row":idx, "value":vtext, "detre": value})
-            else:
-                correct_.append({"row":idx, "value":vtext, "detre": value})        
-        
-            all_data.append({"correct":correct_})
-            all_data.append({"incorrect":incorrect})           
-            return all_data          
-        
+
+        value  = html.escape(str(vtext))
+               
         text = vtext
         for action, type_ in zip(actions,types_):
         
             if action == "remove":
+                text  = html.escape(str(vtext))
+                vtext = html.escape(str(vtext))
                 
-                ans, value = detre_text_remove(text, type_)
+                if type_ != "date":
+                    ans, value = detre_text_remove(text, type_,date_fmt=None)
+                else:
+                    
+                    ans, value = detre_text_remove(text, type_,date_fmt=date_fmt)
+                
                 
                 if ans == "incorrect":
                     incorrect.append({"row":idx, "value":vtext, "detre": value})

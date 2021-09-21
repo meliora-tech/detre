@@ -11,6 +11,23 @@ import re
 from collections import Counter
 from flask_detre.utils.profile import detre_profile
 
+from sqlalchemy.orm import Session
+
+from contextlib import contextmanager
+
+@contextmanager
+def session_scope():
+    """Provide a transactional scope around a series of operations."""
+    session = Session()
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+
 
 def detre_find_months(holder,action,value):
         month_directives = r'[bBm]'
