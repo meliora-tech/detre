@@ -23,3 +23,11 @@
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
+
+
+## About The Project
+
+  <video class="container" autoplay muted loop controls height="300px">
+      <source src="flask_detre/static/assets/videos/main.mp4" type="video/mp4">
+  </video>
+
