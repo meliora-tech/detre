@@ -27,7 +27,4 @@
 
 ## About The Project
 
-  <video class="container" autoplay muted loop controls height="300px">
-      <source src="flask_detre/static/assets/videos/main.mp4" type="video/mp4">
-  </video>
-
+<img src="images/home.png" alt="home-page">
