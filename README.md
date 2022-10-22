@@ -1,3 +1,17 @@
+<div align="center">
+  <a href="/">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Detre</h3>
+
+  <p align="center">
+    A no-code data cleaning platform.
+  
+  </p>
+</div>
+
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
