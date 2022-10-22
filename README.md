@@ -27,4 +27,4 @@
 
 ## About The Project
 
-<img src="images/home.png" alt="home-page">
+<img src="images/home.PNG" alt="home-page">
