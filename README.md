@@ -17,10 +17,8 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -42,11 +40,31 @@ expected to have any coding skills or Excel/Google sheets knowledge.  There will
 
 ### Built With
 
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [Flask](https://flask.palletsprojects.com/en/2.2.x/)
+
+* [Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+
+* [MySQL](https://www.mysql.com/)
+
+## Usage
+
+Please see our YouTube channel for examples: https://www.youtube.com/channel/UCB4xcEMbw-0-pLzKfvDHFbw
+
+## Roadmap
+
+- [x] Add Tests
+- [ ] Refactor inline css 
+- [ ] Add user documentation
+- [ ] Add more FAQs
+
+
+## License
+
+MIT License
 
 ## Contact
 
-Your Name  - ntuthuko@zetra.io
+Email  - ntuthuko@zetra.io
 
 
 
