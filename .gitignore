@@ -5,7 +5,18 @@ __pycache__/
 # ignore folders
 documentation
 other
+flask_detre/documentation/site/
+detre_blog
 
 # ignore files
 *.xlsx
 *.csv
+
+# venv
+venv/
+
+# Config
+.env
+
+# logs
+flask_detre/logs/

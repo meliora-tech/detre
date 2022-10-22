@@ -6,9 +6,9 @@ Created on Mon Sep 20 13:07:49 2021
 """
 
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, SubmitField
+from wtforms import BooleanField, SubmitField, StringField
 from flask_wtf.file import FileField, FileRequired
-from wtforms.fields.html5 import EmailField
+#from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
 
 
@@ -16,7 +16,7 @@ class EarlyAccessForm(FlaskForm):
     """
     Form for early access
     """
-    email       = EmailField('email', validators=[DataRequired()])
+    email       = StringField('email', validators=[DataRequired()])
     launch_sub  = BooleanField("Receive launch email",default="checked")
     letter_sub  = BooleanField("Subscribe to newsletter")
     join        = SubmitField("Join")

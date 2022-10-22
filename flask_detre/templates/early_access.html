@@ -132,19 +132,47 @@ form {
 <br>
 
 <section class="container text-center">
+  <br>
+  <br>
     <h1 style="font-weight: 900;">Early Access  </h1>
-    <p>They will be a surprise waiting for you once we launch. Trust us you won't be disappointed.  Don't forget to send us your `common edge cases` to info@detre.io</p>
+     <p>You can join the early access for only $35.00. <small>Please note this will charged in equivalent South African Rands.</small>   </p>
+     <p>Early access gives you: </p>
+     <ul class="list-group">
+       <li class="list-group-item"> A significant <strong> discount </strong> on our yearly subscription when we launch </li>
+       <li class="list-group-item"> Automatic <strong>upgrade</strong> to any new features we add in the future </li>   
+       <li class="list-group-item"> <strong>Priority </strong> on any common cases that you submit </li>
+       <li class="list-group-item"> A chance to <strong> win </strong> free lifetime access  </li>
+     </ul>
+     <br>
+     <br>
+     <h4>Get started by entering your email.</h4>
 </section>
 
 
 <br>
 <br>
 
+
+
+
+
 <div class="container">
-    <form class="form" method="POST">
+  <form class="form" id="paymentForm" style="width: 50%;" >
+  
+      <div class="form-group has-float-label">
+        <label>Email</label>
+         <input class="form-control" id="email" name="email" type="email" placeholder=" eg. example@detre.io"/> 
+      </div>
+        
+    
+        <button type="submit" onclick="payWithPaystack(this)" class="btn btn-block", style="background-color:#8D5A97; color:#fff; border-radius:8px;"> Pay </button>
+        <small>You will be redirect to Paystack to handle the payment.</small>
+    </form>
+
+   <!--  <form class="form" id="paymentForm" >
       {{ form.hidden_tag() }}
         <div class="form-group has-float-label">
-           <!--<input class="form-control" id="email" name="email" type="email" placeholder="info@detre.io"/> -->
+           <input class="form-control" id="email" name="email" type="email" placeholder="info@detre.io"/> 
             {{form.email(class="form-control",id="email",placeholder="info@detre.io")}}
             {{form.email.label}}
         </div>
@@ -165,11 +193,60 @@ form {
               <span class="custom-control-description">{{form.letter_sub.label}}</span>
             </label>
         </div>   
+        <button type="submit" onclick="payWithPaystack(this)"> Pay </button>
 
         {{form.join(class="btn btn-block", style="background-color:#8D5A97; color:#fff; border-radius:8px;")}}
-      </form>
+      </form> -->
 </div>
 
   
+<script src="https://js.paystack.co/v1/inline.js"></script> 
+
+<script>
+
+const paymentForm = document.getElementById('paymentForm');
+
+paymentForm.addEventListener("submit", payWithPaystack, false);
+
+function payWithPaystack(e) {
+
+  e.preventDefault();
+
+  let handler = PaystackPop.setup({
+
+    key: 'pk_test_1183aa4e038757beec6e31dc253f0a267016c913', // Replace with your public key
+
+    email: document.getElementById("email").value,
+
+    amount: 499.99 * 100,
+
+    currency: "ZAR",
+
+ // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+
+    // label: "Optional string that replaces customer email"
+
+    onClose: function(){
+
+      alert('Payment window was closed. No payment made.');
+
+    },
+
+    callback: function(response){
+
+      var url  = window.location.protocol +"//" +location.host;
+
+      let message = 'Payment complete! Reference: ' + response.reference;
+      window.location = url +"/verify_transaction?reference=" + response.reference;
+      
+
+    }
+
+  });
+
+  handler.openIframe();
+
+}
+</script>
 
 {% endblock %}

@@ -84,7 +84,7 @@ i .fa-bars {
             <div class="nav" id="navbarNav">               
                 <a class="nav-link" href="{{url_for('route_bp.blog')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
                 <a class="nav-link" href="{{url_for('route_bp.faq')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
-                <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
+              <!--   <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a> -->
                 <a class="nav-link" href="{{url_for('route_bp.early_access')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px;  text-decoration: none;">Join Early Access</a>
             </div>
 
@@ -96,7 +96,7 @@ i .fa-bars {
     <section style="margin-top: 30px;">  
         <div class="container text-center">            
             <h1 style="font-size: 56px; font-weight: 900;"> Enjoy cleaning your data </h1>
-            <p style="font-size: 20px;">Messy data is a norm rather than an exception. </p>
+            <p style="font-size: 20px;">Messy data is a norm rather than an exception but there are `common issues` which should be solved by one or two clicks. Detre helps to solve common messy data issues with ease. </p>
         </div>
     </section>
 
@@ -104,8 +104,9 @@ i .fa-bars {
     <section class="container text-center" style="margin-top: 30px;">
         <div class="container text-center" style="box-shadow: rgb(60 66 87 / 5%) 0px 0px 0px 1px, rgb(60 66 87 / 10%) 0px 3px 6px, rgb(60 66 87 / 20%) 0px 9px 24px;">
            <!-- <img src="{{url_for('static',filename='assets/images/browser-window.jpg')}}" width="50%"> -->
-           <video class="container" playsinline muted autoplay loop height="300px">
+        <video class="container" autoplay muted loop controls height="300px">
             <source src="{{url_for('static',filename='assets/videos/main.mp4')}}" type="video/mp4">
+            <source src="{{url_for('static',filename='assets/videos/main.ogg')}}" type="video/ogg">
         </video>
         </div>
     </section>
@@ -143,7 +144,7 @@ i .fa-bars {
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/date.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                               <h5 class="card-title">Date</h5>
-                              <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                             
                             </div>
                         </div>
                     
@@ -153,7 +154,7 @@ i .fa-bars {
                         <img class="mx-auto d-block"  src="{{url_for('static',filename='/assets/images/time.png')}}" alt="Card image cap" width="50%" >
                         <div class="card-body">
                           <h5 class="card-title">Time</h5>
-                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;" >Watch</a>
+                          
                         </div>
                     </div>
     
@@ -161,7 +162,7 @@ i .fa-bars {
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/datetime.png')}}" alt="Card image cap" width="50%" >
                         <div class="card-body">
                           <h5 class="card-title">Datetime</h5>
-                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                          
                         </div>
                     </div>
                
@@ -176,14 +177,14 @@ i .fa-bars {
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/currency.png')}}" alt="Card image cap" width="50%">
                         <div class="card-body">
                           <h5 class="card-title">Currency</h5>
-                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                          
                         </div>
                     </div>
                     <div class="card col" style="border: none; border-right: 1px solid rgb(238, 238, 238);">
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/country.png')}}" alt="Card image cap" width="50%">
                         <div class="card-body">
                           <h5 class="card-title">Country</h5>
-                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                        
                         </div>
                     </div>
     
@@ -191,7 +192,7 @@ i .fa-bars {
                         <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/phone.png')}}" alt="Card image cap" width="50%">
                         <div class="card-body">
                           <h5 class="card-title">Phone number</h5>
-                          <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                          
                         </div>
                     </div>
 
@@ -206,7 +207,7 @@ i .fa-bars {
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/whole.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                             <h5 class="card-title">Whole Number</h5>
-                            <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                            
                             </div>
                         </div>
                     
@@ -215,7 +216,7 @@ i .fa-bars {
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/decimal.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                             <h5 class="card-title">Decimal</h5>
-                            <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                            
                             </div>
                         </div>
 
@@ -223,7 +224,7 @@ i .fa-bars {
                             <img class="mx-auto d-block" src="{{url_for('static',filename='/assets/images/text.png')}}" alt="Card image cap" width="50%">
                             <div class="card-body">
                             <h5 class="card-title">Text</h5>
-                            <a href="#" class="btn btn-primary" style="font-weight: 300;background-color: #B8EBD0;color: #000; border-color: #B8EBD0; border-radius: 8px;">Watch</a>
+                            
                             </div>
                         </div>
 
@@ -289,7 +290,7 @@ i .fa-bars {
                     <a class="nav-link" href="/" style="text-decoration: none; font-weight: 900;font-size: 20px; color:#8D5A97">Detre</a> 
                 </div>
                 <div>
-                    <p class="ml-3">2021 Detre </p>
+                    <p class="ml-3">2022 Detre </p>
                 </div>
                 <div>
                     <a class="ml-3" href="{{url_for('route_bp.privacy')}}" style="text-decoration: underline; color: black;">Terms & Privacy </a>
@@ -321,11 +322,11 @@ i .fa-bars {
                         <a class="ml-3" href="https://www.youtube.com/channel/UCB4xcEMbw-0-pLzKfvDHFbw" target="_blank" style="text-decoration: underline; color: black;">Youtube </a>
                     </div>
                     <div>
-                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Twitter </a>
+                        <a class="ml-3" href="https://twitter.com/DetreRasion" style="text-decoration: underline; color: black;" target="_blank">Twitter </a>
                     </div>
                     
                     <div>
-                        <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Linkedin </a>
+                        <a class="ml-3" href="https://www.linkedin.com/in/detre-io-09741a218/" style="text-decoration: underline; color: black;" target="_blank" >Linkedin </a>
                     </div>
 
                 </div>  

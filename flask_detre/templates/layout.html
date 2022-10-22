@@ -24,7 +24,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<!-- <style>
+ <style>
     .footerfix{height:4rem;}
 footer{
   position: absolute;
@@ -33,7 +33,7 @@ footer{
   left: 0;
   padding: 1rem;
 }
-</style> -->
+</style> 
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap');
@@ -41,8 +41,8 @@ footer{
         font-family: 'Poppins', sans-serif !important;
         height: 100%
     }
-  /* .footerfix{    min-height: 100%;
-    position:relative;}*/
+  .footerfix{    min-height: 100%;
+    position:relative;}
 
 footer{
   position: absolute;
@@ -75,7 +75,7 @@ footer{
             <div class="nav" id="navbarNav">               
                 <a class="nav-link" href="{{url_for('route_bp.blog')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Blog</a>
                 <a class="nav-link" href="{{url_for('route_bp.faq')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">FAQ</a>
-                <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a>
+               <!--  <a class="nav-link" href="{{url_for('route_bp.documentation')}}" style="color: #A4A5AE; text-decoration:none;line-height: 1.8;">Documentation</a> -->
                 <a class="nav-link" href="{{url_for('route_bp.early_access')}}" style="background-color:#8D5A97; color:#fff; border-radius:8px; text-decoration: none;">Join Early Access</a>
             </div>
         </nav>
@@ -89,7 +89,9 @@ footer{
 
     <br>
     <div class="footerfix"></div>
-    <footer style="display: flex; background-color: #faf8f5;">
+
+
+  <!-- <footer style="display: flex; background-color: #faf8f5;">
         <div class="container" style="display: flex;" >
                 <div class="col-3-md" >
                     <div>
@@ -104,7 +106,7 @@ footer{
                 </div>
                 
                 <div class="col-3-md mt-2">
-                    <!-- Resources -->
+                    
                     <div>
                         <b>Resources</b>
                         <div>
@@ -121,18 +123,18 @@ footer{
                 </div>
     
                 <div class="col-3-md mt-2">
-                     <!-- Contact -->
+                   
                      <div>
                         <b>Contact</b>
                         <div>
-                            <a class="ml-3" href="https://www.youtube.com/channel/UCB4xcEMbw-0-pLzKfvDHFbw" style="text-decoration: underline; color: black;">Youtube </a>
+                            <a class="ml-3" href="https://www.youtube.com/channel/UCB4xcEMbw-0-pLzKfvDHFbw" style="text-decoration: underline; color: black;" target="_blank">Youtube </a>
                         </div>
                         <div>
-                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Twitter </a>
+                            <a class="ml-3" href="https://twitter.com/DetreRasion" style="text-decoration: underline; color: black;" target="_blank">Twitter </a>
                         </div>
                         
                         <div>
-                            <a class="ml-3" href="/" style="text-decoration: underline; color: black;">Linkedin </a>
+                            <a class="ml-3" href="https://www.linkedin.com/in/detre-io-09741a218/" style="text-decoration: underline; color: black;" target="_blank" >Linkedin </a>
                         </div>
     
                     </div>  
@@ -142,7 +144,7 @@ footer{
     
     
         </div>
-    </footer>    
+    </footer>   --> 
 
     <script type="text/javascript" src="{{url_for('static',filename='/js/mobile_version.js')}}"></script>
 </body>

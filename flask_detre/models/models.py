@@ -17,10 +17,12 @@ class CountryCodes(db.Model):
     
 class EarlyAccess(db.Model):
     
-    id         = db.Column(db.Integer, primary_key=True)
-    email      = db.Column(db.String(255))
-    launch_sub = db.Column(db.Boolean)
-    letter_sub = db.Column(db.Boolean)
+    id          = db.Column(db.Integer, primary_key=True)
+    email       = db.Column(db.String(255))
+    launch_sub  = db.Column(db.Boolean)
+    letter_sub  = db.Column(db.Boolean)
+    payment_ref = db.Column(db.String(255)) 
+    paid_dt     = db.Column(db.DateTime)
     
     
     

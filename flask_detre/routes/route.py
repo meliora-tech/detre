@@ -12,6 +12,7 @@ import pandas as pd
 import sidetable
 import os
 import re
+import requests
 import json
 import uuid
 import logging
@@ -37,8 +38,7 @@ from flask_detre.utils.whole_number import detre_wnumber
 from flask_detre.utils.decimal import detre_decimal
 from flask_detre.utils.survey_monkey import survey_monkey_analysis
 
-from flask_detre.models.models import EarlyAccess
-from flask_detre.models.models import CountryCodes
+from flask_detre.models.models import EarlyAccess, CountryCodes
 from flask_detre.utils.text_constants import (DATE_ARR)
 
 from flask_detre.utils.db_session import session_scope
@@ -51,12 +51,21 @@ from io import BytesIO
 
 from flask_detre.forms.forms import (EarlyAccessForm, SurveyMonkeyForm, DetreUploadForm)
 
+from dotenv import load_dotenv
+from os import environ, path
+
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
 
 #from defusedxml.ElementTree import parse, fromstring
 # Directory of the current file
 dirname = os.path.dirname(__file__)
 
-BLOG_URL = "http://127.0.0.1:8000"
+BLOG_URL     = os.environ.get("BLOG_URL")
+PAYSTACK_URL = os.environ.get("PAYSTACK_URL")
+PAYSTACK_KEY = os.environ.get("PAYSTACK_KEY")
+
+
 LOG_FILE = os.path.join(dirname.replace("\\routes",'\\logs'),'app.log')
 logging.basicConfig(level=logging.DEBUG,filename=LOG_FILE, format='%(asctime)s %(name)s %(levelname)s:%(message)s')
 logger = logging.getLogger(__name__)
@@ -120,6 +129,45 @@ def documentation():
     Display the resources page
     """
     return render_template("documentation.html")
+
+
+@route_bp.route("/verify_transaction")
+def verify_transaction():
+    """
+    Verify that payment for early access was successful
+    """
+    
+    ref     = request.args.get("reference")
+    url     = PAYSTACK_URL+ref
+    headers = {"authorization": "Bearer " + PAYSTACK_KEY}
+    
+    resp         = requests.get(url, headers=headers)
+    
+    
+   
+    if resp.status_code == 200:
+        resp_json = resp.json()
+        if resp_json["status"]:
+            
+            email = resp_json["data"]["customer"]["email"]
+            paid_dt = resp_json["data"]["paid_at"]
+    
+            # Save the user email and ref
+            with session_scope() as session:
+                early_access = EarlyAccess(email=email, launch_sub=True, letter_sub=False, payment_ref=ref,paid_dt=paid_dt)
+                
+                session.add(early_access)
+    
+            # Send the automated email for onboarding
+            
+            
+        return render_template("success.html")
+    
+    else:
+        flash('Payment was not successful','danger')
+        return redirect(url_for("early_access"))
+
+
 
 @route_bp.route("/", methods=['GET', 'POST'])
 def upload_file():
@@ -296,6 +344,8 @@ def survey():
         
     session['user_csrf'] = form.csrf_token.current_token
     return render_template("survey.html",form=form)
+
+
 
 @route_bp.route("/survey/analysis", methods=["GET"])
 def survey_analysis():
