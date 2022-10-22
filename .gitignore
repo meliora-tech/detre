@@ -16,7 +16,8 @@ detre_blog
 venv/
 
 # Config
-.env
+*.env
 
 # logs
 flask_detre/logs/
+flask_detre/__pycache__/
