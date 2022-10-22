@@ -10,10 +10,6 @@
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -35,7 +31,7 @@ to program or develop above-average skills in Excel do take time; meanwhile, the
 <p><img src='images/messy_dates.PNG'></p>
 <p>The available tools in Excel do not easily cater for what we call <code>common edge cases</code>. The term may sound contradictory because, by its nature, an edge case is uncommon. However, the situation the user above faces is often met by several people who need to make such non-trivial data cleaning transformations. Having a tool that will make it easy and intuitive to clean your data will be indispensable to people's toolkits. Hence the birth of Detre.</p>
 <p>Detre will allow salespeople, marketing managers, etc. (i.e. ), to clean their small to medium-sized data with relative ease.  The user will not be
-expected to have any coding skills or Excel/Google sheets knowledge.  There will only need to upload their data and guide us to their desired output.</p>
+expected to have any coding skills or Excel/Google sheets knowledge.  They will only need to upload their data and guide us to their desired output.</p>
 <p>Our vision is to half the time spent on cleaning data. We know it won't be easy, but it's worth striving for.  Are you joining us on this mission? Then send us your <code>common edge case</code> and let's get started.</p>
 
 ### Built With
@@ -45,6 +41,20 @@ expected to have any coding skills or Excel/Google sheets knowledge.  There will
 * [Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 
 * [MySQL](https://www.mysql.com/)
+
+
+## Getting Started
+
+ - Make sure MySQL is installed
+
+ - Create .env file. See the .env.sample file for required variables
+ 
+ - Setup a virtual environment
+
+ - Install the requirements.txt
+
+ - Start the application with <code> python app.py </code>
+
 
 ## Usage
 
