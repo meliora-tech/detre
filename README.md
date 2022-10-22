@@ -39,3 +39,14 @@ to program or develop above-average skills in Excel do take time; meanwhile, the
 <p>Detre will allow salespeople, marketing managers, etc. (i.e. ), to clean their small to medium-sized data with relative ease.  The user will not be
 expected to have any coding skills or Excel/Google sheets knowledge.  There will only need to upload their data and guide us to their desired output.</p>
 <p>Our vision is to half the time spent on cleaning data. We know it won't be easy, but it's worth striving for.  Are you joining us on this mission? Then send us your <code>common edge case</code> and let's get started.</p>
+
+### Built With
+
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+
+## Contact
+
+Your Name  - ntuthuko@zetra.io
+
+
+
